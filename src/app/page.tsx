@@ -1,7 +1,10 @@
 import Image from "next/image";
 import Navbar from "./components/Navbar";
-import { Span } from "next/dist/trace";
-import City from "./components/City";
+import MuaSection from "./components/MuaSection";
+import PopularCity from "./components/PopularCity";
+import Categories from "./components/Categories";
+import ProductBanner from "./components/ProductBanner";
+import Gallery from "./components/Gallery";
 
 export default function Home() {
   return (
@@ -25,7 +28,11 @@ export default function Home() {
                   className="z-10"
         />
       </div>
-      <City/>
+      <PopularCity/>
+      <MuaSection/>
+      <Categories/>
+      <ProductBanner/>
+      <Gallery/>
     </main>
   );
 }
