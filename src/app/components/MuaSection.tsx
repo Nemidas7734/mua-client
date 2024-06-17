@@ -12,7 +12,7 @@ const MuaSection: React.FC = () => {
     if (canvas) {
       const ctx = canvas.getContext('2d');
       if (ctx) {
-        const width = window.innerWidth;
+        const width = canvas.width;
         const height = canvas.height;
 
         // Draw the faint pink background
@@ -35,13 +35,13 @@ const MuaSection: React.FC = () => {
 
   return (
     <div className="relative p-8 ">
-      <canvas ref={canvasRef}  className="absolute inset-0 m-0 p-0 w-full h-[628px]"></canvas>
+      <canvas ref={canvasRef}  className="absolute inset-0 m-0 p-0 w-full h-[580px]"></canvas>
       <div className="relative z-10 grid grid-flow-col grid-cols-2">
         <div className="flex  align-top">
-            <Image src="/images/Ellipse 1.png" alt="" height={200} width={320} className='z-10 w-[400px] h-[430px] transform translate-x-32 -translate-y-4'/>
-            <Image src="/images/Ellipse 2.png" alt="" height={240} width={280} className='w-[330px] h-[350px] transform translate-y-60 -translate-x-10'/>
+            <Image src="/images/Ellipse 1.png" alt="" height={300} width={330} className='z-10 w-[300px] h-[330px] transform translate-x-32 -translate-y-4'/>
+            <Image src="/images/Ellipse 2.png" alt="" height={250} width={280} className='w-[270px] h-[300px] transform translate-y-56 -translate-x-5'/>
         </div>
-        <div className="text-white mt-24 ml-40 ">
+        <div className="text-white mt-16 ml-40 ">
           <h2 className="text-4xl font-bold  mb-4 ">WE have the best -</h2>
           <ul className="space-y-5 list-disc text-2xl  mb-10">
             <li>WEDDING MAKEUP ARTIST</li>

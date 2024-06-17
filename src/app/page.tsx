@@ -5,6 +5,9 @@ import PopularCity from "./components/PopularCity";
 import Categories from "./components/Categories";
 import ProductBanner from "./components/ProductBanner";
 import Gallery from "./components/Gallery";
+import Founder from "./components/Founder";
+import Blogs from "./components/Blogs";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -33,6 +36,9 @@ export default function Home() {
       <Categories/>
       <ProductBanner/>
       <Gallery/>
+      <Founder/>
+      <Blogs/>
+      <Footer/>
     </main>
   );
 }

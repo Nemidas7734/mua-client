@@ -2,10 +2,10 @@ import Image from "next/image";
 
 export default function Navbar() {
   return (
-    <nav id="top" className="sticky w-full h-8 md:h-16 md:px-12 md:flex md:justify-between md:items-center bg-violet-400  border-b-2 border-slate-300 shadow-lg z-20 ">
+    <nav id="top" className="sticky w-full h-8 md:h-16 md:px-12 md:flex md:justify-between md:items-center bg-[#8C7BF2]  border-slate-300 shadow-lg z-20 ">
     <div className="flex justify-between items-center mt-3 md:mt-0">
         <div className="flex items-center mx-2 md:mx-0">
-            <span className="text-pink-500 text-3xl mx-1 md:text-4xl font-bold">MUA</span>
+            <span className="text-[#EA2793] text-3xl mx-1 md:text-4xl font-bold">MUA</span>
         </div>
     </div>
     <div className="relative overflow-hidden w-96 h-8 bg-amber-100 rounded-full border-none">
