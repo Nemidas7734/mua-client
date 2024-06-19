@@ -2,7 +2,7 @@
 
 export default function Footer(){
     return(
-        <section className="flex justify-center mt-40 w-full bg-[#001B79] h-[500px]">
+        <section className="flex justify-center mt-24 w-full bg-[#001B79] h-[500px]">
             <div className="flex-col justify-center">
                 <div className="grid grid-cols-8 mt-28 w-[1100px]">
                     <div className="col-span-3">
