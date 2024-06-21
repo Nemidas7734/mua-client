@@ -24,13 +24,27 @@ export default function Artist(){
                             <h1 className="hover:text-pink-600">Reviews</h1>
                         </div>    
                     </div>
-                    <div className="bg-[#FDFFC2] w-[565px] h-[404px] rounded-lg">
-                        <div className="w-full h-8 p-2 flex justify-evenly items-center border-b border-black">
+                    <div className="bg-[#FDFFC2] w-[565px] h-[404px] flex flex-col justify-center gap-4 rounded-lg">
+                        <div className="w-full h-8 flex justify-evenly  border-b-[2px] border-black">
                             <h1>Photos</h1>
                             <h1>Videos</h1>
                         </div>
-                        <div className="flex justify-center">
-                            <div className=" "></div>
+                        <div className="flex flex-row justify-center items-center">
+                            <div className="w-[462px] h-[319px] p-2 grid grid-rows-3 grid-flow-col gap-4 justify-between">
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                                <div className="w-24 h-[87px] border-[3px] border-white bg-black "></div>
+                               
+                            </div>
                         </div>
                     </div> 
                     <About/>   

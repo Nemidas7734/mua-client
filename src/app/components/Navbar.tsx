@@ -13,6 +13,6 @@ export default function Navbar() {
         <Image src="/images/search (2).png" alt="search icon" width={24} height={24} className="absolute z-10 left-2 top-1"></Image>
     </div>
     <button className="block w-20 rounded-xl bg-amber-100 mx-4">LogIn</button>
-</nav>
+  </nav>
   );
 }
