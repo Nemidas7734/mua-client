@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Navbar() {
   return (
@@ -12,7 +13,9 @@ export default function Navbar() {
         <input className="relative left-10 bg-transparent top-1" placeholder="Search"></input>
         <Image src="/images/search (2).png" alt="search icon" width={24} height={24} className="absolute z-10 left-2 top-1"></Image>
     </div>
-    <button className="block w-20 rounded-xl bg-amber-100 mx-4">LogIn</button>
+    <Link href= "/pages/login">
+      <button className="block w-20 rounded-xl bg-amber-100 mx-4">LogIn</button>
+    </Link>
   </nav>
   );
 }

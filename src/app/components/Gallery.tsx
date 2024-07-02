@@ -1,7 +1,7 @@
 import Image from "next/image"
 export default function Gallery(){
     return(
-        <div className="flex-col justify-center mt-14 mb-20">
+        <div id="gallery" className="flex-col justify-center mt-14 mb-20">
             <h2 className="flex justify-center font-bold text-4xl p-6 ">Gallery</h2>
             <div className="flex justify-center gap-4 ">
                 <Image src="/gallery/gallery_4.jpeg" alt="" height={240} width={660} quality={100} style={{

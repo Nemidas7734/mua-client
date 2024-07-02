@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 
 export default function Footer(){
@@ -16,12 +17,12 @@ export default function Footer(){
                     </div>
                     <div className="col-span-1 ">
                         <ol className="text-white">
-                            <li>Home</li>
-                            <li>Blogs</li>
-                            <li>Gallery</li>
-                            <li>Cosmatic</li>
-                            <li>About Us</li>
-                            {/* <li>Cancellation Policy</li> */}
+                            <li><a href="/">Home</a></li>
+                            <li><a href="/#blogs">Blogs</a></li>
+                            <li><a href="/#gallery">Gallery</a></li>
+                            <li><a>Cosmetics</a></li>
+                            <li><Link href = "/pages/aboutus">About Us</Link></li>
+                            <li><Link href = "/pages/policy">Cancellation Policy</Link></li>
                         </ol>
                     </div>
                     <div className="col-span-1">

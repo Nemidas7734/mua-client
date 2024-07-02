@@ -1,7 +1,7 @@
 import Image from "next/image"
 export default function Blogs(){
     return(
-        <section className="flex flex-col gap-16 mb-6">
+        <section id="blogs" className="flex flex-col gap-16 mb-6">
             <h1 className="flex justify-center mt-16 text-2xl font-bold">BLOGS</h1>
             <div className="flex justify-center ">
                 <div className="grid grid-flow-col justify-between  w-[1100px] mb-10">

@@ -50,10 +50,11 @@ const Google = () => {
 
 export default function Login(){
     return(
-        <section className="flex flex-col  items-center bg-gradient-to-b from-[#EA2793] to-[#F27BBD] w-auto h-full">
-            <nav id="top" className="sticky flex justify-center rounded-md  w-[1120px] mt-4 h-12 px-12 bg-white  border-slate-300 shadow-lg z-20 ">
+        <section className="relative flex flex-col items-center w-auto min-h-screen">
+            <Image src="/login_bg.jpeg" alt="bg-image" width={1200} height={1200} className='w-full min-h-screen object-cover'/>
+            <nav id="top" className="absolute flex rounded-md  w-[1120px] mt-4 h-12 px-12 bg-white  border-slate-300 shadow-lg z-20 ">
                     <div className="flex justify-between w-full items-center mt-3 md:mt-0">
-                        <div className="flex justify-center items-center mx-2 md:mx-0">
+                        <div className="mx-2 md:mx-0">
                             <span className="text-[#EA2793] text-3xl mx-1 md:text-4xl font-bold">MUA</span>
                         </div>
                         <div className="relative overflow-hidden w-96 h-8 bg-amber-100 rounded-full border-none">
@@ -63,8 +64,8 @@ export default function Login(){
                         <button className="block w-20 rounded-xl bg-amber-100 mx-4">LogIn</button>
                     </div>
             </nav>
-            <div className="form-container ">
-                <div className="flex justify-center items-center mt-10 p-10 max-w-auto ">
+            <div className="form-container absolute">
+                <div className="mt-28 p-10 max-w-auto ">
                     <form 
                         // onSubmit={handleSubmit}
                         className="flex flex-col items-center justify-center shadow-2xl p-6 border-2 min-w-80 bg-white border-slate-300 rounded-xl">
