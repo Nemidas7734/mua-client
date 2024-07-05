@@ -1,37 +1,64 @@
 'use client'
 
-import { useFormState } from "react-dom";
-import { createUser } from "@/app/actions/createUser";
-
+import { useFormState, useFormStatus } from "react-dom";
+import Alert from 'react-bootstrap/Alert'
+import { useEffect, useRef } from "react";
+import { useRouter } from 'next/navigation';
+import { registerForm } from "@/app/firebase/utils/firebase";
+import { AlertHeading } from "react-bootstrap";
 
 const initialState = {
-    message : '',
-}
+    message: '',
+  }
+
 
 export default function Register() {
-    const [state, formAction] = useFormState(createUser, initialState);
+    const [state, formAction] = useFormState(registerForm, initialState);
+    const { pending } = useFormStatus()
+    const router = useRouter();
+    const formRef = useRef<HTMLFormElement>(null);
+
+    useEffect(() => {
+        if (state.message === "success") {
+            formRef.current?.reset();
+            setTimeout(() => {
+                router.push('/pages/success'); 
+            }, 2000);
+        }
+    }, [state, router]);
+
+
     return (
         <div className="flex justify-center items-center">
             <div className="rounded-xl mt-6 bg-pink-500 h-[728px] w-[1020px]">
                 <div className="flex flex-col gap-4 items-center justify-center">
                     <h1 className="font-semibold text-2xl mt-16">Welcome to MUA</h1>
-                    <form action={formAction} className="grid grid-cols-6 mt-8 ml-28 mr-28 gap-4">
-                        <input type="text" id="name" placeholder="First Name" className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Last Name" className="mt-1 col-span-2 rounded-lg h-12 p-2  bg-white" />
-                        <input type="text" placeholder="DOB" className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Address 1" className="mt-1 col-span-6 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="City" className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Region" className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="State" className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Mob No." className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Email" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Shop Act Licence" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Work Experience" className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Gender" className="mt-1 col-span-1 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Adhar Number" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                        <input type="text" placeholder="Business Number" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                    <form action={formAction} ref={formRef}>
+                        <div className="grid grid-cols-6 mt-8 ml-28 mr-28 gap-4">
+                            <input type="text" name="name" id="name" placeholder="First Name" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="lastName" placeholder="Last Name" required className="mt-1 col-span-2 rounded-lg h-12 p-2  bg-white" />
+                            <input type="date" name="dob" placeholder="DOB" required  className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="address" placeholder="Address 1" required className="mt-1 col-span-6 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="city" placeholder="City" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="region" placeholder="Region" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="state" placeholder="State" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
+                            <input type="tel" name="mobNo" placeholder="Mob No." required maxLength={10} className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                            <input type="email" name="email" placeholder="Email" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="shopActLicence" placeholder="Shop Act Licence" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                            <input type="number" name="workExp" placeholder="Work Experience" required min={0} className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="gender" placeholder="Gender" required className="mt-1 col-span-1 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="adharNo" placeholder="Adhar Number" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="businessNo" placeholder="Business Number" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                        </div>
+                        <p aria-live="polite" className="sr-only">
+                            {state?.message}
+                        </p>
+                        <div className="flex justify-center">
+                            <button type="submit" disabled={pending}  className="mt-16 h-10 w-56 bg-pink-400 shadow-lg rounded-full text-white  hover:bg-pink-300 hover:shadow-2xl  px-12">
+                                {pending ? "Registering..." : "Register"}
+                            </button>
+                        </div>
                     </form>
-                    <button type="submit"  className="mt-16 h-10 w-56 bg-pink-400 shadow-lg rounded-full text-white  hover:bg-pink-300 hover:shadow-2xl  px-12">Register</button>
                 </div>
             </div>
         </div>
