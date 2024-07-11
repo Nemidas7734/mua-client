@@ -51,15 +51,18 @@ const Google = () => {
 export default function Login() {
     return (
         <section className="relative bg-[#EA2793] grid grid-cols-2 w-auto min-h-screen">
+            <div>
+
+            </div>
             <div className='form-container w-auto min-h-screen p-4'>
                 <form className="flex flex-col items-center gap-2 h-full shadow-2xl border-2 bg-white border-slate-300 rounded-xl">
-                    <h1 className="text-center mt-16 mb-8 font-normal font-[Damion] text-black text-5xl">Welcome Back</h1>
+                    <h1 className="text-center mt-16 mb-8 font-normal font-[Damion] text-black text-5xl">Get Started</h1>
                     <input
                         type="email"
                         name='email'
                         autoFocus
                         className="border-2 border-[#EA279380] p-2 h-11 w-[440px] rounded-full placeholder:text-sm"
-                        id="inputEmail" 
+                        id="inputEmail"
                         placeholder=" Enter Your Email"
                         required
                     />
@@ -68,36 +71,41 @@ export default function Login() {
                         name='password'
                         className="border-2 border-[#EA279380] p-2 h-11 w-[440px] rounded-full placeholder:text-sm"
                         id="inputPassword"
-                        placeholder=" Enter Your Password"
+                        placeholder="Create Password"
+                        required
+                    />
+                    <input
+                        type="password"
+                        name='password'
+                        className="border-2 border-[#EA279380] p-2 h-11 w-[440px] rounded-full placeholder:text-sm"
+                        id="inputPassword"
+                        placeholder="Confirm Password"
                         required
                     />
                     <div className='px-0'>
                         <button type="submit" className="border rounded-full py-1 h-10 w-[440px] mt-4 font-bold bg-[#EA2793] text-white">
-                            Login
+                            Sign up
                         </button>
                     </div>
                     <h1 className='text-xs mt-2 mb-1'>Forgot Password?</h1>
                     <h1 className='mt-0 text-pink-500'>or</h1>
-                    <h1 className='text-xs mt-2 mb-4'>Don&apos;t have an account ? <Link className='underline underline-offset-4 decoration-black  text-pink-500' href="/pages/signup">Create Account</Link></h1>
+                    <h1 className='text-xs mt-2 mb-4'>Already have an account ? <Link className='underline underline-offset-4 decoration-black  text-pink-500' href="/pages/login">Login</Link></h1>
                     <div className="flex flex-col items-center justify-center gap-2">
                         <div className='relative flex justify-center items-center gap-1 h-11 w-[440px] border-2 border-[#EA279380] rounded-full'>
                             <div className='relative w-10 h-10'>
                                 <Google />
                             </div>
-                            <h1 className='text-xs'>Login with google</h1>
+                            <h1 className='text-xs'>Signup with google</h1>
                         </div>
                         <div className='relative flex justify-center items-center gap-1 h-11 w-[440px] border-2 border-[#EA279380] rounded-full'>
                             <div className='relative w-10 h-10'>
                                 <Facebook />
                             </div>
-                            <h1 className='text-xs'>Login with Facebook</h1>
+                            <h1 className='text-xs'>Signup with Facebook</h1>
                         </div>
                     </div>
                     <h1 className='text-xs mt-14 mb-10'>Are you a makeup artist ?<Link className='underline underline-offset-4 decoration-pink-500 font-bold text-pink-500' href="/pages/register">Yes</Link></h1>
                 </form>
-            </div>
-            <div>
-
             </div>
         </section>
     )
