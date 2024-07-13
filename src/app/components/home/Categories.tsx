@@ -2,7 +2,7 @@
 
 export default function Categories(){
     return(
-        <section className="flex justify-center mt-14 pt-4 ">
+        <section className="flex justify-center mt-4 pt-4 ">
             <div className="flex-col justify-center items-center mt-14">
                 <h2 className="flex justify-center font-bold text-3xl">CATEGORIES</h2>
                 <h2 className="flex justify-center text-blue-700 font-bold  text-xs mt-3 mb-16">see all categories</h2>

@@ -48,7 +48,7 @@ export default function Register() {
                             <input type="number" name="workExp" placeholder="Work Experience" required min={0} className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
                             <input type="text" name="gender" placeholder="Gender" required className="mt-1 col-span-1 rounded-lg h-12 p-2 bg-white" />
                             <input type="text" name="adharNo" placeholder="Adhar Number" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="businessNo" placeholder="Business Number" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="pancard" placeholder="PAN Card" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
                         </div>
                         <p aria-live="polite" className="sr-only">
                             {state?.message}

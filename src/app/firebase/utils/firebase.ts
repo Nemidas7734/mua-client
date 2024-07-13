@@ -20,7 +20,7 @@ export const registerForm = async (prevState: any,formData:FormData) => {
             WorkExp : formData.get('workExp'),
             Gender : formData.get('gender'),
             AdharNo : formData.get('adharNo'),
-            BusinessNo :formData.get('businessNo')
+            PANCard :formData.get('pancard')
             
 
             // redirect('/pages/profile')

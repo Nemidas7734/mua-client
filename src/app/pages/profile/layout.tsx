@@ -1,6 +1,6 @@
 'use client'
 
-import Footer from "@/app/components/Footer";
+import Footer from "@/app/components/home/Footer";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import { useState } from "react";

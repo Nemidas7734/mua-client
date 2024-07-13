@@ -1,6 +1,6 @@
 'use client'
 
-import Footer from "@/app/components/Footer";
+import Footer from "@/app/components/home/Footer";
 import Navbar from "@/app/components/Navbar";
 import { Inter } from "next/font/google";
 
