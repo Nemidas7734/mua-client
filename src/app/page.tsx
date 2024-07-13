@@ -3,12 +3,13 @@ import Navbar from "./components/home/Navbar";
 import MuaSection from "./components/home/MuaSection";
 import PopularCity from "./components/home/PopularCity";
 import Categories from "./components/home/Categories";
-import ProductBanner from "./components/ProductBanner";
+import ProductBanner from "./components/home/ProductBanner";
 import Gallery from "./components/home/Gallery";
 import Founder from "./components/home/Founder";
 import Blogs from "./components/home/Blogs";
 import Footer from "./components/home/Footer";
 import Hero from "./components/home/Hero";
+import About from "./components/home/About";
 
 export default function Home() {
   return (
@@ -17,10 +18,11 @@ export default function Home() {
       <Hero/>
       <PopularCity />
       <MuaSection />
+      <About/>
       <Categories />
+      <Founder />
       <ProductBanner />
       <Gallery />
-      <Founder />
       <Blogs />
       <Footer />
     </main>
