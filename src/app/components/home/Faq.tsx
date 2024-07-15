@@ -12,7 +12,7 @@ export default function Faq(){
             </div>
             <div className="flex flex-col gap-6">
                 <h1 className="font-bold text-xl">How should you prepare for your makeup service?</h1>
-                <p className="font-normal text-lg">To book your appointment swiftly, use MUA for seamless scheduling. When booking, clarify if you prefer a traveling beautician or if you'll visit their studio or spa. Arrive with a clean face on the day of your appointment to ensure the makeup artist can work their magic smoothly.</p>
+                <p className="font-normal text-lg">To book your appointment swiftly, use MUA for seamless scheduling. When booking, clarify if you prefer a traveling beautician or if you&apos;ll visit their studio or spa. Arrive with a clean face on the day of your appointment to ensure the makeup artist can work their magic smoothly.</p>
             </div>
             <div className="flex flex-col gap-6">
                 <h1 className="font-bold text-xl">How to Find the Best Makeup Artists?</h1>
@@ -20,7 +20,7 @@ export default function Faq(){
             </div>
             <div className="flex flex-col gap-6">
                 <h1 className="font-bold text-xl">How do I Make an Appointment with A Makeup Artist?</h1>
-                <p className="font-normal text-lg">MUA streamlines the process of scheduling online appointments effortlessly. Once you've selected your preferred makeup artist, you can easily contact with the makeup artist and find a convenient time that suits your schedule.</p>
+                <p className="font-normal text-lg">MUA streamlines the process of scheduling online appointments effortlessly. Once you&apos;ve selected your preferred makeup artist, you can easily contact with the makeup artist and find a convenient time that suits your schedule.</p>
             </div>
         </div>
     )

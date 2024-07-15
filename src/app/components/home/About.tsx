@@ -13,7 +13,7 @@ export default function About(){
             <div className="grid grid-cols-2 w-[1120px] h-[337px]">
                 <div className="flex flex-col justify-center gap-4 w-[500px] h-full">
                     <h1 className="font-bold text-4xl font-[inter]">BOOK <span className="text-pink-500 font-bold text-4xl font-[inter]">MUA </span> ARTIST ?</h1>
-                    <p className="w-[495px] text-wrap font-[inter] text-base font-semibold">MUA streamlines the process of scheduling online appointments effortlessly. Find the best makeup artist based on your preferences, once you've selected your preferred makeup artist, you can easily contact with the makeup artist and find a convenient time that suits your schedule. Each makeup artist offers a variety of services tailored to your needs. They offer different makeup intensities, from soft and medium looks to full glam.</p>
+                    <p className="w-[495px] text-wrap font-[inter] text-base font-semibold">MUA streamlines the process of scheduling online appointments effortlessly. Find the best makeup artist based on your preferences, once you&apos;ve selected your preferred makeup artist, you can easily contact with the makeup artist and find a convenient time that suits your schedule. Each makeup artist offers a variety of services tailored to your needs. They offer different makeup intensities, from soft and medium looks to full glam.</p>
                 </div>
                 <div className="ml-20 w-[455px] h-full bg-[#C4C4C4] rounded-md"></div>
             </div>
