@@ -10,6 +10,7 @@ import Blogs from "./components/home/Blogs";
 import Footer from "./components/home/Footer";
 import Hero from "./components/home/Hero";
 import About from "./components/home/About";
+import Faq from "./components/home/Faq";
 
 export default function Home() {
   return (
@@ -21,9 +22,10 @@ export default function Home() {
       <About/>
       <Categories />
       <Founder />
-      <ProductBanner />
+      {/* <ProductBanner /> */}
       <Gallery />
       <Blogs />
+      <Faq/>
       <Footer />
     </main>
   );

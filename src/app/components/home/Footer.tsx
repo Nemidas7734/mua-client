@@ -11,9 +11,9 @@ export default function Footer(){
                         <p className="w-80 text-wrap text-white text-2xl font-[saira]">&quot;Beauty At Your Fingertips: Your Ultimate Make-Up Artist Booking Place.&quot;</p>
                     </div>
                     <div className="col-span-3 flex flex-col">
-                        <h1 className="font-semibold text-white mb-1">Subscribe</h1>
-                        <input className="p-1 h-8 rounded-md text-black mb-4 w-80 " placeholder="Enter Email"></input>
-                        <button className="bg-[#EA2793] rounded-full p-0 w-32 text-white font-light ml-48">Subscribe</button>
+                        <h1 className="font-semibold text-white mb-1 p-2">Subscribe</h1>
+                        <input className="p-2 h-8 rounded-md text-black mb-4 w-80 " placeholder="Enter Email"></input>
+                        <button className="bg-[#EA2793] rounded-full p-1 w-32 mt-1 text-white font-light ml-48">Subscribe</button>
                     </div>
                     <div className="col-span-1 ">
                         <ol className="text-white">
