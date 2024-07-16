@@ -23,7 +23,7 @@ export default function Register() {
             formRef.current?.reset();
             setTimeout(() => {
                 router.push('/pages/success'); 
-            }, 2000);
+            }, 1000);
         }
     }, [state, router]);
 
@@ -44,7 +44,7 @@ export default function Register() {
                             <input type="text" name="state" placeholder="State" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
                             <input type="tel" name="mobNo" placeholder="Mob No." required maxLength={10} className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
                             <input type="email" name="email" placeholder="Email" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="shopActLicence" placeholder="Shop Act Licence" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="shopActLicence" placeholder="Shop Act Licence" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
                             <input type="number" name="workExp" placeholder="Work Experience" required min={0} className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
                             <input type="text" name="gender" placeholder="Gender" required className="mt-1 col-span-1 rounded-lg h-12 p-2 bg-white" />
                             <input type="text" name="adharNo" placeholder="Adhar Number" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
