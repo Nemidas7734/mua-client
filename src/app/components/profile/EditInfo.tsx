@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-export default function ArtistInfo() {
+export default function EditInfo() {
     return (
         <div className="w-[1120px] h-[725px] rounded-xl border-2 shadow-2xl shadow-[#0000001F] mb-8">
             <div className="w-full h-[356px]">

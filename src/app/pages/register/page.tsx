@@ -1,11 +1,9 @@
 'use client'
 
 import { useFormState, useFormStatus } from "react-dom";
-import Alert from 'react-bootstrap/Alert'
 import { useEffect, useRef } from "react";
 import { useRouter } from 'next/navigation';
 import { registerForm } from "@/app/firebase/utils/firebase";
-import { AlertHeading } from "react-bootstrap";
 
 const initialState = {
     message: '',

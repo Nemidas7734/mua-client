@@ -1,6 +1,6 @@
 
 
-export default function Gallery(){
+export default function EditGallery(){
     return(
         <div className="flex flex-col gap-10 items-center w-[1120px] h-[1020px] rounded-xl border-2 shadow-2xl shadow-[#0000001F]">
             <h1 className="flex justify-center font-semibold text-2xl mt-10">Gallery</h1>

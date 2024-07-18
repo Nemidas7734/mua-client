@@ -28,30 +28,30 @@ export default function ArtistReviews() {
                         </div>
                     </div>
                     <div className="flex gap-5">
-                        <button className="w-[109px] h-[27px] bg-[#EA2793] rounded-full">Add Photos</button>
-                        <button className="w-[109px] h-[27px] bg-[#EA2793] rounded-full">Submit</button>
+                        <button className="w-[109px] h-[27px] bg-[#EA2793] text-white text-sm rounded-full">Add Photos</button>
+                        <button className="w-[109px] h-[27px] bg-[#EA2793] text-white text-sm rounded-full">Submit</button>
                     </div>
 
                 </div>
             </div>
             <div className="grid grid-cols-3  w-[1064px] max-h-[186px] gap-0 p-2">
-                <div className="flex flex-col min-h-[131px] max-w-[330px] rounded-xl bg-[#F7FF003B]">
+                <div className="p-1 flex flex-col min-h-[131px] max-w-[330px] rounded-xl bg-[#F7FF003B]">
                     <Ratings />
                     <p className="pl-2 font-normal text-base">The Service was really amazing.love your work</p>
-                    <h1 className="mt-4 pl-2 font-semibold pb-4">-Himanshu Chavhan</h1>
+                    <h1 className="mt-4 pl-2 font-semibold pb-4"> -Himanshu Chavhan</h1>
                 </div>
-                <div className="min-h-[131px] max-w-[330px] rounded-xl bg-[#F7FF003B]">
+                <div className="p-1 min-h-[131px] max-w-[330px] rounded-xl bg-[#F7FF003B]">
                     <Ratings />
                     <p className="pl-2 font-normal text-base">The Service was really amazing.but you need to focus upon customer management and also use new products</p>
                     <h1 className="mt-4 pl-2 font-semibold pb-4">-Himanshu Chavhan</h1>
                 </div>
-                <div className="min-h-[131px] max-w-[330px] rounded-xl bg-[#F7FF003B]">
+                <div className="p-1 min-h-[131px] max-w-[330px] rounded-xl bg-[#F7FF003B]">
                     <Ratings />
                     <p className="pl-2 font-normal text-base">Good !!</p>
                     <h1 className="mt-4 pl-2 font-semibold pb-4">-Himanshu Chavhan</h1>
                 </div>
             </div>
-            <button>See More Reviews</button>
+            <button className="mt-2 font-semibold hover:underline hover:underline-offset-2">See all Reviews</button>
         </section>
     )
 }
