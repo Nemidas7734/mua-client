@@ -33,20 +33,20 @@ export default function Register() {
                     <h1 className="font-semibold text-2xl mt-16">Welcome to MUA</h1>
                     <form action={formAction} ref={formRef}>
                         <div className="grid grid-cols-6 mt-8 ml-28 mr-28 gap-4">
-                            <input type="text" name="name" id="name" placeholder="First Name" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="lastName" placeholder="Last Name" required className="mt-1 col-span-2 rounded-lg h-12 p-2  bg-white" />
-                            <input type="date" name="dob" placeholder="DOB" required  className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="address" placeholder="Address 1" required className="mt-1 col-span-6 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="city" placeholder="City" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="region" placeholder="Region" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="state" placeholder="State" required className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                            <input type="tel" name="mobNo" placeholder="Mob No." required maxLength={10} className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                            <input type="email" name="email" placeholder="Email" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="shopActLicence" placeholder="Shop Act Licence" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                            <input type="number" name="workExp" placeholder="Work Experience" required min={0} className="mt-1 col-span-2 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="gender" placeholder="Gender" required className="mt-1 col-span-1 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="adharNo" placeholder="Adhar Number" required className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
-                            <input type="text" name="pancard" placeholder="PAN Card" className="mt-1 col-span-3 rounded-lg h-12 p-2 bg-white" />
+                            <input type="text" name="name" id="name" placeholder="First Name" required className="mt-1 col-span-2 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="lastName" placeholder="Last Name" required className="mt-1 col-span-2 rounded-full h-12 p-4  bg-white" />
+                            <input type="date" name="dob" placeholder="DOB" required  className="mt-1 col-span-2 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="address" placeholder="Address 1" required className="mt-1 col-span-6 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="city" placeholder="City" required className="mt-1 col-span-2 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="region" placeholder="Region" required className="mt-1 col-span-2 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="state" placeholder="State" required className="mt-1 col-span-2 rounded-full h-12 p-4 bg-white" />
+                            <input type="tel" name="mobNo" placeholder="Mob No." required maxLength={10} className="mt-1 col-span-3 rounded-full h-12 p-4 bg-white" />
+                            <input type="email" name="email" placeholder="Email" required className="mt-1 col-span-3 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="shopActLicence" placeholder="Shop Act Licence" className="mt-1 col-span-3 rounded-full h-12 p-4 bg-white" />
+                            <input type="number" name="workExp" placeholder="Work Experience" required min={0} className="mt-1 col-span-2 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="gender" placeholder="Gender" required className="mt-1 col-span-1 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="adharNo" placeholder="Adhar Number" required className="mt-1 col-span-3 rounded-full h-12 p-4 bg-white" />
+                            <input type="text" name="pancard" placeholder="PAN Card" className="mt-1 col-span-3 rounded-full h-12 p-4 bg-white" />
                         </div>
                         <p aria-live="polite" className="sr-only">
                             {state?.message}

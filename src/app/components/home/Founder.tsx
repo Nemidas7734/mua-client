@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function Founder() {
     return (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center mt-5">
             <div className="flex items-center justify-center gap-10 bg-[#1640D6] mt-28 w-[1120px] h-48 p-4 rounded-md">
                 <Image src="/CEO.jpg" alt="" height={80} width={120} className="h-[130px] w-[132px] rounded-full object-cover" />
                 <div className="flex-col">

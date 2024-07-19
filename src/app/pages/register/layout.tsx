@@ -2,6 +2,7 @@
 
 import { Inter } from "next/font/google";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 
@@ -13,7 +14,6 @@ export default function ResultLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const [open, setOpen] = useState(false);
     return (
         <>
             <html lang="en">
@@ -25,18 +25,10 @@ export default function ResultLayout({
                             </div>
                         </div>
                         <span className="text-2xl font-semibold">Registration Form</span>
-                        <span className="block mx-4" onClick={() => setOpen(!open)}>
-                            {open ? <Image
-                                src="/icons8-close.svg"
-                                alt="menu h-10 cursor-pointer"
-                                width={30}
-                                height={25}
-                            /> : <Image
-                                src="/icons8-menu.svg"
-                                alt="menu h-10 cursor-pointer"
-                                width={35}
-                                height={25}
-                            />}
+                        <span className="block mx-4">
+                            <Link href="/pages/login">
+                                <Image src="/gallery/woman.png" alt="" width={35} height={35} quality={100} className="object-cover" />
+                            </Link>
                         </span>
                     </nav>
                     {children}
