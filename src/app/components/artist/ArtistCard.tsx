@@ -2,7 +2,7 @@ import Image from "next/image"
 
 export default function ArtistsCard(){
     return(
-        <div className="relative w-[355px] h-[273px] rounded-xl border border-pink-300 shadow-lg shadow-pink-400">
+        <div className="relative w-[355px] h-[273px] rounded-xl border border-pink-300 shadow-sm shadow-pink-400">
             <div className="absolute w-full h-[135px] p-2 pt-3 rounded-xl z-20">
                 <Image src="/Hero2.jpg" alt="" width={350} height={135} className="w-full h-full object-cover rounded-xl"/>
             </div>
