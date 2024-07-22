@@ -1,5 +1,6 @@
 'use client'
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useRef } from 'react';
 
 
@@ -12,7 +13,9 @@ function MuaSection() {
       <div className="flex flex-col mt-20 justify-center items-center">
         <div className='flex flex-col items-center max-w-[658px] h-[300px] text-wrap'>
           <h1 className="font-semibold font-[Saira] text-5xl leading-tight text-black z-20">&quot;<span className="text-pink-500 font-semibold font-[Saira] text-5xl z-20">Beauty</span> At Your Fingertips : Your Ultimate <span className="text-pink-500 font-semibold font-[Saira] text-5xl z-20">Make-Up Artist</span> Booking Place.&quot;</h1>
-          <button className="bg-[#EA2793] w-28 h-7 rounded-full text-white font-semibold text-sm mt-10 hover:shadow-md hover:shadow-[#F27BBD]">Check Out !</button>
+          <Link href="/pages/artistlisting">
+            <button className="bg-[#EA2793] w-28 h-7 rounded-full text-white font-semibold text-sm mt-10 hover:shadow-md hover:shadow-[#F27BBD]">Check Out !</button>
+          </Link>
         </div>
       </div>
       <div className='relative'>
