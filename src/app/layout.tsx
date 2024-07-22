@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/home/Navbar";
+import Footer from "./components/home/Footer";
 
-const inter = Inter({ subsets: ["latin"],});
+const inter = Inter({ subsets: ["latin"], });
 
 export const metadata: Metadata = {
   title: "MUA-Client",
@@ -16,8 +18,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script> */}
-      <body >{children}</body>
+      <body >
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
