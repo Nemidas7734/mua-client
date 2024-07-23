@@ -1,5 +1,6 @@
 'use client'
 
+import Footer from "@/app/components/home/Footer";
 import { Inter } from "next/font/google";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,7 +10,7 @@ import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function ResultLayout({
+export default function RegisterLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;

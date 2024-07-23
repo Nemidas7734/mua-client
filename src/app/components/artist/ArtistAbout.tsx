@@ -1,4 +1,15 @@
+"use client"
 
+import { Swiper, SwiperSlide } from "swiper/react"
+import Image from "next/image";
+
+
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 
 export default function ArtistAbout() {
     return (
@@ -10,7 +21,44 @@ export default function ArtistAbout() {
                     <h1 className="font-normal text-lg text-[#EA2793]">Rs. 20000 onwards</h1>
                 </div>
             </div>
-            <div className=""></div>
+            <div className="w-[420px] h-[254px] m-auto">
+                <Swiper
+                    effect={'coverflow'}
+                    grabCursor={true}
+                    centeredSlides={true}
+                    // autoplay={{
+                    //     delay: 2500,
+                    //     disableOnInteraction: false,
+                    // }}
+                    // speed={100}
+                    // spaceBetween={50}
+                    preventClicks={true}
+                    initialSlide={3}
+                    loop={true}
+                    slidesPerView={2}
+                    // slidesPerGroupAuto
+                    coverflowEffect={{
+                        rotate: 0,
+                        stretch: 0,
+                        depth: 100,
+                        modifier: 1,
+                    }}
+                    // pagination={{ clickable: true }}
+                    // scrollbar={{ draggable: true }}
+                    modules={[Autoplay, EffectCoverflow]}
+                    className="w-full "
+                >
+                    <SwiperSlide className="w-[190px] h-[254px] rounded-xl ">
+                        <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={190} height={254} className="block w-full object-cover rounded-xl" />
+                    </SwiperSlide>
+                    <SwiperSlide className="w-[190px] h-[254px] rounded-xl ">
+                        <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={190} height={254} className="block w-full object-cover rounded-xl" />
+                    </SwiperSlide>
+                    <SwiperSlide className="w-[190px] h-[254px] rounded-xl ">
+                        <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={190} height={254} className="block w-full object-cover rounded-xl" />
+                    </SwiperSlide>
+                </Swiper>
+            </div>
         </section>
     )
 }

@@ -104,7 +104,7 @@ export default function Login() {
                             <h1 className='text-xs'>Signup with Facebook</h1>
                         </div>
                     </div>
-                    <h1 className='text-xs mt-10 mb-5'>Are you a makeup artist ?<Link className='underline underline-offset-4 decoration-pink-500 font-bold text-pink-500' href="/pages/register">Yes</Link></h1>
+                    <h1 className='text-xs mt-10 mb-5'>Are you a makeup artist ? <Link className='underline underline-offset-4 decoration-pink-500 font-bold text-pink-500' href="/pages/register">Yes</Link></h1>
                 </form>
             </div>
         </section>

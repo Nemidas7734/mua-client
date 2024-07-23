@@ -28,7 +28,7 @@ export default function Register() {
 
     return (
         <div className="flex justify-center items-center">
-            <div className="rounded-xl mt-6 bg-pink-500 h-[728px] w-[1020px]">
+            <div className="rounded-xl mt-20 bg-pink-500 h-[728px] w-[1020px]">
                 <div className="flex flex-col gap-4 items-center justify-center">
                     <h1 className="font-semibold text-2xl mt-16">Welcome to MUA</h1>
                     <form action={formAction} ref={formRef}>

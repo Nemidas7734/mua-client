@@ -19,7 +19,7 @@ export default function ArtistListing() {
   //   };
 
   return (
-    <div className='flex flex-col gap-10'>
+    <div className='flex flex-col gap-14'>
       <div className='flex justify-end pr-8'>
         <input
           type="text"
@@ -30,7 +30,7 @@ export default function ArtistListing() {
         />
       </div>
       <h1 className='text-4xl font-bold m-auto'>Makeup Artists in <span className='text-[#EA2793]'>Pune</span></h1>
-      <div className="grid grid-flow-row grid-cols-3   m-auto gap-8 justify-center">
+      <div className="grid grid-flow-row grid-cols-3  m-auto gap-12 justify-center">
         {/* {artists.map(artist => ( */}
         <ArtistCard />
         <ArtistCard />
