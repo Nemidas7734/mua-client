@@ -24,7 +24,7 @@ export default function Footer() {
                     </div>
                     <hr className="col-span-1 md:hidden h-[223px] mx-10 w-px md:w-0 bg-white border-0 dark:bg-gray-700"></hr>
                     <div className="col-span-2 md:col-span-2 flex flex-col pt-2 md:pt-0">
-                        <p className="font-normal w-[170px] md:w-[187px] text-sm text-wrap text-white">Are you a makeup artist ? Join the MUA community and spread your business all across your city.</p>
+                        <p className="font-normal w-[170px] md:w-[187px] sm:pr-3 md:pr-0 text-sm text-wrap text-white">Are you a makeup artist ? Join the MUA community and spread your business all across your city.</p>
                         <Link href="/pages/register">
                             <h1 className="font-bold text-sm text-white mt-10">Registser Yourself !</h1>
                         </Link>

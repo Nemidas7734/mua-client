@@ -39,32 +39,32 @@ export default function Gallery() {
                     modifier: 1,
                 }}
                 pagination={{ clickable: true }}
-                scrollbar={{ draggable: true }}
+                scrollbar
                 modules={[Autoplay,EffectCoverflow, Pagination]}
                 className="w-full p-12 m-1"
             >
-                <SwiperSlide className="w-[377px] h-[420px] aspect-[3/4] rounded-xl border-2 border-white">
+                <SwiperSlide className="w-[377px] h-[420px] aspect-[3/4] rounded-xl">
                     <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={377} height={420} className="block w-full object-cover rounded-xl"/>
                 </SwiperSlide>
-                <SwiperSlide className="w-[377px] h-[420px] aspect-[3/4] rounded-xl border-2 border-white">
+                <SwiperSlide className="w-[377px] h-[420px] aspect-[3/4] rounded-xl">
                     <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={377} height={420} className="block w-full object-cover rounded-xl"/>
                 </SwiperSlide>
-                <SwiperSlide className="w-[377px] h-[420px] aspect-[3/4] rounded-xl border-2 border-white">
+                <SwiperSlide className="w-[377px] h-[420px] aspect-[3/4] rounded-xl">
                     <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={377} height={420} className="block w-full object-cover rounded-xl"/>
                 </SwiperSlide>
-                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl border-2 border-white">
+                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl">
                     <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={475} height={414} className="object-cover  rounded-xl block"/>
                 </SwiperSlide>
-                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl border-2 border-white">
+                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl">
                     <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={475} height={414} className="object-cover  rounded-xl block"/>
                 </SwiperSlide>
-                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl border-2 border-white">
+                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl">
                     <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={475} height={414} className="object-cover  rounded-xl block"/>
                 </SwiperSlide>
-                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl border-2 border-white">
+                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl">
                     <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={475} height={414} className="object-cover  rounded-xl block"/>
                 </SwiperSlide>
-                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl border-2 border-white">
+                <SwiperSlide className="w-[425px] h-[420px] aspect-[3/4] rounded-xl">
                     <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={475} height={414} className="object-cover  rounded-xl block"/>
                 </SwiperSlide>
             </Swiper>
