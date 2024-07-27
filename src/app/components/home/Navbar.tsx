@@ -7,7 +7,7 @@ import { useState } from "react";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <nav id="top" className="fixed w-[430px] sm:w-full md:w-full h-10 md:h-12 md:px-12 px-2 flex justify-between items-center bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] border-slate-300 shadow-lg z-40 ">
+    <nav id="top" className="fixed w-[427px] md:w-full h-10 md:h-12 md:px-12 px-2 flex justify-between items-center bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] border-slate-300 shadow-lg z-40 ">
         <div className="flex justify-center items-center mx-2 md:mx-0">
           <span className="text-[#EA2793] text-3xl mx-1 md:text-4xl font-bold">MUA</span>
         </div>
