@@ -15,8 +15,8 @@ import {  Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 
 export default function Gallery() {
     return (
-        <div id="gallery" className="flex flex-col justify-center items-center m-auto w-[1024px] h-[535px] gap-10 mt-16 mb-4">
-            <h1 className="font-bold text-3xl">Gallery</h1>
+        <div id="gallery" className="flex flex-col justify-center items-center m-auto  w-full max-w-[427px] md:max-w-[1024px] h-auto min-h-[292px] md:min-h-[535px] gap-8 md:gap-10 mt-12 md:mt-16 mb-1 md:mb-4 ">
+            <h1 className="font-bold text-2xl md:text-3xl">Gallery</h1>
             <Swiper
                 effect={'coverflow'}
                 grabCursor={true}
@@ -28,13 +28,13 @@ export default function Gallery() {
                 // speed={100}
                 // spaceBetween={50}
                 // preventClicks={true}
-                initialSlide={1}
+                initialSlide={2}
                 loop={true}
                 slidesPerView={3}
                 slidesPerGroupAuto
                 coverflowEffect={{
                     rotate: 0,
-                    stretch: 80,
+                    stretch: 0,
                     depth: 300,
                     modifier: 1,
                 }}
