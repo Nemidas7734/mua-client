@@ -12,7 +12,7 @@ function MuaSection() {
       </div>
       <div className="flex flex-col mt-10 md:mt-20 justify-center items-center">
         <div className='flex flex-col items-center max-w-[350px] md:max-w-[658px] h-44 md:h-[300px] text-wrap'>
-          <h1 className="font-semibold font-[Saira] text-2xl md:text-5xl leading-tight text-black z-20">&quot;<span className="text-pink-500 font-semibold font-[Saira] text-2xl md:text-5xl z-20">Beauty</span> At Your Fingertips : Your Ultimate <span className="text-pink-500 font-semibold font-[Saira] text-2xl md:text-5xl z-20">Make-Up Artist</span> Booking Place.&quot;</h1>
+          <h1 className="font-semibold font-[Saira] text-2xl md:text-5xl leading-tight text-black z-20"><span className='ml-6 md:ml-10'>&quot;<span className='text-pink-500 font-semibold font-[Saira] text-2xl md:text-5xl z-20'>Beauty </span>At Your Fingertips: </span><span className="">Your Ultimate <span className='text-pink-500 font-semibold font-[Saira] text-2xl md:text-5xl z-20'>Make-Up Artist </span></span><span className='ml-24 md:ml-[120px] font-semibold font-[Saira] text-2xl md:text-5xl z-20'>Booking Place.&quot;</span></h1>
           <Link href="/pages/artistlisting">
             <button className="bg-[#EA2793] w-24 md:w-28 h-6 md:h-7 rounded-full text-white font-semibold text-xs md:text-sm mt-7 md:mt-10 hover:shadow-md hover:shadow-[#F27BBD]">Check Out !</button>
           </Link>

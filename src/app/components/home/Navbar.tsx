@@ -7,11 +7,11 @@ import { useState } from "react";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <nav id="top" className="fixed w-[430px] md:w-full h-10 md:h-12 md:px-12 px-2 flex justify-between items-center bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] border-slate-300 shadow-lg z-40 ">
+    <nav id="top" className="md:fixed w-full h-10 md:h-12 md:px-12 px-2 flex justify-between items-center bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] border-slate-300 shadow-lg z-40 ">
       <div className="flex justify-center items-center mx-2 md:mx-0">
         <span className="text-[#EA2793] text-3xl mx-1 md:text-4xl font-bold">MUA</span>
       </div>
-      <ul className={`flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-[-1] absolute md:z-auto md:static md:w-auto md:flex md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-10 opacity-100' : 'top-[-400px] opacity-0'}`}>
+      <ul className={`flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-40 absolute md:z-auto md:static md:w-auto md:flex md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-[38px] opacity-100' : 'top-[-400px] opacity-0'}`}>        
         <li className="text-white font-semibold text-base"><a href="/">Home</a></li>
         <li className="text-white font-semibold text-base"><a href="/#gallery">Gallery</a></li>
         <li className="text-white font-semibold text-base"><a href="/#about">About</a></li>
@@ -24,7 +24,7 @@ export default function Navbar() {
       <Link href="/pages/login">
         <Image src="/gallery/woman.png" alt="" width={35} height={35} quality={100} className="object-cover max-sm:hidden" />
       </Link>
-      <span className="md:hidden block z-40" onClick={() => setOpen(!open)}>
+      <span className="md:hidden block z-40 mx-1" onClick={() => setOpen(!open)}>
         {open ? <Image
           src="/icons8-close.svg"
           alt="menu"

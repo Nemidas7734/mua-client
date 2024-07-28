@@ -2,7 +2,6 @@
 import MuaSection from "./components/home/MuaSection";
 import PopularCity from "./components/home/PopularCity";
 import Categories from "./components/home/Categories";
-import ProductBanner from "./components/home/ProductBanner";
 import Gallery from "./components/home/Gallery";
 import Founder from "./components/home/Founder";
 import Blogs from "./components/home/Blogs";
@@ -22,7 +21,6 @@ export default function Home() {
       <About/>
       <Categories />
       <Founder />
-      {/* <ProductBanner /> */}
       <Gallery />
       <Blogs />
       <Faq/>

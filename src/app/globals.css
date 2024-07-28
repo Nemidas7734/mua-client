@@ -6,25 +6,34 @@
     overflow: hidden !important;
 }
 
+.swiper-container {
+    padding-bottom: 30px !important;
+}
+
 .swiper-pagination {
-    z-index: 20 !important;
-    --swiper-pagination-bottom: 0px !important;
+    position: absolute;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .swiper-pagination-bullet {
-    width: 6px !important;
-    height: 6px !important;
+    width: 8px !important;
+    height: 8px !important;
     background-color: #000000 !important;
     border-radius: 50%;
     transition: all 0.3s ease-in-out;
+    opacity: 0.5;
 }
 
 .swiper-pagination-bullet-active {
-    width: 22px !important;
+    width: 24px !important;
     border-radius: 12px !important;
+    opacity: 1;
 }
 
-/* Responsive styles */
 @media (min-width: 640px) {
     .swiper-pagination-bullet {
         width: 10px !important;
@@ -32,7 +41,7 @@
     }
 
     .swiper-pagination-bullet-active {
-        width: 26px !important;
+        width: 28px !important;
     }
 }
 
