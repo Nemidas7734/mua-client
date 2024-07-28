@@ -4,14 +4,10 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { FormEvent } from 'react'
-// import { signIn } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
-// import { useSession } from 'next-auth/react';
-
 const Twitterx = () => {
     return (
         <svg
-            // onClick={()=> signIn('twitter')}
             className="absolute  "
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 32 32" width="26px" height="26px">
@@ -23,7 +19,6 @@ const Twitterx = () => {
 const Facebook = () => {
     return (
         <svg
-            // onClick={()=> signIn('facebook')}
             className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  '
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 48 48" width="34px" height="34px">
@@ -36,7 +31,6 @@ const Facebook = () => {
 const Google = () => {
     return (
         <svg
-            // onClick={()=> signIn('google')}
             className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 48 48" width="30px" height="30px">
@@ -50,18 +44,16 @@ const Google = () => {
 
 export default function Login() {
     return (
-        <section className="relative bg-[#EA2793] grid grid-cols-2 w-auto min-h-screen">
-            <div>
-
-            </div>
-            <div className='form-container w-auto min-h-screen p-4'>
-                <form className="flex flex-col items-center gap-2 h-full shadow-2xl border-2 bg-white border-slate-300 rounded-xl">
-                    <h1 className="text-center mt-16 mb-8 font-normal font-[Damion] text-black text-5xl">Get Started</h1>
+        <section className="relative md:bg-[#EA2793] md:grid md:grid-cols-2 w-full min-h-screen">
+            <div className='max-sm:hidden'></div>
+            <div className='form-container w-full min-h-screen p-4'>
+                <form className="flex flex-col items-center gap-4 md:gap-2 h-full md:shadow-2xl md:border-2 bg-white border-slate-300 rounded-xl">
+                    <h1 className="text-center mt-16 mb-8 font-normal font-[Damion] text-black text-3xl md:text-5xl">Get Started</h1>
                     <input
                         type="email"
                         name='email'
                         autoFocus
-                        className="border-2 border-[#EA279380] p-2 h-11 w-[440px] rounded-full placeholder:text-sm"
+                        className="border-2 border-[#EA279380] p-2 h-[39px] md:h-11 w-[311px] md:w-[440px] rounded-full placeholder:text-sm"
                         id="inputEmail"
                         placeholder=" Enter Your Email"
                         required
@@ -69,7 +61,7 @@ export default function Login() {
                     <input
                         type="password"
                         name='password'
-                        className="border-2 border-[#EA279380] p-2 h-11 w-[440px] rounded-full placeholder:text-sm"
+                        className="border-2 border-[#EA279380] p-2 h-[39px] md:h-11 w-[311px] md:w-[440px] rounded-full placeholder:text-sm"
                         id="inputPassword"
                         placeholder="Create Password"
                         required
@@ -77,34 +69,34 @@ export default function Login() {
                     <input
                         type="password"
                         name='password'
-                        className="border-2 border-[#EA279380] p-2 h-11 w-[440px] rounded-full placeholder:text-sm"
+                        className="border-2 border-[#EA279380] p-2 h-[39px] md:h-11 w-[311px] md:w-[440px] rounded-full placeholder:text-sm"
                         id="inputPassword"
                         placeholder="Confirm Password"
                         required
                     />
                     <div className='px-0'>
-                        <button type="submit" className="border rounded-full py-1 h-10 w-[440px] mt-4 font-bold bg-[#EA2793] text-white">
+                        <button type="submit" className="border rounded-full py-1 h-[39px] md:h-10 w-[311px] md:w-[440px] mt-2 md:mt-4 font-bold bg-[#EA2793] text-white">
                             Sign up
                         </button>
                     </div>
-                    <h1 className='text-xs mt-2 mb-1'>Forgot Password?</h1>
+                    <h1 className='text-xs mt-2 md:mb-1'>Forgot Password?</h1>
                     <h1 className='mt-0 text-pink-500'>or</h1>
-                    <h1 className='text-xs mt-2 mb-4'>Already have an account ? <Link className='underline underline-offset-4 decoration-black  text-pink-500' href="/pages/login">Login</Link></h1>
+                    <h1 className='text-xs md:mt-2 mb-4'>Already have an account ? <Link className='underline underline-offset-4 decoration-black  text-pink-500' href="/pages/login">Login</Link></h1>
                     <div className="flex flex-col items-center justify-center gap-2">
-                        <div className='relative flex justify-center items-center gap-1 h-11 w-[440px] border-2 border-[#EA279380] rounded-full'>
+                        <div className='relative flex justify-center items-center gap-1 h-[39px] md:h-10 w-[311px] md:w-[440px] border-2 border-[#EA279380] rounded-full'>
                             <div className='relative w-10 h-10'>
                                 <Google />
                             </div>
                             <h1 className='text-xs'>Signup with google</h1>
                         </div>
-                        <div className='relative flex justify-center items-center gap-1 h-11 w-[440px] border-2 border-[#EA279380] rounded-full'>
+                        <div className='relative flex justify-center items-center gap-1 h-[39px] md:h-10 w-[311px] md:w-[440px] border-2 border-[#EA279380] rounded-full'>
                             <div className='relative w-10 h-10'>
                                 <Facebook />
                             </div>
                             <h1 className='text-xs'>Signup with Facebook</h1>
                         </div>
                     </div>
-                    <h1 className='text-xs mt-10 mb-5'>Are you a makeup artist ? <Link className='underline underline-offset-4 decoration-pink-500 font-bold text-pink-500' href="/pages/register">Yes</Link></h1>
+                    <h1 className='text-xs mt-5 md:mt-10 mb-5'>Are you a makeup artist ? <Link className='underline underline-offset-4 decoration-pink-500 font-bold text-pink-500' href="/pages/register">Yes</Link></h1>
                 </form>
             </div>
         </section>
