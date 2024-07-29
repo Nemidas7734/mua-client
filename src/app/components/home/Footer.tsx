@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-        <section className="flex flex-col items-center justify-between mt-24 w-full bg-[#001B79] h-[634px] md:h-[500px]">
+        <section className="flex flex-col items-center justify-between mt-10 md:mt-24 w-full bg-[#001B79] h-[634px] md:h-[500px]">
             <div className="flex-col justify-center">
                 <div className="grid grid-cols-5 md:grid md:grid-cols-9 mt-5 md:mt-20 w-full md:w-[1120px]">
                     <div className="max-sm:hidden col-span-3 pl-4">

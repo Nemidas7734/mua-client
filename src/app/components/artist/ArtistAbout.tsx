@@ -13,50 +13,48 @@ import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 
 export default function ArtistAbout() {
     return (
-        <section className="grid grid-cols-2 gap-2 w-[1120px] h-[347px] rounded-xl border-2 shadow-2xl shadow-[#0000001F] mt-2">
-            <div className="flex flex-col gap-32 pl-12">
-                <p className="w-[375px] text-wrap pt-5">Hi !!!<br></br>Elevate Your Beauty Experience with Kritika. Hair Styling, Draping, Makeup, False Lashes + Inshort tichya baddal info</p>
+        <section className="max-sm:grid max-sm:grid-rows-2 md:grid md:grid-cols-2 md:gap-2 w-full md:w-[1120px] h-[420px] md:h-[348px] rounded-xl border-2 shadow-2xl shadow-[#0000001F] md:mt-2">
+            <div className="flex flex-col gap-10 md:gap-32 pl-6 md:pl-12">
+                <p className="w-[375px] text-wrap text-sm md:text-lg font-normal pt-5">Hi !!!<br></br>Elevate Your Beauty Experience with Kritika. Hair Styling, Draping, Makeup, False Lashes + Inshort tichya baddal info</p>
                 <div className="">
-                    <h1 className="w-[265px] font-semibold text-xl">Starting Price</h1>
-                    <h1 className="font-normal text-lg text-[#EA2793]">Rs. 20000 onwards</h1>
+                    <h1 className="w-[265px] font-semibold text-base md:text-xl">Starting Price</h1>
+                    <h1 className="font-semibold text-base md:text-xl text-[#EA2793]">Rs. 20000 onwards</h1>
                 </div>
             </div>
-            <div className="w-[420px] h-[254px] m-auto">
+            <div className="w-[293px] md:w-[420px] h-[176px] md:h-[254px] m-auto max-sm:mt-0">
                 <Swiper
                     effect={'coverflow'}
                     grabCursor={true}
                     centeredSlides={true}
-                    // autoplay={{
-                    //     delay: 2500,
-                    //     disableOnInteraction: false,
-                    // }}
-                    // speed={100}
-                    // spaceBetween={50}
+                    autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    }}
                     preventClicks={true}
                     initialSlide={3}
                     loop={true}
                     slidesPerView={2}
-                    // slidesPerGroupAuto
+                    slidesPerGroupAuto
                     coverflowEffect={{
                         rotate: 0,
                         stretch: 0,
                         depth: 100,
                         modifier: 1,
                     }}
-                    // pagination={{ clickable: true }}
-                    // scrollbar={{ draggable: true }}
                     modules={[Autoplay, EffectCoverflow]}
                     className="w-full "
                 >
-                    <SwiperSlide className="w-[190px] h-[254px] rounded-xl ">
-                        <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={190} height={254} className="block w-full object-cover rounded-xl" />
-                    </SwiperSlide>
-                    <SwiperSlide className="w-[190px] h-[254px] rounded-xl ">
-                        <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={190} height={254} className="block w-full object-cover rounded-xl" />
-                    </SwiperSlide>
-                    <SwiperSlide className="w-[190px] h-[254px] rounded-xl ">
-                        <Image src="/gallery/gallery2.jpg" alt="Slide_image" width={190} height={254} className="block w-full object-cover rounded-xl" />
-                    </SwiperSlide>
+                    {[...Array(8)].map((_, index) => (
+                        <SwiperSlide key={index} className="w-[132px] md:w-[190px] h-[176px] md:h-[254px] rounded-xl">
+                            <Image 
+                                src="/gallery/gallery2.jpg" 
+                                alt={`Slide_image_${index + 1}`} 
+                                width={200} 
+                                height={260} 
+                                className="w-full h-full object-cover rounded-xl"
+                            />
+                        </SwiperSlide>
+                    ))}
                 </Swiper>
             </div>
         </section>
