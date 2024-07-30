@@ -5,14 +5,14 @@ import Image from "next/image";
 
 export default function Footer() {
     return (
-        <section className="flex flex-col items-center justify-between mt-10 md:mt-24 w-full bg-[#001B79] h-[634px] md:h-[500px]">
-            <div className="flex-col justify-center">
-                <div className="grid grid-cols-5 md:grid md:grid-cols-9 mt-5 md:mt-20 w-full md:w-[1120px]">
+        <section className="flex flex-col items-center justify-between mt-10 md:mt-24 w-auto bg-[#001B79] max-h-[634px] md:h-[500px]">
+            <div className="flex-col justify-center w-full max-sm:max-w-[360px]">
+                <div className="max-sm:flex max-sm:justify-between md:m-auto md:grid md:grid-cols-9 mt-5 md:mt-20 w-full max-w-[360px] md:max-w-[1120px]">
                     <div className="max-sm:hidden col-span-3 pl-4">
                         <h1 className="text-2xl text-white font-[saira] mb-4">www.bookyourmua.com</h1>
                         <p className="w-80 text-wrap text-white text-2xl font-[saira]">&quot;Beauty At Your Fingertips: Your Ultimate Make-Up Artist Booking Place.&quot;</p>
                     </div>
-                    <div className="col-span-2 md:col-span-2 pl-8 pt-2 md:pt-0">
+                    <div className="col-span-2 md:col-span-2 pl-4 md:pl-8 pt-2 md:pt-0">
                         <ol className="text-white">
                             <li><a href="/">Home</a></li>
                             <li><a href="/#blogs">Blogs</a></li>
@@ -22,9 +22,9 @@ export default function Footer() {
                             <li><Link href="/pages/policy">Cancellation Policy</Link></li>
                         </ol>
                     </div>
-                    <hr className="col-span-1 md:hidden h-[223px] mx-10 w-px md:w-0 bg-white border-0 dark:bg-gray-700"></hr>
+                    {/* <hr className="col-span-1 md:hidden h-[223px] mx-10 w-px md:w-0 bg-white border-0 dark:bg-gray-700"></hr> */}
                     <div className="col-span-2 md:col-span-2 flex flex-col pt-2 md:pt-0">
-                        <p className="font-normal w-[170px] md:w-[187px] sm:pr-3 md:pr-0 text-sm text-wrap text-white">Are you a makeup artist ? Join the MUA community and spread your business all across your city.</p>
+                        <p className="font-normal w-[170px] md:w-[187px] pr-3 md:pr-0 text-sm text-wrap text-white">Are you a makeup artist ? Join the MUA community and spread your business all across your city.</p>
                         <Link href="/pages/register">
                             <h1 className="font-bold text-sm text-white mt-10">Registser Yourself !</h1>
                         </Link>
@@ -66,14 +66,14 @@ export default function Footer() {
                             </div>
                         </div>
                     </div>
-                    <hr className="max-sm:hidden h-px my-10 mx-5 w-[384px] md:w-[1100px] bg-white border-0 dark:bg-gray-700"></hr>
+                    <hr className="max-sm:hidden h-px my-10  w-[384px] md:w-[1100px] bg-white border-0 dark:bg-gray-700"></hr>
                 </div>
-                <div className="md:hidden flex flex-col justify-center items-center">
+                {/* <div className="max-sm:hidden flex flex-col justify-center items-center">
                         <h1 className="text-2xl text-white font-[saira] mt-4 mb-2">www.bookyourmua.com</h1>
                         <p className="w-72 text-wrap text-white text-2xl font-[saira] ml-4">&quot;Beauty At Your Fingertips: <span className="ml-5">Your Ultimate Make-Up</span> <span className="ml-6">Artist Booking Place.&quot;</span></p>
-                    </div>
-                <hr className="md:hidden h-px my-7 mx-5 w-[384px] bg-white border-0 dark:bg-gray-700"></hr>
-                <div className="flex flex-col justify-center items-center md:flex md:flex-row md:justify-evenly mt-4 md:mt-8">
+                    </div> */}
+                <hr className="md:hidden h-px my-6 mx-1 max-w-[400px] bg-white border-0 dark:bg-gray-700"></hr>
+                <div className="flex flex-col justify-center items-center md:flex md:flex-row md:items-center md:justify-evenly mb-4 md:mt-0">
                     <strong className="text-6xl md:text-7xl text-[#EA2793]">MUA</strong>
                     <div className="flex flex-col justify-center items-center md:mt-5 text-white text-base font-bold">
                         <h1>Contact Us:</h1>

@@ -1,7 +1,7 @@
 
 export default function Faq(){
     return(
-        <div className="flex flex-col m-auto mt-10 md:mt-16 gap-4 md:gap-6 w-[378px] md:w-[1120px] h-[1292px] md:h-[900px] text-wrap">
+        <div className="flex flex-col m-auto mt-10 md:mt-16 gap-4 md:gap-6 max-w-[378px] md:max-w-[1120px] min-h-[1292px] md:min-h-[900px] px-2 text-wrap">
             <div className="flex flex-col gap-3 md:gap-5">
                 <h1 className="font-bold text-xl md:text-2xl">Makeup artists near you ?</h1>
                 <p className="font-normal text-base text-[#706C6C] md:text-lg">Looking for a skilled beautician to handle your wedding day makeup? Look no further than a professional makeup artist and studio! MUA helps you discover local makeup artists who specialize in making you look stunning for your special day. You can explore their rates, services, customer reviews, and more. Booking a makeup artist is an excellent choice for preparing for any important occasion. They can also suggest new makeup brands and products worth trying, leveraging their expertise in selecting the perfect makeup for your skin tone and hair color</p>
