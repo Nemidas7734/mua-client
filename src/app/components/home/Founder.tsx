@@ -20,7 +20,7 @@ export default function Founder() {
                     </div>
                     <div className="flex-1">
                         <p className="text-white text-sm md:text-base mb-4">
-                            The app is designed to be extremely user-friendly. Any user searching for makeup services will have their inquiries directly visible in the makeup artist's lead box. We encourage all makeup artists to register and create their profiles on the MUA app to take advantage of these benefits and grow their business.<br /><br />
+                            The app is designed to be extremely user-friendly. Any user searching for makeup services will have their inquiries directly visible in the makeup &apos; lead box. We encourage all makeup artists to register and create their profiles on the MUA app to take advantage of these benefits and grow their business.<br /><br />
                             Join MUA today and showcase your talent to a wider audience!
                         </p>
                         <div className="hidden md:block">
