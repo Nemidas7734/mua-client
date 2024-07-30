@@ -1,57 +1,48 @@
 "use client"
-
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ArtistCard from '@/app/components/artist/ArtistCard';
 
 export default function ArtistListing() {
-  const [artists, setArtists] = useState([]);
+  const [artists, setArtists] = useState([{id: 1, name: 'Kritika', city: 'Pune', experience: '3+ years', price: 7000}]);
   const [city, setCity] = useState('');
+  const [filteredArtists, setFilteredArtists] = useState([{id: 1, name: 'Kritika', city: 'Pune', experience: '3+ years', price: 7000}]);
 
-  //   useEffect(() => {
-  //     fetchArtists();
-  //   }, [city]);
+  useEffect(() => {
+    // Fetch artists data and set it to the artists state
+    // For now, let's use dummy data
+    const dummyArtists = [
+      { id: 1, name: 'Kritika', city: 'Pune', experience: '3+ years', price: 7000 },
+      { id: 2, name: 'Priya', city: 'Mumbai', experience: '5+ years', price: 8000 },
+      // Add more dummy data as needed
+    ];
+    setArtists(dummyArtists);
+    setFilteredArtists(dummyArtists);
+  }, []);
 
-  //   const fetchArtists = async () => {
-  //     const res = await fetch(`/api/artists${city ? `?city=${city}` : ''}`);
-  //     const data = await res.json();
-  //     setArtists(data);
-  //   };
+  useEffect(() => {
+    const filtered = artists.filter(artists => 
+      artists.city.toLowerCase().includes(city.toLowerCase())
+    );
+    setFilteredArtists(filtered);
+  }, [city, artists]);
 
   return (
-    <div className='flex flex-col gap-14'>
-      <div className='flex justify-end pr-8'>
-        <input
-          type="text"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-          placeholder="Search by city"
-          className='mt-20 placeholder:text-black w-36 h-7 p-2  bg-[#FFBCE1] rounded-xl'
-        />
-      </div>
-      <h1 className='text-4xl font-bold m-auto'>Makeup Artists in <span className='text-[#EA2793]'>Pune</span></h1>
-      <div className="grid grid-flow-row grid-cols-3  m-auto gap-12 justify-center">
-        {/* {artists.map(artist => ( */}
-        <ArtistCard />
-        <ArtistCard />
-        <ArtistCard />
-        <ArtistCard />
-        <ArtistCard />
-        <ArtistCard />
-        {/* ))} */}
-      </div>
-      <div>
-        <Image src="/MUA_Banner.png" alt="" width={1440} height={300} className='w-full h-64' />
-      </div>
-      <div className="grid grid-flow-row grid-cols-3  m-auto gap-8 gap-y-12 justify-center">
-        {/* {artists.map(artist => ( */}
-        <ArtistCard />
-        <ArtistCard />
-        <ArtistCard />
-        <ArtistCard />
-        <ArtistCard />
-        <ArtistCard />
-        {/* ))} */}
+    <div className="container mx-auto px-4">
+      <input
+        type="text"
+        value={city}
+        onChange={(e) => setCity(e.target.value)}
+        placeholder="Search by city"
+        className='mt-20 placeholder:text-black w-full sm:w-36 h-10 p-2 bg-[#FFBCE1] rounded-xl'
+      />
+      
+      <h1 className="text-2xl font-bold my-4">Makeup Artists in {city || 'All Cities'}</h1>
+      
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        {filteredArtists.map(artist => (
+          <ArtistCard key={artist.id} artist={artist} />
+        ))}
       </div>
     </div>
   );

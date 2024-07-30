@@ -6,7 +6,7 @@ export default function Profile() {
         <section className="flex flex-col items-center gap-2 mt-16">
             <EditInfo />
             <EditGallery />
-            <button className="bg-[#EA2793] w-[160px] py-2 text-white font-semibold rounded-full mt-12">Save Changes</button>
+            <button className="bg-[#EA2793] w-[120px] md:w-[160px] py-2 text-white text-sm md:text-base font-semibold rounded-full mt-12">Save Changes</button>
         </section>
     )
 }
