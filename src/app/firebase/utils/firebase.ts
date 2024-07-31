@@ -1,31 +1,36 @@
 "use server"
 import { addDoc, collection } from "firebase/firestore"
 import { db } from "../firebase_config"
-import { redirect } from "next/navigation";
+import { artistSchema, ArtistFormData, FormState } from '@/app/lib/validationSchema'
+import { z } from 'zod';
 
-export const registerForm = async (prevState: any,formData:FormData) => {
-        const collectionRef = collection(db,'Artists');
 
-        const docRef = await addDoc(collectionRef,{
-            Name : formData.get('name'),
-            LastName : formData.get('lastName'),
-            DOB : formData.get('dob'),
-            Address : formData.get('address'),
-            City : formData.get('city'),
-            Region : formData.get('region'),
-            State : formData.get('state'),
-            MobNo : formData.get('mobNo'),
-            Email : formData.get('email'),
-            ShopActLicence: formData.get('shopActLicence'),
-            WorkExp : formData.get('workExp'),
-            Gender : formData.get('gender'),
-            AdharNo : formData.get('adharNo'),
-            PANCard :formData.get('pancard')
-            
-
-            // redirect('/pages/profile')
-        })
-        return {
-            message: 'success',
+export const registerForm = async (prevState: FormState, formData: FormData): Promise<FormState> => {
+    try {
+      const data: Partial<ArtistFormData> = {};
+      formData.forEach((value, key) => {
+        if (typeof value === 'string') {
+          data[key as keyof ArtistFormData] = value;
         }
-}
+      });
+  
+      const validatedData = artistSchema.parse(data);
+  
+      const collectionRef = collection(db, 'Artists');
+      const docRef = await addDoc(collectionRef, validatedData);
+  
+      return {
+        message: 'success',
+      };
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        return {
+          message: 'validation_error',
+          errors: error.errors,
+        };
+      }
+      return {
+        message: 'error',
+      };
+    }
+  }
