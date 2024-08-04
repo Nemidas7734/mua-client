@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { ZodIssue } from 'zod';
 
 const step1Schema = z.object({
   name: z.string().min(1, "First Name is required"),
@@ -23,13 +24,19 @@ const step3Schema = z.object({
     pancard: z.string().optional(),
   });
 
-export const artistSchema = step1Schema.merge(step2Schema).merge(step3Schema);
+const role = z.object({role: z.string().default('artist')})
+
+export const artistSchema = step1Schema.merge(step2Schema).merge(step3Schema).merge(role);
 
 export type ArtistFormData = z.infer<typeof artistSchema>;
 
+
+
 export type FormState = {
-  message: string;
-  errors?: z.ZodIssue[];
+  message: 'success' | 'validation_error' | 'error'| '';
+  errors?: ZodIssue[];
 };
+
+
 
 export { step1Schema, step2Schema, step3Schema };

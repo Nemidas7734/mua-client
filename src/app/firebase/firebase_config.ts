@@ -1,20 +1,20 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+// firebase_config.ts
+import { initializeApp, getApps, getApp } from 'firebase/app';
 import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.Auth_Domain,
-  projectId: process.env.Project_ID,
-  storageBucket: process.env.Storage_Bucket,
-  messagingSenderId: process.env.Messaging_ID,
-  appId: process.env.APP_ID
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_Auth_Domain,
+  projectId: process.env.NEXT_PUBLIC_Project_ID,
+  storageBucket: process.env.NEXT_PUBLIC_Storage_Bucket,
+  messagingSenderId: process.env.NEXT_PUBLIC_Messaging_ID,
+  appId: process.env.NEXT_PUBLIC_App_ID,
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-export { db };
+export { db, auth };

@@ -25,9 +25,9 @@ const initialFormData: Partial<ArtistFormData> = {
     workExp: '',
     adharNo: '',
     pancard: '',
-  };
-  
-  
+};
+
+
 
 export default function Register() {
     const [state, formAction] = useFormState(registerForm, initialState);
@@ -42,7 +42,9 @@ export default function Register() {
 
     useEffect(() => {
         if (state.message === "success") {
-            setIsLoading(false);
+            setTimeout(() => {
+                setIsLoading(false);
+            }, 1000);
             formRef.current?.reset();
             setTimeout(() => {
                 router.push('/pages/success');
@@ -51,21 +53,28 @@ export default function Register() {
             setIsLoading(false);
             const newErrors: { [key: string]: string } = {};
             state.errors.forEach((error) => {
-                if (typeof error.path[0] === 'string') {
+                if (error.path.length > 0 && typeof error.path[0] === 'string') {
                     newErrors[error.path[0]] = error.message;
                 }
             });
             setErrors(newErrors);
+            console.log("validation error", newErrors);
+        } else if (state.message === "error") {
+            setIsLoading(false);
+            const errorMessage = state.errors?.[0]?.message || 'An unexpected error occurred';
+            setErrors({ general: errorMessage });
+            console.log("error", errorMessage);
         }
-    }, [state, router]);
+    }, [state]);
+
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
         if (errors[name]) {
-          setErrors(prev => ({ ...prev, [name]: '' }));
+            setErrors(prev => ({ ...prev, [name]: '' }));
         }
-      };
+    };
 
 
     const validateStep = async () => {
@@ -107,17 +116,17 @@ export default function Register() {
         e.preventDefault();
         const isValid = await validateStep();
         if (isValid) {
-          setIsLoading(true);
-          const form = new FormData();
-          Object.entries(formData).forEach(([key, value]) => {
-            if (value !== undefined && value !== null) {
-              form.append(key, value.toString());
-            }
-          });
-          formAction(form);
+            setIsLoading(true);
+            const form = new FormData();
+            Object.entries(formData).forEach(([key, value]) => {
+                if (value !== undefined && value !== null) {
+                    form.append(key, value.toString());
+                }
+            });
+            formAction(form);
         }
-      };
-      
+    };
+
 
     const renderStep = () => {
         switch (step) {

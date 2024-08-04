@@ -1,20 +1,20 @@
 "use client"
-import React from 'react';
-import Image from 'next/image';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FormEvent } from 'react'
-import { redirect, useRouter } from 'next/navigation';
-const Twitterx = () => {
-    return (
-        <svg
-            className="absolute  "
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 32 32" width="26px" height="26px">
-            <path d="M 4.0175781 4 L 13.091797 17.609375 L 4.3359375 28 L 6.9511719 28 L 14.246094 19.34375 L 20.017578 28 L 20.552734 28 L 28.015625 28 L 18.712891 14.042969 L 27.175781 4 L 24.560547 4 L 17.558594 12.310547 L 12.017578 4 L 4.0175781 4 z M 7.7558594 6 L 10.947266 6 L 24.279297 26 L 21.087891 26 L 7.7558594 6 z" />
-        </svg>
-    );
-};
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/app/lib/store/authStore';
+import { z } from 'zod';
+
+const signupSchema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+    confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ["confirmPassword"],
+});
+
+
 
 const Facebook = () => {
     return (
@@ -42,13 +42,46 @@ const Google = () => {
     )
 }
 
-export default function Login() {
+export default function Signup() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+    const { register, isLoading, error: storeError, user } = useAuthStore();
+    const router = useRouter();
+
+    useEffect(() => {
+        if (user) {
+            router.push('/');
+        }
+    }, [user, router]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+        try {
+            signupSchema.parse({ email, password, confirmPassword });
+            await register(email, password);
+        } catch (error) {
+            if (error instanceof z.ZodError) {
+                setError(error.errors[0].message);
+            } else if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
+        }
+    };
+
+
     return (
         <section className="relative md:bg-[#EA2793] md:grid md:grid-cols-2 w-full min-h-screen">
             <div className='max-sm:hidden'></div>
             <div className='form-container w-full min-h-screen p-4'>
-                <form className="flex flex-col items-center gap-4 md:gap-2 h-full md:shadow-2xl md:border-2 bg-white border-slate-300 rounded-xl">
+                <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 md:gap-2 h-full md:shadow-2xl md:border-2 bg-white border-slate-300 rounded-xl">
                     <h1 className="text-center mt-16 mb-8 font-normal font-[Damion] text-black text-3xl md:text-5xl">Get Started</h1>
+                    {error && <p className="text-red-500">{error}</p>}
+                    {storeError && <p className="text-red-500">{storeError}</p>}
                     <input
                         type="email"
                         name='email'
@@ -57,6 +90,8 @@ export default function Login() {
                         id="inputEmail"
                         placeholder=" Enter Your Email"
                         required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                         type="password"
@@ -65,18 +100,22 @@ export default function Login() {
                         id="inputPassword"
                         placeholder="Create Password"
                         required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <input
                         type="password"
-                        name='password'
+                        name='confirmPassword'
                         className="border-2 border-[#EA279380] p-2 h-[39px] md:h-11 w-[311px] md:w-[440px] rounded-full placeholder:text-sm"
-                        id="inputPassword"
+                        id="inputConfirmPassword"
                         placeholder="Confirm Password"
                         required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                     />
                     <div className='px-0'>
-                        <button type="submit" className="border rounded-full py-1 h-[39px] md:h-10 w-[311px] md:w-[440px] mt-2 md:mt-4 font-bold bg-[#EA2793] text-white">
-                            Sign up
+                        <button type="submit" disabled={isLoading} className="border rounded-full py-1 h-[39px] md:h-10 w-[311px] md:w-[440px] mt-2 md:mt-4 font-bold bg-[#EA2793] text-white">
+                            {isLoading ? 'Signing up...' : 'Sign up'}
                         </button>
                     </div>
                     <h1 className='text-xs mt-2 md:mb-1'>Forgot Password?</h1>

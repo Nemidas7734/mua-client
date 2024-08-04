@@ -1,22 +1,18 @@
 "use client"
-import React from 'react';
-import Image from 'next/image';
-import { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FormEvent } from 'react'
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/app/lib/store/authStore';
+import { loginUser } from '@/app/firebase/utils/auth';
+import { z } from 'zod';
 
 
-const Twitterx = () => {
-    return (
-        <svg
-            className="absolute  "
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 32 32" width="26px" height="26px">
-            <path d="M 4.0175781 4 L 13.091797 17.609375 L 4.3359375 28 L 6.9511719 28 L 14.246094 19.34375 L 20.017578 28 L 20.552734 28 L 28.015625 28 L 18.712891 14.042969 L 27.175781 4 L 24.560547 4 L 17.558594 12.310547 L 12.017578 4 L 4.0175781 4 z M 7.7558594 6 L 10.947266 6 L 24.279297 26 L 21.087891 26 L 7.7558594 6 z" />
-        </svg>
-    );
-};
+
+const loginSchema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(6, 'Password must be at least 6 characters'),
+});
+
 
 const Facebook = () => {
     return (
@@ -45,19 +41,54 @@ const Google = () => {
 }
 
 export default function Login() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const { login, isLoading, error: storeError, user, setUser } = useAuthStore();
+    const router = useRouter();
+
+    useEffect(() => {
+        console.log('Current user:', user);
+        if (user) {
+            router.push('/');
+        }
+    }, [user, router]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError('');
+        try {
+            loginSchema.parse({ email, password });
+            await login(email, password);
+            router.push('/')
+        } catch (error) {
+            if (error instanceof z.ZodError) {
+                setError(error.errors[0].message);
+            } else if (error instanceof Error) {
+                setError(error.message);
+            } else {
+                setError('An unexpected error occurred');
+            }
+        }
+    };
+
     return (
         <section className="relative bg-white md:bg-[#EA2793] md:grid md:grid-cols-2 w-full min-h-screen">
             <div className='form-container w-full min-h-screen p-4'>
-                <form className="flex flex-col items-center gap-4 md:gap-2 h-full md:shadow-2xl md:border-2 bg-white border-slate-300 rounded-xl">
+                <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 md:gap-2 h-full md:shadow-2xl md:border-2 bg-white border-slate-300 rounded-xl">
                     <h1 className="text-center mt-16 mb-8 font-normal font-[Damion] text-black text-3xl md:text-5xl">Welcome Back</h1>
+                    {error && <p className="text-red-500">{error}</p>}
+                    {storeError && <p className="text-red-500">{storeError}</p>}               
                     <input
                         type="email"
                         name='email'
                         autoFocus
                         className="border-2 border-[#EA279380] p-2 h-[39px] md:h-11 w-[311px] md:w-[440px] rounded-full placeholder:text-sm"
-                        id="inputEmail" 
+                        id="inputEmail"
                         placeholder=" Enter Your Email"
                         required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                     <input
                         type="password"
@@ -66,10 +97,12 @@ export default function Login() {
                         id="inputPassword"
                         placeholder=" Enter Your Password"
                         required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                     <div className='px-0'>
-                        <button type="submit" className="border rounded-full py-1 h-[39px] md:h-10 w-[311px] md:w-[440px] mt-2 md:mt-4 font-bold bg-[#EA2793] text-white">
-                            Login
+                        <button type="submit" disabled={isLoading} className="border rounded-full py-1 h-[39px] md:h-10 w-[311px] md:w-[440px] mt-2 md:mt-4 font-bold bg-[#EA2793] text-white">
+                            {isLoading ? 'Logging in...' : 'Login'}
                         </button>
                     </div>
                     <h1 className='text-xs mt-2 md:mb-1'>Forgot Password?</h1>
@@ -92,9 +125,6 @@ export default function Login() {
                     </div>
                     <h1 className='text-xs mt-5 md:mt-14 mb-10'>Are you a makeup artist ? <Link className='underline underline-offset-4 decoration-pink-500 font-bold text-pink-500' href="/pages/register">Yes</Link></h1>
                 </form>
-            </div>
-            <div>
-
             </div>
         </section>
     )
