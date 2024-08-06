@@ -1,25 +1,51 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 
-export default function EditGallery() {
-    const [images, setImages] = useState(Array(12).fill(null))
+interface EditGalleryProps {
+    onGalleryImagesChange: (files: File[],urls: string[]) => void
+    existingGalleryUrls: string[]
+}
 
-    const handleImageUpload = (index :any) => (e :any) => {
+export default function EditGallery({ onGalleryImagesChange, existingGalleryUrls }: EditGalleryProps) {
+    const [images, setImages] = useState<(string | null)[]>(
+        [...existingGalleryUrls, ...Array(12 - existingGalleryUrls.length).fill(null)]
+    )
+    const [files, setFiles] = useState<(File | null)[]>(Array(12).fill(null))
+    useEffect(() => {
+        setImages([...existingGalleryUrls, ...Array(12 - existingGalleryUrls.length).fill(null)])
+    }, [existingGalleryUrls])
+
+    const handleImageUpload = (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
+            const file = e.target.files[0]
             const newImages = [...images]
-            newImages[index] = URL.createObjectURL(e.target.files[0])
+            const newFiles = [...files]
+            newImages[index] = URL.createObjectURL(file)
+            newFiles[index] = file
             setImages(newImages)
+            setFiles(newFiles)
+            
+            const updatedFiles = newFiles.filter((file): file is File => file !== null)
+            const updatedUrls = newImages.filter((url): url is string => url !== null && !url.startsWith('blob:'))
+            onGalleryImagesChange(updatedFiles, updatedUrls)
         }
     }
-
-    const handleImageDelete = (index:any) => () => {
+    
+    const handleImageDelete = (index: number) => () => {
         const newImages = [...images]
+        const newFiles = [...files]
         newImages[index] = null
+        newFiles[index] = null
         setImages(newImages)
+        setFiles(newFiles)
+        
+        const updatedFiles = newFiles.filter((file): file is File => file !== null)
+        const updatedUrls = newImages.filter((url): url is string => url !== null && !url.startsWith('blob:'))
+        onGalleryImagesChange(updatedFiles, updatedUrls)
     }
-
+    
     return (
         <div className="flex flex-col gap-6 items-center w-full max-w-[1120px] mx-auto rounded-xl border-2 shadow-2xl shadow-[#0000001F] p-4 sm:p-6 md:p-8">
             <h1 className="font-semibold text-xl sm:text-2xl">Gallery</h1>
@@ -28,7 +54,19 @@ export default function EditGallery() {
                     <div key={index} className="relative w-full max-w-[190px] h-[190px] md:h-[254px] aspect-[3/4] bg-[#DADADA] rounded-xl border border-black overflow-hidden">
                         {image ? (
                             <>
-                                <Image src={image} alt={`Gallery image ${index + 1}`} layout="responsive" width={190} height={254} objectFit="cover" />
+                                <Image 
+                                    src={image} 
+                                    alt={`Gallery image ${index + 1}`} 
+                                    layout="fill" 
+                                    objectFit="cover"
+                                    onError={() => {
+                                        console.error(`Failed to load image: ${image}`);
+                                        // Optionally, set a placeholder or remove the image
+                                        // const newImages = [...images];
+                                        // newImages[index] = null;
+                                        // setImages(newImages);
+                                    }}
+                                />
                                 <button
                                     onClick={handleImageDelete(index)}
                                     className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full"

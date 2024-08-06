@@ -5,14 +5,15 @@ import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/app/lib/store/authStore'
 import EditInfo from "@/app/components/profile/EditInfo"
 import EditGallery from "@/app/components/profile/EditGallery"
-import { doc, updateDoc, getDoc } from "firebase/firestore"
+import { doc, setDoc, getDoc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "@/app/firebase/firebase_config"
 import { StaticImport } from "next/dist/shared/lib/get-img-props"
 
 
 
-export default function EditArtistProfile() {
+
+export default function CreateArtistProfile() {
 
     const router = useRouter()
     const { user, role } = useAuthStore()
@@ -31,47 +32,22 @@ export default function EditArtistProfile() {
     const [coverImagePreview, setCoverImagePreview] = useState<string | StaticImport>('')
     const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null)
     const [existingGalleryUrls, setExistingGalleryUrls] = useState<string[]>([])
-    const [currentGalleryUrls, setCurrentGalleryUrls] = useState<string[]>([])
-
 
     useEffect(() => {
         if (!user || role !== 'artist') {
             router.push('/')
         } else {
-            fetchExistingProfile()
+            checkExistingProfile()
         }
     }, [user, role, router])
 
-    const fetchExistingProfile = async () => {
+    const checkExistingProfile = async () => {
         if (user) {
             const artistRef = doc(db, 'Artists', user.uid)
             const artistDoc = await getDoc(artistRef)
             if (artistDoc.exists()) {
-                const data = artistDoc.data()
-                setProfileData({
-                    name: data.name || '',
-                    location: data.location || '',
-                    whatsappNumber: data.whatsappNumber || '',
-                    contactNumber: data.contactNumber || '',
-                    description: data.description || '',
-                    expertise: data.expertise || '',
-                    startingPrice: data.startingPrice || '',
-                })
-    
-                // Set existing image URLs
-                if (data.coverImageUrl) {
-                    setCoverImagePreview(data.coverImageUrl)
-                }
-                if (data.profileImageUrl) {
-                    setProfileImagePreview(data.profileImageUrl)
-                }
-                if (data.galleryUrls && Array.isArray(data.galleryUrls)) {
-                    setExistingGalleryUrls(data.galleryUrls)
-                    setCurrentGalleryUrls(data.galleryUrls)
-                }
-            } else {
-                alert('No profile found. Redirecting to create profile page.')
-                router.push('/pages/createartistprofile')
+                alert('You already have a profile. Redirecting to edit page.')
+                router.push('/pages/editprofile')
             }
         }
     }
@@ -90,10 +66,8 @@ export default function EditArtistProfile() {
         setProfileImage(file)
     }
 
-
-    const handleGalleryImagesChange = (files: File[], urls: string[]) => {
+    const handleGalleryImagesChange = (files: File[]) => {
         setGalleryImages(files)
-        setCurrentGalleryUrls(urls)
     }
 
     const uploadImage = async (file: File, path: string) => {
@@ -102,67 +76,71 @@ export default function EditArtistProfile() {
         return getDownloadURL(storageRef)
     }
 
-
-
-
-    const handleSaveChanges = async () => {
+    const handleCreateProfile = async () => {
         if (!user) return
-    
+
         try {
             const artistRef = doc(db, 'Artists', user.uid)
+            const artistDoc = await getDoc(artistRef)
+            
+            if (artistDoc.exists()) {
+                alert('You already have a profile. Redirecting to edit page.')
+                router.push('/pages/editprofile')
+                return
+            }
+
             const updateData: any = { ...profileData }
-    
+
             if (coverImage) {
                 updateData.coverImageUrl = await uploadImage(coverImage, `artists/${user.uid}/cover.jpg`)
             }
-    
+
             if (profileImage) {
                 updateData.profileImageUrl = await uploadImage(profileImage, `artists/${user.uid}/profile.jpg`)
             }
-    
-            // Handle gallery images
-            const newGalleryUrls = await Promise.all(
-                galleryImages.map((file, index) =>
-                    uploadImage(file, `artists/${user.uid}/gallery/${index}-${Date.now()}.jpg`)
+
+            if (galleryImages.length > 0) {
+                const galleryUrls = await Promise.all(
+                    galleryImages.map((file, index) =>
+                        uploadImage(file, `artists/${user.uid}/gallery/${index}.jpg`)
+                    )
                 )
-            )
-            
-            // Combine new gallery URLs with existing ones that weren't deleted
-            updateData.galleryUrls = [...newGalleryUrls, ...currentGalleryUrls.filter(url => !url.startsWith('blob:'))]
-    
-            await updateDoc(artistRef, updateData)
-            alert('Profile updated successfully!')
-            router.push("/pages/artistprofile")
+                updateData.galleryUrls = galleryUrls
+            }
+
+            await setDoc(artistRef, updateData)
+            alert('Profile created successfully!')
+            router.push('/pages/artistprofile')
         } catch (error) {
-            console.error('Error updating profile:', error);
+            console.error('Error creating profile:', error);
             if (error instanceof Error) {
                 alert(`An error occurred: ${error.message}`);
             } else {
-                alert('An unknown error occurred while updating the profile.');
+                alert('An unknown error occurred while creating the profile.');
             }
         }
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 flex flex-col items-center mt-4">
-            <h1 className="text-2xl md:text-3xl font-bold mb-8">Edit Profile</h1>
+        <div className="container mx-auto px-4 py-8 flex flex-col items-center mt-8">
+            <h1 className="text-2xl md:text-3xl font-bold mb-8">Create Profile</h1>
             <EditInfo
                 profileData={profileData}
                 onInputChange={handleInputChange}
                 onCoverImageChange={handleCoverImageChange}
-                onProfileImageChange={handleProfileImageChange}
                 coverImagePreview={coverImagePreview}
                 profileImagePreview={profileImagePreview}
+                onProfileImageChange={handleProfileImageChange}
             />
             <EditGallery
                 onGalleryImagesChange={handleGalleryImagesChange}
                 existingGalleryUrls={existingGalleryUrls}
             />
             <button
-                onClick={handleSaveChanges}
+                onClick={handleCreateProfile}
                 className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-                Save Changes
+                Create Profile
             </button>
         </div>
     )

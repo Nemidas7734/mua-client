@@ -2,6 +2,7 @@
 "use server"
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { db } from "../firebase_config";
+import { doc, setDoc } from "firebase/firestore";
 import { artistSchema, ArtistFormData, FormState } from '@/app/lib/validationSchema';
 import { z } from 'zod';
 import { initializeApp, getApps, getApp } from 'firebase/app';
@@ -55,3 +56,23 @@ export const registerForm = async (prevState: FormState, formData: FormData): Pr
     };
   }
 }
+
+export const createUserDocument = async (userId: string, userData: any) => {
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  const firestore = getFirestore(app);
+  const userRef = doc(firestore, "users", userId);
+  await setDoc(userRef, {
+      ...userData,
+      createdAt: new Date(),
+  });
+};
+
+export const createArtistDocument = async (userId: string, artistData: any) => {
+  const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+  const firestore = getFirestore(app);
+  const artistRef = doc(firestore, "Artists", userId);
+  await setDoc(artistRef, {
+      ...artistData,
+      createdAt: new Date(),
+  });
+};

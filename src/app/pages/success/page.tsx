@@ -6,7 +6,7 @@ const SuccessPage = () => {
 
     const handleCreateProfile = () => {
         // Navigate to profile page
-        router.push('/pages/editprofile');
+        router.push('/pages/createprofile');
     };
 
     return (

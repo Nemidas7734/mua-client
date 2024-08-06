@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/app/lib/store/authStore';
-import { loginUser } from '@/app/firebase/utils/auth';
 import { z } from 'zod';
 
 
@@ -48,7 +47,7 @@ export default function Login() {
     const router = useRouter();
 
     useEffect(() => {
-        console.log('Current user:', user);
+        // console.log('Current user:', user);
         if (user) {
             router.push('/');
         }

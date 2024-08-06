@@ -5,6 +5,9 @@ import { useFormState, useFormStatus } from "react-dom";
 import { useRouter } from 'next/navigation';
 import { registerForm } from "@/app/firebase/utils/firebase";
 import { ArtistFormData, FormState, step1Schema, step2Schema, step3Schema } from '@/app/lib/validationSchema';
+import { useAuthStore } from '@/app/lib/store/authStore';
+import { createUserDocument, createArtistDocument } from '@/app/firebase/utils/firebase';
+
 
 const initialState: FormState = {
     message: '',
@@ -16,6 +19,7 @@ const initialFormData: Partial<ArtistFormData> = {
     dob: '',
     mobNo: '',
     email: '',
+    password: '',
     gender: '',
     address: '',
     city: '',
@@ -39,6 +43,7 @@ export default function Register() {
     const [isLoading, setIsLoading] = useState(false);
 
     const formRef = useRef<HTMLFormElement>(null);
+    const { register, user, error: storeError } = useAuthStore();
 
     useEffect(() => {
         if (state.message === "success") {
@@ -58,12 +63,12 @@ export default function Register() {
                 }
             });
             setErrors(newErrors);
-            console.log("validation error", newErrors);
+            // console.log("validation error", newErrors);
         } else if (state.message === "error") {
             setIsLoading(false);
             const errorMessage = state.errors?.[0]?.message || 'An unexpected error occurred';
             setErrors({ general: errorMessage });
-            console.log("error", errorMessage);
+            // console.log("error", errorMessage);
         }
     }, [state]);
 
@@ -117,16 +122,39 @@ export default function Register() {
         const isValid = await validateStep();
         if (isValid) {
             setIsLoading(true);
-            const form = new FormData();
-            Object.entries(formData).forEach(([key, value]) => {
-                if (value !== undefined && value !== null) {
-                    form.append(key, value.toString());
+            try {
+                // Register user in Firebase Authentication
+                const userCredential = await register(formData.email!, formData.password!);
+
+                if (userCredential && userCredential.user) {
+                    const userId = userCredential.user.uid;
+
+                    // Create user document in Firestore
+                    await createUserDocument(userId, {
+                        email: formData.email,
+                        role: 'artist',
+                    });
+
+                    // Create artist document in Firestore
+                    await createArtistDocument(userId, {
+                        ...formData,
+                        userId: userId,
+                    });
+
+                    // Update role in auth store
+                    useAuthStore.getState().setUser(userCredential.user, 'artist');
+
+                    router.push('/pages/success');
+                } else {
+                    throw new Error('User registration failed');
                 }
-            });
-            formAction(form);
+            } catch (error) {
+                // console.error('Registration error:', error);
+                setIsLoading(false);
+                setErrors({ general: 'An error occurred during registration' });
+            }
         }
     };
-
 
     const renderStep = () => {
         switch (step) {
@@ -152,6 +180,10 @@ export default function Register() {
                         <div>
                             <input type="email" name="email" placeholder="Email" onChange={handleInputChange} value={formData.email || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
                             {errors.email && <p className="p-1 px-4 text-black text-xs mt-1">{errors.email}</p>}
+                        </div>
+                        <div>
+                            <input type="password" name="password" placeholder="Password" onChange={handleInputChange} value={formData.password || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            {errors.password && <p className="p-1 px-4 text-black text-xs mt-1">{errors.password}</p>}
                         </div>
                         <div>
                             <input type="text" name="gender" placeholder="Gender" onChange={handleInputChange} value={formData.gender || ''} required className="rounded-full h-12 p-4 bg-white w-full" />

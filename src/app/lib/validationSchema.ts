@@ -7,6 +7,7 @@ const step1Schema = z.object({
   dob: z.string().min(1, "Date of Birth is required"),
   mobNo: z.string().length(10, "Mobile number must be 10 digits"),
   email: z.string().email("Invalid email address"),
+  password: z.string().min(6,"Invalid password"),
   gender: z.string().min(1, "Gender is required"),
 });
 

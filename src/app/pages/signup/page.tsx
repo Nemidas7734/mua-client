@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/app/lib/store/authStore';
+import { createUserDocument } from '@/app/firebase/utils/firebase';
 import { z } from 'zod';
 
 const signupSchema = z.object({
@@ -47,7 +48,7 @@ export default function Signup() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [error, setError] = useState('');
-    const { register, isLoading, error: storeError, user } = useAuthStore();
+    const { register, user, isLoading, error: storeError } = useAuthStore();
     const router = useRouter();
 
     useEffect(() => {
@@ -61,8 +62,23 @@ export default function Signup() {
         setError('');
         try {
             signupSchema.parse({ email, password, confirmPassword });
-            await register(email, password);
+            const userCredential = await register(email, password, 'user');
+            if (userCredential && userCredential.user) {
+                const userId = userCredential.user.uid;
+                // Create user document in Firestore
+                await createUserDocument(userId, {
+                    email: email,
+                    role: 'user'
+                });
+
+                // Update role in auth store
+                useAuthStore.getState().setUser(userCredential.user, 'user');
+                router.push('/');
+            } else {
+                throw new Error('User registration failed');
+            }
         } catch (error) {
+            console.error('Signup error:', error);
             if (error instanceof z.ZodError) {
                 setError(error.errors[0].message);
             } else if (error instanceof Error) {
