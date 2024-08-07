@@ -24,7 +24,7 @@ export default function Gallery() {
                     }}
                     initialSlide={2}
                     loop={true}
-                    slidesPerView={3}
+                    slidesPerView={2}
                     slidesPerGroupAuto
                     coverflowEffect={{
                         rotate: 0,
@@ -38,6 +38,13 @@ export default function Gallery() {
                     }}
                     modules={[Autoplay, EffectCoverflow, Pagination]}
                     className="w-full"
+                    breakpoints={{
+                        768: {
+                            slidesPerView: 3,
+                            initialSlide: 2,
+                        }
+                    }}
+
                 >
                     {[...Array(8)].map((_, index) => (
                         <SwiperSlide key={index} className="w-[240px] sm:w-[300px] md:w-[377px] h-[280px] sm:h-[350px] md:h-[420px]">

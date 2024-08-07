@@ -26,7 +26,7 @@ export default function ArtistAbout({ artistData }: ArtistAboutProps) {
                     <h1 className="font-semibold text-base md:text-xl text-[#EA2793]">Rs. {artistData.startingPrice} onwards</h1>
                 </div>
             </div>
-            <div className="w-full md:w-[420px] h-[176px] md:h-[254px] m-auto max-sm:mt-0 overflow-hidden">
+            <div className="w-[293px] md:w-[420px] h-[176px] md:h-[254px] m-auto max-sm:mt-0 overflow-hidden">
                 <Swiper
                     effect={'coverflow'}
                     grabCursor={true}

@@ -34,20 +34,26 @@ export default function Navbar() {
         <span className="text-[#EA2793] text-3xl mx-1 md:text-4xl font-bold">MUA</span>
       </div>
       <ul className={`flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-40 absolute md:z-auto md:static md:w-auto md:flex md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-[38px] opacity-100' : 'top-[-400px] opacity-0'}`}>
-            <li className="text-white font-semibold text-base"><Link href="/">Home</Link></li>
-            <li className="text-white font-semibold text-base"><Link href="/#gallery">Gallery</Link></li>
-            <li className="text-white font-semibold text-base"><Link href="/#about">About</Link></li>
-        <li className="md:hidden text-base m-auto px-4 pb-[2px] md:px-4 md:py-1 rounded-full w-20 md:w-auto text-white font-semibold bg-pink-500 hover:bg-pink-600">
+        <li className="text-white font-semibold text-base"><Link href="/">Home</Link></li>
+        <li className="text-white font-semibold text-base"><Link href="/#gallery">Gallery</Link></li>
+        <li className="text-white font-semibold text-base"><Link href="/#about">About</Link></li>
+        <li className="md:hidden text-base m-auto px-4 pb-[2px] md:px-4 md:py-1 rounded-full w-20 md:w-auto">
           {isClient && user ? (
-            <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
-              <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
+            <button onClick={handleProfileClick} className="flex flex-col gap-4">
+              <Image src="/gallery/woman.png" alt="Profile" width={35} height={35} />
+              <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
+                <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
+              </button>
             </button>
+
           ) : (
-            <Image src="/gallery/woman.png" alt="Profile" width={35} height={35} />
+            <Link href="/pages/login" className="font-semibold rounded-full">
+              <Image src="/gallery/woman.png" alt="Profile" width={35} height={35} />
+            </Link>
           )}
         </li>
       </ul>
-      <div className="flex items-center">
+      <div className="max-sm:hidden flex items-center">
         {isClient && user ? (
           role === 'artist' ? (
             <button onClick={handleProfileClick} className="mr-4 flex gap-2">

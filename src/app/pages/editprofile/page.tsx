@@ -71,7 +71,7 @@ export default function EditArtistProfile() {
                 }
             } else {
                 alert('No profile found. Redirecting to create profile page.')
-                router.push('/pages/createartistprofile')
+                router.push('/pages/createprofile')
             }
         }
     }

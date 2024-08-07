@@ -62,9 +62,9 @@ export default function EditGallery({ onGalleryImagesChange, existingGalleryUrls
                                     onError={() => {
                                         console.error(`Failed to load image: ${image}`);
                                         // Optionally, set a placeholder or remove the image
-                                        // const newImages = [...images];
-                                        // newImages[index] = null;
-                                        // setImages(newImages);
+                                        const newImages = [...images];
+                                        newImages[index] = null;
+                                        setImages(newImages);
                                     }}
                                 />
                                 <button

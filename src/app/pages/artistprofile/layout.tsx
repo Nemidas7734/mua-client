@@ -46,7 +46,7 @@ export default function ArtistProfileLayout({
                             <li className="text-white font-semibold text-base"><Link href="/">Home</Link></li>
                             <li className="text-black font-semibold text-base"><Link href="/pages/editprofile">Edit Profile</Link></li>
                             <li className="text-white font-semibold text-base"><Link href="/#about">About</Link></li>
-                            <li className="md:hidden text-base m-auto px-4 pb-[2px] md:px-4 md:py-1 rounded-full w-20 md:w-auto text-white font-semibold bg-pink-500 hover:bg-pink-600">
+                            <li className="md:hidden text-base m-auto px-4 pb-[2px] md:px-4 md:py-1 rounded-full w-20 md:w-auto">
                                 {isClient && user ? (
                                     <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
                                         <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
@@ -56,14 +56,11 @@ export default function ArtistProfileLayout({
                                 )}
                             </li>
                         </ul>
-                        <div className="flex items-center">
+                        <div className="max-sm:hidden flex items-center">
                             {isClient && user ? (
                                 role === 'artist' ? (
-                                    <button onClick={handleProfileClick} className="mr-4 flex gap-2">
-                                        <Image src="/gallery/woman.png" alt="Profile" width={35} height={35} />
-                                        <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
-                                            <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
-                                        </button>
+                                    <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
+                                        <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
                                     </button>
                                 ) : (
                                     <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
