@@ -8,7 +8,7 @@ import { db } from '@/app/firebase/firebase_config' // Add this line, adjust the
 
 interface AuthState {
   user: User | null
-  userId: string | null
+  userId: string
   role: string | null
   isLoading: boolean
   error: string | null
@@ -22,7 +22,7 @@ export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
-      userId: null,
+      userId: "",
       role: null,
       isLoading: false,
       error: null,
@@ -34,7 +34,7 @@ export const useAuthStore = create<AuthState>()(
           const userDocSnap = await getDoc(userDocRef)
           const role = userDocSnap.exists() ? userDocSnap.data().role : 'user'
           set({ user: userCredential.user, userId: userCredential.user.uid, role, isLoading: false })
-          console.log('Login successful:', userCredential.user, role)
+          // console.log('Login successful:', userCredential.user, role)
         } catch (error: any) {
           console.error('Login error:', error)
           set({ error: error.message, isLoading: false, user: null, role: null })
@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthState>()(
         set({ isLoading: true, error: null })
         try {
           await logoutUser()
-          set({ user: null, userId:null, role: null, isLoading: false })
+          set({ user: null, userId:"", role: null, isLoading: false })
         } catch (error: any) {
           set({ error: error.message, isLoading: false })
         }
@@ -56,7 +56,7 @@ export const useAuthStore = create<AuthState>()(
         try {
           const userCredential = await registerUser(email, password)
           set({ user: userCredential.user, userId: userCredential.user.uid, role, isLoading: false })
-          console.log('Registration successful:', userCredential.user, role)
+          // console.log('Registration successful:', userCredential.user, role)
           return userCredential;
         } catch (error: any) {
           console.error('Registration error:', error)

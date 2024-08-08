@@ -44,9 +44,11 @@ export default function ArtistProfileLayout({
                         </div>
                         <ul className={`flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-40 absolute md:z-auto md:static md:w-auto md:flex md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-[38px] opacity-100' : 'top-[-400px] opacity-0'}`}>
                             <li className="text-white font-semibold text-base"><Link href="/">Home</Link></li>
-                            <li className="text-black font-semibold text-base"><Link href="/pages/editprofile">Edit Profile</Link></li>
+                            {role === 'artist' ? (<li className="text-black font-semibold text-base"><Link href="/pages/editprofile">Edit Profile</Link></li>
+                            ) : (<li className="text-black font-semibold text-base"><Link href="/pages/artistlisting">Artists</Link></li>
+                            )}
                             <li className="text-white font-semibold text-base"><Link href="/#about">About</Link></li>
-                            <li className="md:hidden text-base m-auto px-4 pb-[2px] md:px-4 md:py-1 rounded-full w-20 md:w-auto">
+                            <li className="md:hidden text-base m-auto px-5 pb-[2px] md:px-4 md:py-1 rounded-full w-20 md:w-auto">
                                 {isClient && user ? (
                                     <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
                                         <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
