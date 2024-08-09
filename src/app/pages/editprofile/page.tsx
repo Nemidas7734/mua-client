@@ -8,7 +8,6 @@ import EditGallery from "@/app/components/profile/EditGallery"
 import { doc, updateDoc, getDoc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "@/app/firebase/firebase_config"
-import { StaticImport } from "next/dist/shared/lib/get-img-props"
 
 
 
@@ -28,10 +27,11 @@ export default function EditArtistProfile() {
     const [coverImage, setCoverImage] = useState<File | null>(null)
     const [profileImage, setProfileImage] = useState<File | null>(null)
     const [galleryImages, setGalleryImages] = useState<File[]>([])
-    const [coverImagePreview, setCoverImagePreview] = useState<string | StaticImport>('')
-    const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null)
+    const [coverImagePreview, setCoverImagePreview] = useState<string | ''>('')
+    const [profileImagePreview, setProfileImagePreview] = useState<string | ''>('')
     const [existingGalleryUrls, setExistingGalleryUrls] = useState<string[]>([])
     const [currentGalleryUrls, setCurrentGalleryUrls] = useState<string[]>([])
+    const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export default function EditArtistProfile() {
                     expertise: data.expertise || '',
                     startingPrice: data.startingPrice || '',
                 })
-    
+
                 // Set existing image URLs
                 if (data.coverImageUrl) {
                     setCoverImagePreview(data.coverImageUrl)
@@ -107,29 +107,30 @@ export default function EditArtistProfile() {
 
     const handleSaveChanges = async () => {
         if (!user) return
-    
+
+        setIsLoading(true)
         try {
             const artistRef = doc(db, 'Artists', user.uid)
             const updateData: any = { ...profileData }
-    
+
             if (coverImage) {
                 updateData.coverImageUrl = await uploadImage(coverImage, `artists/${user.uid}/cover.jpg`)
             }
-    
+
             if (profileImage) {
                 updateData.profileImageUrl = await uploadImage(profileImage, `artists/${user.uid}/profile.jpg`)
             }
-    
+
             // Handle gallery images
             const newGalleryUrls = await Promise.all(
                 galleryImages.map((file, index) =>
                     uploadImage(file, `artists/${user.uid}/gallery/${index}-${Date.now()}.jpg`)
                 )
             )
-            
+
             // Combine new gallery URLs with existing ones that weren't deleted
             updateData.galleryUrls = [...newGalleryUrls, ...currentGalleryUrls.filter(url => !url.startsWith('blob:'))]
-    
+
             await updateDoc(artistRef, updateData)
             alert('Profile updated successfully!')
             router.push("/pages/artistprofile")
@@ -140,6 +141,8 @@ export default function EditArtistProfile() {
             } else {
                 alert('An unknown error occurred while updating the profile.');
             }
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -158,12 +161,21 @@ export default function EditArtistProfile() {
                 onGalleryImagesChange={handleGalleryImagesChange}
                 existingGalleryUrls={existingGalleryUrls}
             />
-            <button
-                onClick={handleSaveChanges}
-                className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-                Save Changes
-            </button>
+            {isLoading ? (
+                <div className="mt-8 flex flex-col items-center">
+                    <div className="loader"></div>
+                    <p className="mt-4 text-lg text-center">
+                        Please wait, your profile is being updated. This may take a few minutes.
+                    </p>
+                </div>
+            ) : (
+                <button
+                    onClick={handleSaveChanges}
+                    className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                >
+                    Save Changes
+                </button>
+            )}
         </div>
     )
 }

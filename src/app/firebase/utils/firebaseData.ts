@@ -1,5 +1,7 @@
 import { doc, getDoc, updateDoc, arrayUnion, getFirestore } from "firebase/firestore";
 import { initializeApp, getApps, getApp } from 'firebase/app';
+import { DocumentData } from "firebase/firestore";
+
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -10,14 +12,31 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_App_ID,
 };
 
-export async function getArtistData(artistId: string) {
+interface ArtistData extends DocumentData {
+  name: string;
+  location: string;
+  expertise: string;
+  coverImageUrl?: string;
+  profileImageUrl?: string;
+  description: string;
+  startingPrice: number;
+  galleryUrls: string[];
+  reviews: Array<{
+    text: string;
+    rating: number;
+    date: string;
+    userName?: string;
+  }>;
+}
+
+export async function getArtistData(artistId: string): Promise<ArtistData | null> {
   const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
   const firestore = getFirestore(app);
   const artistRef = doc(firestore, "Artists", artistId);
-  const artistSnap = await getDoc(artistRef);
-  
-  if (artistSnap.exists()) {
-    return artistSnap.data();
+  const artistSnapshot = await getDoc(artistRef);
+
+  if (artistSnapshot.exists()) {
+    return artistSnapshot.data() as ArtistData;
   } else {
     console.log("No such artist!");
     return null;

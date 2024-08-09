@@ -26,13 +26,13 @@ export default function EditLayout({
                             <li className="text-white font-semibold text-base"><a href="/">Home</a></li>
                             <li className="text-white font-semibold text-base"><a href="/#gallery">Gallery</a></li>
                             <li className="text-white font-semibold text-base"><a href="/#about">About</a></li>
-                            <li className="md:hidden text-base m-auto px-4 pb-[2px]  md:px-4 md:py-1 rounded-full w-20 md:w-auto text-white font-semibold bg-pink-500 hover:bg-pink-600">
-                                <Link href="/pages/login">
-                                    Login
+                            <li className="md:hidden m-auto w-[35px] h-[35px] rounded-full">
+                                <Link href="/pages/artistprofile">
+                                <Image src="/gallery/woman.png" alt="Profile" width={35} height={35} />
                                 </Link>
                             </li>
                         </ul>
-                        <Link href="/pages/login">
+                        <Link href="/pages/artistprofile">
                             <Image src="/gallery/woman.png" alt="" width={35} height={35} quality={100} className="object-cover max-sm:hidden" />
                         </Link>
                         <span className="md:hidden block mx-4" onClick={() => setOpen(!open)}>

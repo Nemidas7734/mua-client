@@ -3,18 +3,13 @@
 import { useState, useEffect } from "react"
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/app/lib/store/authStore'
-import EditInfo from "@/app/components/profile/EditInfo"
-import EditGallery from "@/app/components/profile/EditGallery"
+import CreateInfo from "@/app/components/profile/CreateInfo"
+import CreateGallery from "@/app/components/profile/CreateGallery"
 import { doc, setDoc, getDoc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "@/app/firebase/firebase_config"
-import { StaticImport } from "next/dist/shared/lib/get-img-props"
-
-
-
 
 export default function CreateArtistProfile() {
-
     const router = useRouter()
     const { user, role } = useAuthStore()
     const [profileData, setProfileData] = useState({
@@ -29,29 +24,13 @@ export default function CreateArtistProfile() {
     const [coverImage, setCoverImage] = useState<File | null>(null)
     const [profileImage, setProfileImage] = useState<File | null>(null)
     const [galleryImages, setGalleryImages] = useState<File[]>([])
-    const [coverImagePreview, setCoverImagePreview] = useState<string | StaticImport>('')
-    const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null)
-    const [existingGalleryUrls, setExistingGalleryUrls] = useState<string[]>([])
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         if (!user || role !== 'artist') {
             router.push('/')
-        } else {
-            checkExistingProfile()
         }
     }, [user, role, router])
-
-    const checkExistingProfile = async () => {
-        if (user) {
-            const artistRef = doc(db, 'Artists', user.uid)
-            const artistDoc = await getDoc(artistRef)
-            if (artistDoc.exists()) {
-                alert('You already have a profile. Redirecting to edit page.')
-                router.push('/pages/editprofile')
-            }
-        }
-    }
-
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target
@@ -79,16 +58,9 @@ export default function CreateArtistProfile() {
     const handleCreateProfile = async () => {
         if (!user) return
 
+        setIsLoading(true)
         try {
             const artistRef = doc(db, 'Artists', user.uid)
-            const artistDoc = await getDoc(artistRef)
-            
-            if (artistDoc.exists()) {
-                alert('You already have a profile. Redirecting to edit page.')
-                router.push('/pages/editprofile')
-                return
-            }
-
             const updateData: any = { ...profileData }
 
             if (coverImage) {
@@ -106,6 +78,8 @@ export default function CreateArtistProfile() {
                     )
                 )
                 updateData.galleryUrls = galleryUrls
+            } else {
+                updateData.galleryUrls = []
             }
 
             await setDoc(artistRef, updateData)
@@ -118,30 +92,38 @@ export default function CreateArtistProfile() {
             } else {
                 alert('An unknown error occurred while creating the profile.');
             }
+        } finally {
+            setIsLoading(false)
         }
     }
 
     return (
         <div className="container mx-auto px-4 py-8 flex flex-col items-center mt-8">
             <h1 className="text-2xl md:text-3xl font-bold mb-8">Create Profile</h1>
-            <EditInfo
+            <CreateInfo
                 profileData={profileData}
                 onInputChange={handleInputChange}
                 onCoverImageChange={handleCoverImageChange}
-                coverImagePreview={coverImagePreview}
-                profileImagePreview={profileImagePreview}
                 onProfileImageChange={handleProfileImageChange}
             />
-            <EditGallery
+            <CreateGallery
                 onGalleryImagesChange={handleGalleryImagesChange}
-                existingGalleryUrls={existingGalleryUrls}
             />
+        {isLoading ? (
+            <div className="mt-8 flex flex-col items-center">
+                <div className="loader"></div>
+                <p className="mt-4 text-lg text-center">
+                    Please wait, your profile is being created. This may take a few minutes.
+                </p>
+            </div>
+        ) : (
             <button
                 onClick={handleCreateProfile}
                 className="mt-8 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
                 Create Profile
             </button>
-        </div>
-    )
+        )}
+    </div>
+)
 }

@@ -4,7 +4,7 @@ import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { db } from "../firebase_config";
 import { doc, setDoc } from "firebase/firestore";
 import { artistSchema, ArtistFormData, FormState } from '@/app/lib/validationSchema';
-import { z } from 'zod';
+import { boolean, z } from 'zod';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 
 const firebaseConfig = {

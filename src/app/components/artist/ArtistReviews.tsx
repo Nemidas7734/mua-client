@@ -71,7 +71,7 @@ export default function ArtistReviews({ artistId, reviews }: ArtistReviewsProps)
                     </div>
                 </div>)}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 w-full mt-4">
-                {reviews.map((review, index) => (
+                {reviews?.map((review, index) => (
                     <div key={index} className="p-4 flex flex-col rounded-xl bg-[#F7FF003B]">
                         <Ratings rating={review.rating} />
                         <p className="mt-2 font-normal text-sm">{review.text}</p>

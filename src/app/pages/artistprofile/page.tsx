@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuthStore } from '@/app/lib/store/authStore';
 import ArtistAbout from "@/app/components/artist/ArtistAbout";
@@ -34,25 +34,24 @@ interface ArtistData extends DocumentData {
 }
 
 function transformGalleryUrls(urls: string[]): ImageObject[] {
-  return urls.map(url => ({ url, alt: "Gallery image" }));
+  return urls?.map(url => ({ url, alt: "Gallery image" }));
 }
 
-export default function ArtistProfile() {
+function ArtistProfileContent() {
   const searchParams = useSearchParams();
   const { userId } = useAuthStore();
   const [artistData, setArtistData] = useState<ArtistData | null>(null);
+  
 
   useEffect(() => {
     async function fetchArtistData() {
       const artistId = searchParams.get('id');
-      console.log('artistid',artistId);
       if (artistId) {
         const data = await getArtistData(artistId);
         if (data) {
           setArtistData(data as ArtistData);
         }
-      }
-      else{
+      } else {
         const data = await getArtistData(userId);
         if (data) {
           setArtistData(data as ArtistData);
@@ -60,7 +59,7 @@ export default function ArtistProfile() {
       }
     }
     fetchArtistData();
-  }, [searchParams ]);
+  }, [searchParams, userId]);
 
   if (!artistData) return <div>Loading...</div>;
 
@@ -71,5 +70,13 @@ export default function ArtistProfile() {
       <ArtistGallery images={transformGalleryUrls(artistData.galleryUrls)} />
       <ArtistReviews artistId={artistData.id} reviews={artistData.reviews} />
     </section>
+  );
+}
+
+export default function ArtistProfile() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ArtistProfileContent />
+    </Suspense>
   );
 }

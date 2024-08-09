@@ -5,7 +5,7 @@ interface Artist {
     artist:{
         id: string;
         name: string;
-        city:string;
+        location:string;
         experience:string;
         startingPrice:number;
         profileImageUrl: string ;
@@ -32,7 +32,7 @@ export default function ArtistsCard({ artist }:Artist){
       </div>
       <div className="p-4">
         <h2 className="text-xl font-semibold">{artist.name}</h2>
-        <p className="text-gray-600">{artist.city}</p>
+        <p className="text-gray-600">{artist.location}</p>
         <p className="mt-2">Hair Styling, Draping, Makeup, False Lashes +</p>
         <p className="mt-1">Experience: {artist.experience}</p>
         <p className="mt-2 text-sm">Hi !!! Elevate Your Beauty Experience with {artist.name}.</p>

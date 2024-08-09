@@ -1,9 +1,9 @@
 "use client"
 
 import Image from "next/image"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 
-interface EditInfoProps {
+interface CreateInfoProps {
     profileData: {
         name: string
         location: string
@@ -16,30 +16,21 @@ interface EditInfoProps {
     onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
     onCoverImageChange: (file: File) => void
     onProfileImageChange: (file: File) => void
-    coverImagePreview: string
-    profileImagePreview: string
 }
 
-export default function EditInfo({
+export default function CreateInfo({
     profileData,
     onInputChange,
     onCoverImageChange,
     onProfileImageChange,
-    coverImagePreview,
-    profileImagePreview
-}: EditInfoProps) {
-    const [localCoverImagePreview, setLocalCoverImagePreview] = useState(coverImagePreview)
-    const [localProfileImagePreview, setLocalProfileImagePreview] = useState(profileImagePreview)
-
-    useEffect(() => {
-        setLocalCoverImagePreview(coverImagePreview)
-        setLocalProfileImagePreview(profileImagePreview)
-    }, [coverImagePreview, profileImagePreview])
+}: CreateInfoProps) {
+    const [coverImagePreview, setCoverImagePreview] = useState<string>("/images/Hero.png")
+    const [profileImagePreview, setProfileImagePreview] = useState<string>("/images/placeholder.jpg")
 
     const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0]
-            setLocalCoverImagePreview(URL.createObjectURL(file))
+            setCoverImagePreview(URL.createObjectURL(file))
             onCoverImageChange(file)
         }
     }
@@ -47,7 +38,7 @@ export default function EditInfo({
     const handleProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
             const file = e.target.files[0]
-            setLocalProfileImagePreview(URL.createObjectURL(file))
+            setProfileImagePreview(URL.createObjectURL(file))
             onProfileImageChange(file)
         }
     }
@@ -56,13 +47,7 @@ export default function EditInfo({
         <div className="w-full max-w-[1120px] mx-auto rounded-xl border-2 shadow-2xl shadow-[#0000001F] mb-8 overflow-hidden">
             {/* Cover Image */}
             <div className="relative w-full h-48 sm:h-64 md:h-80 lg:h-[356px]">
-                <Image
-                    src={localCoverImagePreview || "/images/Hero.png"}
-                    alt="Cover photo"
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-t-xl"
-                />
+                <Image src={coverImagePreview} alt="Cover photo" layout="fill" objectFit="cover" className="rounded-t-xl" />
                 <label className="absolute bottom-2 right-2 bg-white p-2 rounded-full cursor-pointer">
                     <input type="file" className="hidden" onChange={handleCoverImageChange} accept="image/*" />
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6">
@@ -75,7 +60,7 @@ export default function EditInfo({
             <div className="relative mx-4 sm:mx-8 -mt-16 sm:-mt-20 mb-8">
                 <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full bg-stone-400 overflow-hidden relative">
                     <Image
-                        src={localProfileImagePreview || "/images/placeholder.jpg"}
+                        src={profileImagePreview}
                         alt="Profile"
                         layout="fill"
                         objectFit="cover"

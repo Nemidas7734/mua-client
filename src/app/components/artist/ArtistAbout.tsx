@@ -49,7 +49,7 @@ export default function ArtistAbout({ artistData }: ArtistAboutProps) {
                     modules={[Autoplay, EffectCoverflow]}
                     className="w-full h-full"
                 >
-                    {artistData.galleryUrls.map((url, index) => (
+                    {artistData?.galleryUrls.map((url, index) => (
                         <SwiperSlide key={index} className="w-full h-full">
                             <div className="relative w-full h-full">
                                 <Image 

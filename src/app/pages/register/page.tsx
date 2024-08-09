@@ -7,6 +7,7 @@ import { registerForm } from "@/app/firebase/utils/firebase";
 import { ArtistFormData, FormState, step1Schema, step2Schema, step3Schema } from '@/app/lib/validationSchema';
 import { useAuthStore } from '@/app/lib/store/authStore';
 import { createUserDocument, createArtistDocument } from '@/app/firebase/utils/firebase';
+import { LoadingSpinner } from "@/app/components/ui/Loading";
 
 
 const initialState: FormState = {
@@ -43,7 +44,7 @@ export default function Register() {
     const [isLoading, setIsLoading] = useState(false);
 
     const formRef = useRef<HTMLFormElement>(null);
-    const { register, user, error: storeError } = useAuthStore();
+    const { register, error: storeError } = useAuthStore();
 
     useEffect(() => {
         if (state.message === "success") {
@@ -121,7 +122,7 @@ export default function Register() {
         e.preventDefault();
         const isValid = await validateStep();
         if (isValid) {
-            setIsLoading(true);
+        setIsLoading(true);
             try {
                 // Register user in Firebase Authentication
                 const userCredential = await register(formData.email!, formData.password!);
@@ -130,16 +131,24 @@ export default function Register() {
                     const userId = userCredential.user.uid;
 
                     // Create user document in Firestore
-                    await createUserDocument(userId, {
-                        email: formData.email,
-                        role: 'artist',
-                    });
+                    try {
+                        await createUserDocument(userId, {
+                            email: formData.email,
+                            role: 'artist',
+                        });
+                    } catch (error) {
+                        console.error('Error creating user document:', error);
+                    }
 
                     // Create artist document in Firestore
-                    await createArtistDocument(userId, {
-                        ...formData,
-                        userId: userId,
-                    });
+                    try {
+                        await createArtistDocument(userId, {
+                            ...formData,
+                            userId: userId,
+                        });
+                    } catch (error) {
+                        console.error('Error creating artist document:', error);
+                    }
 
                     // Update role in auth store
                     useAuthStore.getState().setUser(userCredential.user, 'artist');
@@ -148,13 +157,19 @@ export default function Register() {
                 } else {
                     throw new Error('User registration failed');
                 }
-            } catch (error) {
-                // console.error('Registration error:', error);
+            } catch (error :any) {
+                // Handle Firebase Authentication errors specifically
+                if (error.code === 'auth/email-already-in-use') {
+                    setErrors({ general: 'Email address is already in use' });
+                } else {
+                    console.error('Registration error:', error);
+                    setErrors({ general: 'An error occurred during registration' });
+                }
                 setIsLoading(false);
-                setErrors({ general: 'An error occurred during registration' });
             }
         }
     };
+
 
     const renderStep = () => {
         switch (step) {
@@ -272,8 +287,8 @@ export default function Register() {
                 </div>
             </div>
             {isLoading && (
-                <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-white"></div>
+                <div className="absolute inset-0 bg-white bg-opacity-40 flex items-center justify-center">
+                    <LoadingSpinner />
                 </div>
             )}
         </div>
