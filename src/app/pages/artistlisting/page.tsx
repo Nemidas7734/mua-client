@@ -25,7 +25,7 @@ export default function ArtistListing() {
         id: doc.id,
         ...doc.data(),
       } as Artist));
-      console.log("Fetched artists:", artistList);
+      // console.log("Fetched artists:", artistList);
       setArtists(artistList);
       setFilteredArtists(artistList);
     }, (error) => {

@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { useState, useRef } from "react";
+import {  useFormStatus } from "react-dom";
 import { useRouter } from 'next/navigation';
 import { registerForm } from "@/app/firebase/utils/firebase";
 import { ArtistFormData, FormState, step1Schema, step2Schema, step3Schema } from '@/app/lib/validationSchema';
@@ -10,9 +10,9 @@ import { createUserDocument, createArtistDocument } from '@/app/firebase/utils/f
 import { LoadingSpinner } from "@/app/components/ui/Loading";
 
 
-const initialState: FormState = {
-    message: '',
-};
+// const initialState: FormState = {
+//     message: '',
+// };
 
 const initialFormData: Partial<ArtistFormData> = {
     name: '',
@@ -35,7 +35,7 @@ const initialFormData: Partial<ArtistFormData> = {
 
 
 export default function Register() {
-    const [state, formAction] = useFormState(registerForm, initialState);
+    // const [state, formAction] = useFormState(registerForm, initialState);
     const { pending } = useFormStatus()
     const router = useRouter();
     const [step, setStep] = useState(1);
@@ -46,32 +46,32 @@ export default function Register() {
     const formRef = useRef<HTMLFormElement>(null);
     const { register, error: storeError } = useAuthStore();
 
-    useEffect(() => {
-        if (state.message === "success") {
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 1000);
-            formRef.current?.reset();
-            setTimeout(() => {
-                router.push('/pages/success');
-            }, 1000);
-        } else if (state.message === "validation_error" && state.errors) {
-            setIsLoading(false);
-            const newErrors: { [key: string]: string } = {};
-            state.errors.forEach((error) => {
-                if (error.path.length > 0 && typeof error.path[0] === 'string') {
-                    newErrors[error.path[0]] = error.message;
-                }
-            });
-            setErrors(newErrors);
-            // console.log("validation error", newErrors);
-        } else if (state.message === "error") {
-            setIsLoading(false);
-            const errorMessage = state.errors?.[0]?.message || 'An unexpected error occurred';
-            setErrors({ general: errorMessage });
-            // console.log("error", errorMessage);
-        }
-    }, [state]);
+    // useEffect(() => {
+    //     if (state.message === "success") {
+    //         setTimeout(() => {
+    //             setIsLoading(false);
+    //         }, 1000);
+    //         formRef.current?.reset();
+    //         setTimeout(() => {
+    //             router.push('/pages/success');
+    //         }, 1000);
+    //     } else if (state.message === "validation_error" && state.errors) {
+    //         setIsLoading(false);
+    //         const newErrors: { [key: string]: string } = {};
+    //         state.errors.forEach((error) => {
+    //             if (error.path.length > 0 && typeof error.path[0] === 'string') {
+    //                 newErrors[error.path[0]] = error.message;
+    //             }
+    //         });
+    //         setErrors(newErrors);
+    //         // console.log("validation error", newErrors);
+    //     } else if (state.message === "error") {
+    //         setIsLoading(false);
+    //         const errorMessage = state.errors?.[0]?.message || 'An unexpected error occurred';
+    //         setErrors({ general: errorMessage });
+    //         // console.log("error", errorMessage);
+    //     }
+    // }, [state]);
 
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -33,11 +33,11 @@ export default function Navbar() {
       <div className="flex justify-center items-center mx-2 md:mx-0">
         <span className="text-[#EA2793] text-3xl mx-1 md:text-4xl font-bold">MUA</span>
       </div>
-      <ul className={`flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-40 absolute md:z-auto md:static md:w-auto md:flex md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-[38px] opacity-100' : 'top-[-400px] opacity-0'}`}>
+      <ul className={`menu3 flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-40 absolute md:z-auto md:static md:w-auto md:flex md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-[38px] opacity-100' : 'top-[-400px] opacity-0'}`}>
         <li className="text-white font-semibold text-base"><Link href="/">Home</Link></li>
         <li className="text-white font-semibold text-base"><Link href="/#gallery">Gallery</Link></li>
         <li className="text-white font-semibold text-base"><Link href="/#about">About</Link></li>
-        <li className="md:hidden text-base m-auto px-4 pb-[2px] md:px-4 md:py-1 rounded-full w-20 md:w-auto">
+        <li className="md:hidden not-visible text-base m-auto px-4 pb-[2px] md:px-4 md:py-1 rounded-full w-20">
         {isClient && user ? (
           role === 'artist' ? (
             <button onClick={handleProfileClick} className="mr-4 flex flex-col gap-2">

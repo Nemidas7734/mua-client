@@ -34,18 +34,26 @@ export const useAuthStore = create<AuthState>()(
           const userDocSnap = await getDoc(userDocRef)
           const role = userDocSnap.exists() ? userDocSnap.data().role : 'user'
           set({ user: userCredential.user, userId: userCredential.user.uid, role, isLoading: false })
+          document.cookie = "isLoggedIn=true; path=/; max-age=86400"; // expires in 1 day
           // console.log('Login successful:', userCredential.user, role)
         } catch (error: any) {
           console.error('Login error:', error)
           set({ error: error.message, isLoading: false, user: null, role: null })
         }
-      },        
+      },
       setUser: (user: User | null, role: string | null) => set({ user, role }),
       logout: async () => {
         set({ isLoading: true, error: null })
         try {
           await logoutUser()
-          set({ user: null, userId:"", role: null, isLoading: false })
+          set({ user: null, userId: "", role: null, isLoading: false })
+          document.cookie = "isLoggedIn=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+
+          // Clear localStorage
+          localStorage.removeItem('auth-storage')
+
+          // Force a page reload to ensure all state is cleared
+          window.location.href = '/';
         } catch (error: any) {
           set({ error: error.message, isLoading: false })
         }
@@ -64,7 +72,7 @@ export const useAuthStore = create<AuthState>()(
           throw error;
         }
       },
-      
+
     }),
     {
       name: 'auth-storage',

@@ -31,11 +31,11 @@ const Blogs: FC = () => {
                 <h1 className="mt-10 md:mt-16 text-2xl md:text-3xl font-bold">Blogs</h1>
                 <div className="w-full max-w-[374px]  md:max-w-[1100px] flex flex-col md:flex-row md:justify-center md:gap-8 lg:gap-20">
                     <BlogCard
-                        imageSrc="/CEO.jpg"
+                        imageSrc="/blogs1.jpeg"
                         text="The app is designed to be extremely user-friendly. Any user searching for makeup services will have their inquiries directly visible in the makeup artist's lead box. We encourage all makeup artists to register and create their profiles on the MUA app to take advantage of these benefits and grow their business. Join MUA today and showcase your talent to a wider audience!"
                     />
                     <BlogCard
-                        imageSrc="/CEO.jpg"
+                        imageSrc="/blogs2.jpeg"
                         text="The MUA stands out for its unique features that cater specifically to makeup artists. On this site, makeup artists can create their own profiles and upload photos and videos of their work. This allows potential customers to view their portfolio and place orders directly. Additionally, the app offers options for date locking and bookings, ensuring artists receive a robust response."
                         className="hidden md:flex"
                     />
