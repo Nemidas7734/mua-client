@@ -26,7 +26,7 @@ export default function RegisterLayout({
                                 <span className="text-pink-500 text-3xl mx-1 max-sm:mb-4 md:text-4xl font-bold">MUA</span>
                             </div>
                         </div>
-                        <ul className={`md:hidden flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-40 absolute md:z-auto md:static md:w-auto md:flex md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-[38px] opacity-100' : 'top-[-400px] opacity-0'}`}>
+                        <ul className={`md:hidden flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-40 absolute md:z-auto md:static md:w-auto  md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-[38px] opacity-100' : 'top-[-400px] opacity-0'}`}>
                             <li className="text-white font-semibold text-base"><a href="/">Home</a></li>
                             <li className="text-white font-semibold text-base"><a href="/#gallery">Gallery</a></li>
                             <li className="text-white font-semibold text-base"><a href="/#about">About</a></li>

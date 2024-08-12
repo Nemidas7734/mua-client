@@ -11,7 +11,7 @@ export default function ArtistListingLayout({
     return (
         <>
             <html lang="en">
-                <body>
+                <body className="relative">
                     <Navbar/>
                     {children}
                     <Footer/>

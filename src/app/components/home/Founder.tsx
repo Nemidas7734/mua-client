@@ -14,18 +14,18 @@ export default function Founder() {
                             className="h-[70px] w-[70px] md:h-[130px] md:w-[132px] rounded-full object-cover"
                         />
                         <div className="md:hidden ml-4">
-                            <h1 className="text-lg text-black font-bold">Vaibhav Janunkar</h1>
-                            <h2 className="text-sm italic text-black">CEO</h2>
+                            <h1 className="text-lg text-black font-bold font-[sans-serif]">Vaibhav Janunkar</h1>
+                            <h2 className="text-sm italic text-black font-[sans-serif]">CEO</h2>
                         </div>
                     </div>
                     <div className="flex-1">
-                        <p className="text-white text-sm md:text-base mb-4">
+                        <p className="text-white text-sm md:text-base mb-4 font-[sans-serif]">
                             The app is designed to be extremely user-friendly. Any user searching for makeup services will have their inquiries directly visible in the makeup &apos; lead box. We encourage all makeup artists to register and create their profiles on the MUA app to take advantage of these benefits and grow their business.<br /><br />
                             Join MUA today and showcase your talent to a wider audience!
                         </p>
                         <div className="hidden md:block">
-                            <h1 className="text-black font-bold">Vaibhav Janunkar</h1>
-                            <h2 className="text-black italic">CEO</h2>
+                            <h1 className="text-black font-bold font-[sans-serif]">Vaibhav Janunkar</h1>
+                            <h2 className="text-black italic font-[sans-serif]">CEO</h2>
                         </div>
                     </div>
                 </div>

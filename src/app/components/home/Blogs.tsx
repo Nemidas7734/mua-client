@@ -17,7 +17,7 @@ const BlogCard: FC<BlogCardProps> = ({ imageSrc, text, className = "" }) => {
                 width={120}
                 className="object-cover min-w-[70px] h-[75px] md:w-[120px] md:h-[120px] rounded-lg md:rounded-full"
             />
-            <div className="text-white max-w-[270px] md:max-w-[330px] text-wrap text-[13px] font-normal md:text-base">
+            <div className="text-white max-w-[270px] md:max-w-[330px] text-wrap text-[13px] font-normal font-[sans-serif] md:text-base">
                 {text}
             </div>
         </div>
@@ -28,7 +28,7 @@ const Blogs: FC = () => {
     return (
         <>
             <section id="blogs" className="flex flex-col justify-center items-center gap-8 md:gap-16 mb-4 md:mb-6 px-4 md:px-0">
-                <h1 className="mt-10 md:mt-16 text-2xl md:text-3xl font-bold">Blogs</h1>
+                <h1 className="mt-10 md:mt-16 text-2xl md:text-3xl font-bold font-[sans-serif]">Blogs</h1>
                 <div className="w-full max-w-[374px]  md:max-w-[1100px] flex flex-col md:flex-row md:justify-center md:gap-8 lg:gap-20">
                     <BlogCard
                         imageSrc="/blogs1.jpeg"

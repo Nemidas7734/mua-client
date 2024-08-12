@@ -13,7 +13,7 @@ import { EffectCards } from 'swiper/modules';
 export default function Categories() {
     return (
         <section id='category' className="flex flex-col items-center justify-center h-[350px] md:h-[576px] mt-16 md:mt-24 overflow-hidden">
-            <h2 className="font-bold text-2xl md:text-3xl mb-6 md:mb-12 text-center">CATEGORIES</h2>
+            <h2 className="font-bold font-[sans-serif] text-2xl md:text-3xl mb-6 md:mb-12 text-center">CATEGORIES</h2>
             <div className="w-[280px] sm:w-[300px] md:w-[460px]">
                 <Swiper
                     effect={'cards'}

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/app/lib/store/authStore';
 import { z } from 'zod';
+import Image from 'next/image';
 
 
 
@@ -59,7 +60,7 @@ export default function Login() {
         try {
             loginSchema.parse({ email, password });
             await login(email, password);
-            router.push('/')
+            router.push('/pages/artistlisting')
         } catch (error) {
             if (error instanceof z.ZodError) {
                 setError(error.errors[0].message);
@@ -75,9 +76,14 @@ export default function Login() {
         <section className="relative bg-white md:bg-[#EA2793] md:grid md:grid-cols-2 w-full min-h-screen">
             <div className='form-container w-full min-h-screen p-4'>
                 <form onSubmit={handleSubmit} className="flex flex-col items-center gap-4 md:gap-2 h-full md:shadow-2xl md:border-2 bg-white border-slate-300 rounded-xl">
-                    <h1 className="text-center mt-16 mb-8 font-normal font-[Damion] text-black text-3xl md:text-5xl">Welcome Back</h1>
+                    <div className='flex flex-col gap-12 md:gap-16 max-sm:items-center mt-1 md:mt-2 mb-6 md:mb-8'>
+                        <Link href="/">
+                            <Image src="/home.png" alt="Profile" width={35} height={35} className='object-cover md:ml-[520px]' />
+                        </Link>
+                        <h1 className="text-center  font-normal font-[sans-serif] text-black text-3xl md:text-5xl">Welcome Back</h1>
+                    </div>
                     {error && <p className="text-red-500">{error}</p>}
-                    {storeError && <p className="text-red-500">{storeError}</p>}               
+                    {storeError && <p className="text-red-500">{storeError}</p>}
                     <input
                         type="email"
                         name='email'
