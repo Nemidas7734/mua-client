@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuthStore } from "@/app/lib/store/authStore";
 import { useRouter } from 'next/navigation'
 
@@ -45,7 +45,7 @@ export default function Navbar() {
         </div>
       );
     }
-    
+
     if (role === 'artist') {
       return (
         <div className="py-1">
@@ -58,7 +58,7 @@ export default function Navbar() {
         </div>
       );
     }
-    
+
     return (
       <div className="py-1">
         <button onClick={handleLogout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -78,35 +78,35 @@ export default function Navbar() {
         <li className="text-white font-medium font-[sans-serif] text-base"><Link href="/">Home</Link></li>
         <li className="text-white font-medium font-[sans-serif] text-base"><Link href="/#gallery">Gallery</Link></li>
         <li className="text-white font-medium font-[sans-serif] text-base"><Link href="/#about">About</Link></li>
-        <li className="md:hidden not-visible text-base m-auto px-4 pb-[2px] md:px-4 md:py-1 rounded-full w-20">
-        {isClient && user ? (
-          role === 'artist' ? (
-            <button onClick={handleProfileClick} className="mr-4 flex flex-col gap-2  w-[35px] h-[35px] rounded-full">
-              <Image src="/gallery/user2.png" alt="Profile" width={40} height={40} className="object-cover w-full h-full"/>
-              <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
-                <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
+        <li className="md:hidden not-visible text-base m-auto px-6 pb-[2px] md:px-4 md:py-1 rounded-full w-20">
+          {isClient && user ? (
+            role === 'artist' ? (
+              <button onClick={handleProfileClick} className="mr-4 flex flex-col gap-2 w-[30px] h-[30px] rounded-full">
+                <img width="30" height="30" src="https://img.icons8.com/material-sharp/48/user-male-circle.png" alt="user-male-circle" className="max-w-[30px] max-h-[30px] bg-white overflow-hidden rounded-full " />
+                <button onClick={handleLogout} className="relative h-[30px] w-[30px] font-semibold rounded-full">
+                  <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/logout-rounded.png" alt="logout-rounded" className="max-w-8 max-h-8 bg-white rounded-full" />
+                </button>
               </button>
-            </button>
+            ) : (
+              <button onClick={handleLogout} className="relative h-[30px] w-[30px] font-semibold rounded-full">
+                <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/logout-rounded.png" alt="logout-rounded" className="max-w-8 max-h-8 bg-white rounded-full" />
+              </button>
+            )
           ) : (
-            <button onClick={handleLogout} className="relative bg-[#EE4B68] h-[35px] w-[35px] font-semibold rounded-full">
-              <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
-            </button>
-          )
-        ) : (
-          <Link href="/pages/login" className="font-semibold rounded-full  w-[35px] h-[35px]">
-            <Image src="/gallery/user2.png" alt="Profile" width={40} height={40} className="object-cover w-full h-full"/>
-          </Link>
-        )}
+            <Link href="/pages/login" className="font-semibold rounded-full w-[30px] h-[30px]">
+              <img width="30" height="30" src="https://img.icons8.com/material-sharp/48/user-male-circle.png" alt="user-male-circle" className="max-w-[30px] max-h-[30px] bg-white overflow-hidden rounded-full " />
+            </Link>
+          )}
         </li>
       </ul>
       <div className="max-sm:hidden flex items-center relative" ref={dropdownRef}>
         {isClient && (
-          <button onClick={handleProfileClick} className="flex items-center  w-[35px] h-[35px] rounded-full">
-            <Image src="/gallery/user2.png" alt="Profile" width={40} height={40} className="object-cover w-full h-full"/>
-          </button>
+          <div onClick={handleProfileClick} className="w-[30px] h-[30px]  rounded-full">
+            <img width="30" height="30" src="https://img.icons8.com/material-sharp/48/user-male-circle.png" alt="user-male-circle" className="max-w-[30px] max-h-[30px] bg-white overflow-hidden rounded-full " />
+          </div>
         )}
         {dropdownOpen && (
-          <div className={`origin-top-right absolute right-0 mt-24 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${role === 'artist' ? 'mt-[132px]':'mt-24'}`}>
+          <div className={`origin-top-right absolute right-0 mt-24 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 ${role === 'artist' ? 'mt-[132px]' : 'mt-24'}`}>
             {renderDropdownContent()}
           </div>
         )}

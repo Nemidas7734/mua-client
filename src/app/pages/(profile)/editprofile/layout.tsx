@@ -24,16 +24,16 @@ export default function EditLayout({
                         </div>
                         <ul className={`flex justify-center items-center gap-6 max-sm:bg-gradient-to-r from-[#FFBCE1] via-[#F27BBD] to-[#FFBCE1] flex-col w-full left-0 z-40 absolute md:z-auto md:static md:w-auto md:flex md:flex-row md:items-center md:justify-between md:py-0 py-4 md:pl-0  md:gap-12 md:opacity-100 transition-all ease-in duration-500 ${open ? 'top-[38px] opacity-100' : 'top-[-400px] opacity-0'}`}>
                             <li className="text-white font-medium text-base"><a href="/">Home</a></li>
-                            <li className="text-white font-medium text-base"><a href="/#gallery">Gallery</a></li>
+                            <li className="text-white font-medium text-base"><Link href="/#gallery">Gallery</Link></li>
                             <li className="text-white font-medium text-base"><a href="/#about">About</a></li>
-                            <li className="md:hidden m-auto w-[35px] h-[35px] rounded-full">
+                            <li className="md:hidden m-auto w-[30px] h-[30px] rounded-full">
                                 <Link href="/pages/artistprofile">
-                                <Image src="/gallery/user2.png" alt="Profile" width={35} height={35} />
+                                    <img width="30" height="30" src="https://img.icons8.com/material-sharp/48/user-male-circle.png" alt="user-male-circle" className="max-w-[30px] max-h-[30px] bg-white overflow-hidden rounded-full " />
                                 </Link>
                             </li>
                         </ul>
                         <Link href="/pages/artistprofile">
-                            <Image src="/gallery/user2.png" alt="" width={35} height={35} quality={100} className="object-cover max-sm:hidden" />
+                            <img width="30" height="30" src="https://img.icons8.com/material-sharp/48/user-male-circle.png" alt="user-male-circle" className="max-w-[30px] max-h-[30px] bg-white overflow-hidden rounded-full " />
                         </Link>
                         <span className="md:hidden block mx-4" onClick={() => setOpen(!open)}>
                             {open ? <Image

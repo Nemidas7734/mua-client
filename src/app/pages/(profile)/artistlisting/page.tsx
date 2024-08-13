@@ -68,7 +68,7 @@ export default function ArtistListing() {
   };
 
   return (
-    <div className="container mx-auto px-4 pt-16"> 
+    <div className="container mx-auto px-4 pt-8 md:pt-16"> 
       <div className='relative w-64 mb-5 z-30' ref={dropdownRef}> 
         <div className='flex items-center border border-gray-300 rounded-md overflow-hidden'>
           <div className='p-2'>

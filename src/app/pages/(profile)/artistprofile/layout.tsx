@@ -93,18 +93,18 @@ export default function ArtistProfileLayout({
                             <li className="md:hidden text-base m-auto px-5 pb-[2px] md:px-4 md:py-1 rounded-full w-20 md:w-auto">
                                 {isClient && user ? (
                                     role === 'artist' ? (
-                                        <button onClick={handleLogout} className="relative  h-[35px] w-[35px] font-semibold rounded-full">
-                                            <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
+                                        <button onClick={handleLogout} className="relative  h-[30px] w-[30px] font-semibold rounded-full">
+                                            <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/logout-rounded.png" alt="logout-rounded" className="max-w-8 max-h-8 bg-white rounded-full" />
                                         </button>
 
                                     ) : (
-                                        <button onClick={handleLogout} className="relative  h-[35px] w-[35px] font-semibold rounded-full">
-                                            <Image src="/gallery/user-logout.png" alt="Profile" width={35} height={35} className="p-1 mx-[2px]" />
+                                        <button onClick={handleLogout} className="relative h-[30px] w-[30px] font-semibold rounded-full">
+                                            <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/logout-rounded.png" alt="logout-rounded" className="max-w-8 max-h-8 bg-white rounded-full" />
                                         </button>
                                     )
                                 ) : (
                                     <Link href="/pages/login" className="font-semibold rounded-full">
-                                        <Image src="/gallery/user2.png" alt="Profile" width={35} height={35} />
+                                        <img width="30" height="30" src="https://img.icons8.com/material-sharp/48/user-male-circle.png" alt="user-male-circle" className="max-w-[30px] max-h-[30px] bg-white overflow-hidden rounded-full " />
                                     </Link>
                                 )}
                             </li>
@@ -112,7 +112,7 @@ export default function ArtistProfileLayout({
                         <div className="max-sm:hidden flex items-center relative" ref={dropdownRef}>
                             {isClient && (
                                 <button onClick={handleProfileClick} className="flex items-center  w-[35px] h-[35px] rounded-full">
-                                    <Image src="/gallery/user2.png" alt="Profile" width={40} height={40} className="object-cover w-full h-full" />
+                                    <img width="30" height="30" src="https://img.icons8.com/material-sharp/48/user-male-circle.png" alt="user-male-circle" className="max-w-[30px] max-h-[30px] bg-white overflow-hidden rounded-full " />
                                 </button>
                             )}
                             {dropdownOpen && (

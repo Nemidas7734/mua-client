@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import {  useFormStatus } from "react-dom";
 import { useRouter } from 'next/navigation';
 import { registerForm } from "@/app/firebase/utils/firebase";
-import { ArtistFormData, FormState, step1Schema, step2Schema, step3Schema } from '@/app/lib/validationSchema';
+import { ArtistFormData, FormState, step1Schema, step2Schema, step3Schema } from '@/app/lib/schema/validationSchema';
 import { useAuthStore } from '@/app/lib/store/authStore';
 import { createUserDocument, createArtistDocument } from '@/app/firebase/utils/firebase';
 import { LoadingSpinner } from "@/app/components/ui/Loading";
