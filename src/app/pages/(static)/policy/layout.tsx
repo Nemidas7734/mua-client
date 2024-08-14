@@ -1,6 +1,6 @@
 
-import Footer from "@/app/components/home/Footer";
-import Navbar from "@/app/components/home/Navbar";
+import Footer from "@/app/components/home/(layout)/Footer";
+import Navbar from "@/app/components/home/(layout)/Navbar";
 
 
 

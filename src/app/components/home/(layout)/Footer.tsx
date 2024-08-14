@@ -28,7 +28,7 @@ export default function Footer() {
                     <div className=" flex flex-col md:pl-[88px] pt-2 md:pt-0">
                         <p className="font-normal w-[170px] md:w-[187px] pr-3 md:pr-0 text-sm text-wrap text-white font-[sans-serif]">Are you a makeup artist ? Join the MUA community and spread your business all across your city.</p>
                         <Link href="/pages/register">
-                            <h1 className="font-bold text-sm text-white mt-10 font-[sans-serif]">Registser Yourself !</h1>
+                            <h1 className="font-bold underline underline-offset-4 text-sm text-white mt-10 font-[sans-serif]">Registser Yourself !</h1>
                         </Link>
                     </div>
                     <div className="max-sm:hidden pl-[88px]">
@@ -84,8 +84,8 @@ export default function Footer() {
                     </div>
                 </div>
             </div>
-            <div className="w-full h-6 bg-[#706C6C] flex justify-center items-center">
-                <h1 className="font-normal font-[sans-serif] text-[12px] text-white">&copy; Copyright 2024 MUA. ALL rights reserved.</h1>
+            <div className="w-full h-5 bg-[#706C6C] flex justify-center items-center">
+                <h1 className="font-normal font-[sans-serif] text-[11px] text-white">&copy; Copyright 2024 MUA. ALL rights reserved.</h1>
             </div>
         </section>
     )

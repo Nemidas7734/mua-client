@@ -3,8 +3,8 @@
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { db } from "../firebase_config";
 import { doc, setDoc } from "firebase/firestore";
-import { artistSchema, ArtistFormData, FormState } from '@/app/lib/validationSchema';
-import { boolean, z } from 'zod';
+import { artistSchema, ArtistFormData, FormState } from '@/app/lib/schema/validationSchema';
+import { z } from 'zod';
 import { initializeApp, getApps, getApp } from 'firebase/app';
 
 const firebaseConfig = {
@@ -28,6 +28,14 @@ export const registerForm = async (prevState: FormState, formData: FormData): Pr
     data.role = 'artist';
 
     const validatedData = artistSchema.parse(data);
+
+    // // If you need to convert certain fields to numbers after validation:
+    // const finalData = {
+    //   ...validatedData,
+    //   mobNo: parseInt(validatedData.mobNo, 10),
+    //   workExp: parseInt(validatedData.workExp, 10),
+    //   adharNo: parseInt(validatedData.adharNo, 10),
+    // };
 
     // Initialize Firebase on the server
     const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

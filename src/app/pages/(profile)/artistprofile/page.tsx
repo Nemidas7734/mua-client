@@ -23,6 +23,7 @@ interface ArtistData extends DocumentData {
   coverImageUrl?: string;
   profileImageUrl?: string;
   description: string;
+  skills: string;
   startingPrice: number;
   galleryUrls: string[];
   reviews: Array<{

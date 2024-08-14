@@ -11,6 +11,7 @@ interface EditInfoProps {
         contactNumber: string
         description: string
         expertise: string
+        skills: string
         startingPrice: string
     }
     onInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
@@ -98,8 +99,17 @@ export default function EditInfo({
                 <input name="whatsappNumber" value={profileData.whatsappNumber} onChange={onInputChange} className="w-full h-10 border p-2 rounded-md border-stone-700 font-normal placeholder:text-black" placeholder="WhatsApp Number" />
                 <input name="contactNumber" value={profileData.contactNumber} onChange={onInputChange} className="w-full h-10 border p-2 rounded-md border-stone-700 font-normal placeholder:text-black" placeholder="Contact Number" />
                 <textarea name="description" value={profileData.description} onChange={onInputChange} className="w-full h-24 border p-2 rounded-md border-stone-700 font-normal placeholder:text-black sm:col-span-2" placeholder="Description" />
-                <input name="expertise" value={profileData.expertise} onChange={onInputChange} className="w-full h-10 border p-2 rounded-md border-stone-700 font-normal placeholder:text-black" placeholder="Expertise" />
-                <input name="startingPrice" value={profileData.startingPrice} onChange={onInputChange} className="w-full h-10 border p-2 rounded-md border-stone-700 font-normal placeholder:text-black" placeholder="Starting Price" />
+                <input name="expertise" value={profileData.expertise} onChange={onInputChange} className="w-full h-10 border p-2 rounded-md border-stone-700 font-normal placeholder:text-black" placeholder="Expertise (comma-separated)" />
+                <input
+                    name="skills"
+                    value={profileData.skills || ''}
+                    onChange={(e) => onInputChange({
+                        ...e,
+                        target: { ...e.target, value: e.target.value.toString() }
+                    })}
+                    className="w-full h-10 border p-2 rounded-md border-stone-700 font-normal placeholder:text-black"
+                    placeholder="Skills (comma-separated)"
+                />            
             </div>
         </div>
     )

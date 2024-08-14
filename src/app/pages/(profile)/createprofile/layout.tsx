@@ -1,6 +1,6 @@
 'use client'
 
-import Footer from "@/app/components/home/Footer";
+import Footer from "@/app/components/home/(layout)/Footer";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -33,7 +33,7 @@ export default function EditLayout({
                             </li>
                         </ul>
                         <Link href="/pages/login">
-                            <Image src="/gallery/woman.png" alt="" width={35} height={35} quality={100} className="object-cover max-sm:hidden" />
+                            <img width="30" height="30" src="https://img.icons8.com/material-sharp/48/user-male-circle.png" alt="user-male-circle" className="max-w-[30px] max-h-[30px] bg-white overflow-hidden rounded-full " />
                         </Link>
                         <span className="md:hidden block mx-4" onClick={() => setOpen(!open)}>
                             {open ? <Image

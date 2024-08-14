@@ -8,8 +8,8 @@ import Blogs from "./components/home/Blogs";
 import Hero from "./components/home/Hero";
 import About from "./components/home/About";
 import Faq from "./components/home/Faq";
-import Navbar from "./components/home/Navbar";
-import Footer from "./components/home/Footer";
+import Navbar from "./components/home/(layout)/Navbar";
+import Footer from "./components/home/(layout)/Footer";
 
 export default function Home() {
   return (

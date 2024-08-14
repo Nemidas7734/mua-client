@@ -68,7 +68,7 @@ export default function ArtistListing() {
   };
 
   return (
-    <div className="container mx-auto px-4 pt-8 md:pt-16"> 
+    <div className="container mx-auto px-4 pt-10 md:pt-20"> 
       <div className='relative w-64 mb-5 z-30' ref={dropdownRef}> 
         <div className='flex items-center border border-gray-300 rounded-md overflow-hidden'>
           <div className='p-2'>
@@ -103,7 +103,7 @@ export default function ArtistListing() {
         Makeup Artists in {searchTerm || 'All Cities'}
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
         {filteredArtists.map(artist => (
           <ArtistCard key={artist.id} artist={artist} />
         ))}

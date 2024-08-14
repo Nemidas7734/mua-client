@@ -7,21 +7,38 @@ import 'swiper/css/pagination';
 import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 
 interface ArtistData {
-  description: string;
-  startingPrice: number;
-  galleryUrls: string[];
-}
-
+    description: string;
+    startingPrice: number;
+    galleryUrls: string[];
+    skills: string | number | boolean | null | undefined;
+  }
 interface ArtistAboutProps {
-  artistData: ArtistData;
+    artistData: ArtistData;
 }
 
 export default function ArtistAbout({ artistData }: ArtistAboutProps) {
     return (
-        <section className="max-sm:grid max-sm:grid-rows-2 md:grid md:grid-cols-2 md:gap-2 w-full md:w-[1120px] h-[420px] md:h-[348px] rounded-xl border-2 shadow-2xl shadow-[#0000001F] md:mt-2">
-            <div className="flex flex-col gap-10 md:gap-32 pl-6 md:pl-12">
+        <section className="max-sm:grid max-sm:grid-rows-3 md:grid md:grid-cols-2 md:gap-2 w-full md:w-[1120px] rounded-xl border-2 shadow-2xl shadow-[#0000001F] md:mt-2">
+            <div className="flex flex-col gap-6 md:gap-10 pl-6 md:pl-12">
                 <p className="max-w-[330px] text-wrap text-sm md:text-lg font-normal pt-5">{artistData.description}</p>
-                <div className="">
+                <div>
+                    <h2 className="font-semibold text-base md:text-xl mb-2">Skills</h2>
+                    <div className="flex flex-wrap gap-2">
+                        {typeof artistData.skills === 'string'
+                            ? artistData.skills.split(',').map((skill, index) => (
+                                <span key={index} className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                    {skill.trim()}
+                                </span>
+                            ))
+                            : artistData.skills
+                                ? <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                                    {String(artistData.skills)}
+                                </span>
+                                : <span className="text-gray-500">No skills listed</span>
+                        }
+                    </div>
+                </div>
+                <div className="mb-4">
                     <h1 className="w-[265px] font-semibold text-base md:text-xl">Starting Price</h1>
                     <h1 className="font-semibold text-base md:text-xl text-[#EA2793]">Rs. {artistData.startingPrice} onwards</h1>
                 </div>
@@ -49,12 +66,12 @@ export default function ArtistAbout({ artistData }: ArtistAboutProps) {
                     modules={[Autoplay, EffectCoverflow]}
                     className="w-full h-full"
                 >
-                    {artistData?.galleryUrls.map((url, index) => (
+                    {artistData?.galleryUrls?.map((url, index) => (
                         <SwiperSlide key={index} className="w-full h-full">
                             <div className="relative w-full h-full">
-                                <Image 
-                                    src={url} 
-                                    alt={`Slide_image_${index + 1}`} 
+                                <Image
+                                    src={url}
+                                    alt={`Slide_image_${index + 1}`}
                                     layout="fill"
                                     objectFit="cover"
                                     className="rounded-xl"

@@ -5,7 +5,7 @@ const step1Schema = z.object({
   name: z.string().min(1, "First Name is required"),
   lastName: z.string().min(1, "Last Name is required"),
   dob: z.string().min(1, "Date of Birth is required"),
-  mobNo: z.string().length(10, "Mobile number must be 10 digits"),
+  mobNo: z.string().refine((val) => /^\d{10}$/.test(val), "Mobile number must be 10 digits"),
   email: z.string().email("Invalid email address"),
   password: z.string().min(6,"Invalid password"),
   gender: z.string().min(1, "Gender is required"),
@@ -20,10 +20,10 @@ const step2Schema = z.object({
 
 const step3Schema = z.object({
     shopActLicence: z.string().optional(),
-    workExp: z.string().min(1, "Work experience is required"),
-    adharNo: z.string().length(12, "Adhar number must be 12 digits"),
+    workExp: z.string().refine((val) => /^\d+$/.test(val), "Work experience must be a number"),
+    adharNo: z.string().refine((val) => /^\d{12}$/.test(val), "Aadhaar number must be 12 digits"),
     pancard: z.string().optional(),
-  });
+});
 
 const role = z.object({role: z.string().default('artist')})
 
@@ -31,13 +31,9 @@ export const artistSchema = step1Schema.merge(step2Schema).merge(step3Schema).me
 
 export type ArtistFormData = z.infer<typeof artistSchema>;
 
-
-
 export type FormState = {
   message: 'success' | 'validation_error' | 'error'| '';
   errors?: ZodIssue[];
 };
-
-
 
 export { step1Schema, step2Schema, step3Schema };

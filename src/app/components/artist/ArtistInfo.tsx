@@ -2,24 +2,24 @@ import Image from "next/image"
 import Ratings from "./Ratings"
 
 interface ArtistData {
-  name: string;
-  location: string;
-  expertise: string;
-  coverImageUrl?: string;
-  profileImageUrl?: string;
-}
+    name: string;
+    location: string;
+    expertise: string | number | boolean | null | undefined;
+    coverImageUrl?: string;
+    profileImageUrl?: string;
+  }
 
 interface ArtistInfoProps {
-  artistData: ArtistData;
+    artistData: ArtistData;
 }
 
 export default function ArtistInfo({ artistData }: ArtistInfoProps) {
     return (
         <div className="w-full max-w-[1120px] mx-auto rounded-xl border-2 shadow-2xl shadow-[#0000001F] mt-4 sm:mt-10 md:mt-20 overflow-hidden">
             <div className="relative w-full h-32 sm:h-48 md:h-64 lg:h-[356px]">
-                <Image 
-                    src={artistData.coverImageUrl || "/images/Hero.png"} 
-                    alt="Cover photo" 
+                <Image
+                    src={artistData.coverImageUrl || "/images/Hero.png"}
+                    alt="Cover photo"
                     layout="fill"
                     objectFit="cover"
                     className="rounded-t-xl"
@@ -42,7 +42,20 @@ export default function ArtistInfo({ artistData }: ArtistInfoProps) {
             <div className="flex flex-col px-4 sm:px-6 md:px-8 pt-12 sm:pt-16 md:pt-20 pb-6">
                 <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">{artistData.name}</h1>
                 <h2 className="font-normal text-sm sm:text-base md:text-lg lg:text-xl mt-1">{artistData.location}</h2>
-                <p className="font-normal text-xs sm:text-sm md:text-base mt-1">{artistData.expertise}</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                    {typeof artistData.expertise === 'string'
+                        ? artistData.expertise.split(',').map((exp, index) => (
+                            <span key={index} className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                {exp.trim()}
+                            </span>
+                        ))
+                        : artistData.expertise
+                            ? <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                                {String(artistData.expertise)}
+                            </span>
+                            : null
+                    }
+                </div>
                 <div className="mt-2">
                     <Ratings />
                 </div>

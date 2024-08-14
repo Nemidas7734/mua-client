@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useRef } from "react";
-import {  useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { useRouter } from 'next/navigation';
-import { registerForm } from "@/app/firebase/utils/firebase";
+// import { registerForm } from "@/app/firebase/utils/firebase";
 import { ArtistFormData, FormState, step1Schema, step2Schema, step3Schema } from '@/app/lib/schema/validationSchema';
 import { useAuthStore } from '@/app/lib/store/authStore';
 import { createUserDocument, createArtistDocument } from '@/app/firebase/utils/firebase';
@@ -14,11 +14,12 @@ import { LoadingSpinner } from "@/app/components/ui/Loading";
 //     message: '',
 // };
 
+// Update the initialFormData
 const initialFormData: Partial<ArtistFormData> = {
     name: '',
     lastName: '',
     dob: '',
-    mobNo: '',
+    mobNo: '', 
     email: '',
     password: '',
     gender: '',
@@ -27,10 +28,12 @@ const initialFormData: Partial<ArtistFormData> = {
     state: '',
     region: '',
     shopActLicence: '',
-    workExp: '',
-    adharNo: '',
+    workExp: '', 
+    adharNo: '', 
     pancard: '',
 };
+
+
 
 
 
@@ -74,8 +77,10 @@ export default function Register() {
     // }, [state]);
 
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
+
         setFormData(prev => ({ ...prev, [name]: value }));
         if (errors[name]) {
             setErrors(prev => ({ ...prev, [name]: '' }));
@@ -122,7 +127,7 @@ export default function Register() {
         e.preventDefault();
         const isValid = await validateStep();
         if (isValid) {
-        setIsLoading(true);
+            setIsLoading(true);
             try {
                 // Register user in Firebase Authentication
                 const userCredential = await register(formData.email!, formData.password!);
@@ -157,7 +162,7 @@ export default function Register() {
                 } else {
                     throw new Error('User registration failed');
                 }
-            } catch (error :any) {
+            } catch (error: any) {
                 // Handle Firebase Authentication errors specifically
                 if (error.code === 'auth/email-already-in-use') {
                     setErrors({ general: 'Email address is already in use' });
@@ -177,31 +182,53 @@ export default function Register() {
                 return (
                     <div className="max-w-[640px] grid grid-cols-1 justify-between m-auto sm:grid-cols-2 gap-4">
                         <div>
-                            <input type="text" name="name" placeholder="First Name" onChange={handleInputChange} value={formData.name || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="name" className="block text-sm font-medium text-white mb-1">First Name</label>
+                            <input type="text" id="name" name="name" onChange={handleInputChange} value={formData.name || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.name && <p className="p-1 px-4 text-black text-xs mt-1">{errors.name}</p>}
                         </div>
                         <div>
-                            <input type="text" name="lastName" placeholder="Last Name" onChange={handleInputChange} value={formData.lastName || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="lastName" className="block text-sm font-medium text-white mb-1">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" onChange={handleInputChange} value={formData.lastName || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.lastName && <p className="p-1 px-4 text-black text-xs mt-1">{errors.lastName}</p>}
                         </div>
                         <div>
-                            <input type="date" name="dob" placeholder="DOB" onChange={handleInputChange} value={formData.dob || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="dob" className="block text-sm font-medium text-white mb-1">Date of Birth</label>
+                            <input type="date" id="dob" name="dob" onChange={handleInputChange} value={formData.dob || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.dob && <p className="p-1 px-4 text-black text-xs mt-1">{errors.dob}</p>}
                         </div>
                         <div>
-                            <input type="tel" name="mobNo" placeholder="Mobile Number" onChange={handleInputChange} value={formData.mobNo || ''} required maxLength={10} className="rounded-full h-12 p-4 bg-white w-full" />
-                            {errors.mobNo && <p className="p-1 px-4 text-black text-xs mt-1">{errors.mobNo}</p>}
+                            <label htmlFor="mobNo" className="block text-sm font-medium text-white mb-1">Mobile Number</label>
+                            <input
+                                type="tel"
+                                id="mobNo"
+                                name="mobNo"
+                                onChange={handleInputChange}
+                                value={formData.mobNo || ''}
+                                required
+                                pattern="[0-9]{10}"
+                                maxLength={10}
+                                className="rounded-lg h-12 p-4 bg-white w-full"
+                            />
+                            {errors.mobNo && <p className="p-1 px-4 text-red-500 text-xs mt-1">{errors.mobNo}</p>}
                         </div>
                         <div>
-                            <input type="email" name="email" placeholder="Email" onChange={handleInputChange} value={formData.email || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="email" className="block text-sm font-medium text-white mb-1">Email</label>
+                            <input type="email" id="email" name="email" onChange={handleInputChange} value={formData.email || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.email && <p className="p-1 px-4 text-black text-xs mt-1">{errors.email}</p>}
                         </div>
                         <div>
-                            <input type="password" name="password" placeholder="Password" onChange={handleInputChange} value={formData.password || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="password" className="block text-sm font-medium text-white mb-1">Password</label>
+                            <input type="password" id="password" name="password" onChange={handleInputChange} value={formData.password || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.password && <p className="p-1 px-4 text-black text-xs mt-1">{errors.password}</p>}
                         </div>
                         <div>
-                            <input type="text" name="gender" placeholder="Gender" onChange={handleInputChange} value={formData.gender || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="gender" className="block text-sm font-medium text-white mb-1">Gender</label>
+                            <select id="gender" name="gender" onChange={handleInputChange} value={formData.gender || ''} required className="rounded-lg h-12 p-4 bg-white w-full">
+                                <option value="">Select Gender</option>
+                                <option value="female">Female</option>
+                                <option value="male">Male</option>
+                                <option value="other">Other</option>
+                            </select>
                             {errors.gender && <p className="p-1 px-4 text-black text-xs mt-1">{errors.gender}</p>}
                         </div>
                     </div>
@@ -210,19 +237,23 @@ export default function Register() {
                 return (
                     <div className="max-w-[640px] grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="col-span-full">
-                            <input type="text" name="address" placeholder="Address" onChange={handleInputChange} value={formData.address || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="address" className="block text-sm font-medium text-white mb-1">Address</label>
+                            <input type="text" id="address" name="address" onChange={handleInputChange} value={formData.address || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.address && <p className="p-1 px-4 text-black text-xs mt-1">{errors.address}</p>}
                         </div>
                         <div>
-                            <input type="text" name="city" placeholder="City" onChange={handleInputChange} value={formData.city || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="city" className="block text-sm font-medium text-white mb-1">City</label>
+                            <input type="text" id="city" name="city" onChange={handleInputChange} value={formData.city || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.city && <p className="p-1 px-4 text-black text-xs mt-1">{errors.city}</p>}
                         </div>
                         <div>
-                            <input type="text" name="state" placeholder="State" onChange={handleInputChange} value={formData.state || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="state" className="block text-sm font-medium text-white mb-1">State</label>
+                            <input type="text" id="state" name="state" onChange={handleInputChange} value={formData.state || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.state && <p className="p-1 px-4 text-black text-xs mt-1">{errors.state}</p>}
                         </div>
                         <div>
-                            <input type="text" name="region" placeholder="Region" onChange={handleInputChange} value={formData.region || ''} required className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="region" className="block text-sm font-medium text-white mb-1">Region</label>
+                            <input type="text" id="region" name="region" onChange={handleInputChange} value={formData.region || ''} required className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.region && <p className="p-1 px-4 text-black text-xs mt-1">{errors.region}</p>}
                         </div>
                     </div>
@@ -231,19 +262,43 @@ export default function Register() {
                 return (
                     <div className="max-w-[340px] left-0 grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div className="col-span-full">
-                            <input type="text" name="shopActLicence" placeholder="Shop Act Licence" onChange={handleInputChange} value={formData.shopActLicence || ''} className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="shopActLicence" className="block text-sm font-medium text-white mb-1">Shop Act Licence</label>
+                            <input type="text" id="shopActLicence" name="shopActLicence" onChange={handleInputChange} value={formData.shopActLicence || ''} className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.shopActLicence && <p className="p-1 px-4 text-black text-xs mt-1">{errors.shopActLicence}</p>}
                         </div>
                         <div className="col-span-full">
-                            <input type="text" name="workExp" placeholder="Work Experience" required onChange={handleInputChange} value={formData.workExp || ''} className="rounded-full h-12 p-4 bg-white w-full" />
-                            {errors.workExp && <p className="p-1 px-4 text-black text-xs mt-1">{errors.workExp}</p>}
+                            <label htmlFor="workExp" className="block text-sm font-medium text-white mb-1">Work Experience (years)</label>
+                            <input
+                                type="number"
+                                id="workExp"
+                                name="workExp"
+                                onChange={handleInputChange}
+                                value={formData.workExp || ''}
+                                required
+                                min="0"
+                                step="1"
+                                className="rounded-lg h-12 p-4 bg-white w-full"
+                            />
+                            {errors.workExp && <p className="p-1 px-4 text-red-500 text-xs mt-1">{errors.workExp}</p>}
                         </div>
                         <div className="col-span-full">
-                            <input type="text" name="adharNo" placeholder="Adhar Number" required onChange={handleInputChange} value={formData.adharNo || ''} className="rounded-full h-12 p-4 bg-white w-full" />
-                            {errors.adharNo && <p className="p-1 px-4 text-black text-xs mt-1">{errors.adharNo}</p>}
+                            <label htmlFor="adharNo" className="block text-sm font-medium text-white mb-1">Aadhaar Number</label>
+                            <input
+                                type="tel"
+                                id="adharNo"
+                                name="adharNo"
+                                onChange={handleInputChange}
+                                value={formData.adharNo || ''}
+                                required
+                                pattern="[0-9]{12}"
+                                maxLength={12}
+                                className="rounded-lg h-12 p-4 bg-white w-full"
+                            />
+                            {errors.adharNo && <p className="p-1 px-4 text-red-500 text-xs mt-1">{errors.adharNo}</p>}
                         </div>
                         <div className="col-span-full">
-                            <input type="text" name="pancard" placeholder="PAN Card" onChange={handleInputChange} value={formData.pancard || ''} className="rounded-full h-12 p-4 bg-white w-full" />
+                            <label htmlFor="pancard" className="block text-sm font-medium text-white mb-1">PAN Card</label>
+                            <input type="text" id="pancard" name="pancard" onChange={handleInputChange} value={formData.pancard || ''} pattern="[A-Z]{5}[0-9]{4}[A-Z]{1}" className="rounded-lg h-12 p-4 bg-white w-full" />
                             {errors.pancard && <p className="p-1 px-4 text-black text-xs mt-1">{errors.pancard}</p>}
                         </div>
                     </div>

@@ -13,6 +13,17 @@ export default function EditGallery({ onGalleryImagesChange, existingGalleryUrls
         [...existingGalleryUrls, ...Array(12 - existingGalleryUrls.length).fill(null)]
     )
     const [files, setFiles] = useState<(File | null)[]>(Array(12).fill(null))
+    const [warningMessage, setWarningMessage] = useState("");
+
+
+    useEffect(() => {
+        const imageCount = images.filter(img => img !== null).length;
+        if (imageCount < 6) {
+            setWarningMessage("Please upload at least 6 images to your gallery.");
+        } else {
+            setWarningMessage("");
+        }
+    }, [images]);
 
     useEffect(() => {
         setImages([...existingGalleryUrls, ...Array(12 - existingGalleryUrls.length).fill(null)])
@@ -50,6 +61,9 @@ export default function EditGallery({ onGalleryImagesChange, existingGalleryUrls
     return (
         <div className="flex flex-col gap-6 items-center w-full max-w-[1120px] mx-auto rounded-xl border-2 shadow-2xl shadow-[#0000001F] p-4 sm:p-6 md:p-8">
             <h1 className="font-semibold text-xl sm:text-2xl">Gallery</h1>
+            {warningMessage && (
+                <p className="text-red-500 text-sm">{warningMessage}</p>
+            )}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                 {images.map((image, index) => (
                     <div key={index} className="relative w-full max-w-[190px] h-[190px] md:h-[254px] aspect-[3/4] bg-[#DADADA] rounded-xl border border-black overflow-hidden">
