@@ -10,6 +10,7 @@ interface Artist {
   name: string;
   location: string;
   experience: string;
+  expertise : string;
   startingPrice: number;
   profileImageUrl: string;
 }
