@@ -22,6 +22,7 @@ export default function EditArtistProfile() {
         contactNumber: '',
         description: '',
         expertise: '',
+        skills: '',
         startingPrice: '',
     })
     const [coverImage, setCoverImage] = useState<File | null>(null)
@@ -55,6 +56,7 @@ export default function EditArtistProfile() {
                     contactNumber: data.contactNumber || '',
                     description: data.description || '',
                     expertise: data.expertise || '',
+                    skills: data.skills || '',
                     startingPrice: data.startingPrice || '',
                 })
 
