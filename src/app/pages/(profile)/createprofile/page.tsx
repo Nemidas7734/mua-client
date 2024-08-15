@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/app/lib/store/authStore'
 import CreateInfo from "@/app/components/profile/CreateInfo"
 import CreateGallery from "@/app/components/profile/CreateGallery"
-import { doc, setDoc, getDoc } from "firebase/firestore"
+import { doc, updateDoc, getDoc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { db, storage } from "@/app/firebase/firebase_config"
 
@@ -78,44 +78,50 @@ export default function CreateArtistProfile() {
 
     const handleCreateProfile = async () => {
         if (!user) return
-
+    
         setError(null)
         setIsLoading(true)
-
+    
         if (galleryImages.length < 6) {
             setError("Please upload at least 6 gallery images.")
             setIsLoading(false)
             return
         }
-
+    
         try {
             const artistRef = doc(db, 'Artists', user.uid)
-            const updateData: any = { ...profileData }
-
+            
+            // First, get the existing document
+            const artistDoc = await getDoc(artistRef)
+            const existingData = artistDoc.data() || {}
+    
+            const updateData: any = { ...existingData, ...profileData }
+    
             if (coverImage) {
                 updateData.coverImageUrl = await uploadImage(coverImage, `artists/${user.uid}/cover.jpg`)
             }
-
+    
             if (profileImage) {
                 updateData.profileImageUrl = await uploadImage(profileImage, `artists/${user.uid}/profile.jpg`)
             }
-
+    
             const galleryUrls = await Promise.all(
                 galleryImages.map((file, index) =>
                     uploadImage(file, `artists/${user.uid}/gallery/${index}.jpg`)
                 )
             )
             updateData.galleryUrls = galleryUrls
-
-            await setDoc(artistRef, updateData)
-            alert('Profile created successfully!')
+    
+            // Use updateDoc instead of setDoc
+            await updateDoc(artistRef, updateData)
+            alert('Profile updated successfully!')
             router.push('/pages/artistprofile')
         } catch (error) {
-            console.error('Error creating profile:', error);
+            console.error('Error updating profile:', error);
             if (error instanceof Error) {
                 setError(`An error occurred: ${error.message}`);
             } else {
-                setError('An unknown error occurred while creating the profile.');
+                setError('An unknown error occurred while updating the profile.');
             }
         } finally {
             setIsLoading(false)
