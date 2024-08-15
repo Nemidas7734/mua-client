@@ -7,13 +7,31 @@ interface ArtistData {
     expertise: string | number | boolean | null | undefined;
     coverImageUrl?: string;
     profileImageUrl?: string;
-  }
+}
 
 interface ArtistInfoProps {
     artistData: ArtistData;
 }
 
 export default function ArtistInfo({ artistData }: ArtistInfoProps) {
+    // Function to render expertise badges
+    const renderExpertiseBadges = () => {
+        if (Array.isArray(artistData.expertise)) {
+            return artistData.expertise.map((exp, index) => (
+                <span key={index} className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-green-600/20 whitespace-nowrap">
+                    {exp}
+                </span>
+            ));
+        } else if (typeof artistData.expertise === 'string' && artistData.expertise.trim() !== '') {
+            return artistData.expertise.split(',').map((exp, index) => (
+                <span key={index} className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 whitespace-nowrap">
+                    {exp.trim()}
+                </span>
+            ));
+        }
+        return <span className="text-gray-500">No expertise listed</span>;
+    };
+
     return (
         <div className="w-full max-w-[1120px] mx-auto rounded-xl border-2 shadow-2xl shadow-[#0000001F] mt-4 sm:mt-10 md:mt-20 overflow-hidden">
             <div className="relative w-full h-32 sm:h-48 md:h-64 lg:h-[356px]">
@@ -43,18 +61,7 @@ export default function ArtistInfo({ artistData }: ArtistInfoProps) {
                 <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">{artistData.name}</h1>
                 <h2 className="font-normal text-sm sm:text-base md:text-lg lg:text-xl mt-1">{artistData.location}</h2>
                 <div className="flex flex-wrap gap-2 mt-2">
-                    {typeof artistData.expertise === 'string'
-                        ? artistData.expertise.split(',').map((exp, index) => (
-                            <span key={index} className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                {exp.trim()}
-                            </span>
-                        ))
-                        : artistData.expertise
-                            ? <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                                {String(artistData.expertise)}
-                            </span>
-                            : null
-                    }
+                    {renderExpertiseBadges()}
                 </div>
                 <div className="mt-2">
                     <Ratings />

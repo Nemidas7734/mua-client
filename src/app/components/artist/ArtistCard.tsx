@@ -7,7 +7,7 @@ interface Artist {
     name: string;
     location: string;
     experience: string;
-    expertise: string;
+    expertise: string[] | string;
     startingPrice: number;
     profileImageUrl: string;
   }
@@ -19,6 +19,23 @@ export default function ArtistsCard({ artist }: Artist) {
 
   const handleProfile = () => {
     router.push(`/pages/artistprofile?id=${artist.id}`);
+  };
+
+  const renderExpertiseBadges = () => {
+    if (Array.isArray(artist.expertise)) {
+      return artist.expertise.map((exp, index) => (
+        <span key={index} className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 whitespace-nowrap m-1">
+          {exp}
+        </span>
+      ));
+    } else if (typeof artist.expertise === 'string' && artist.expertise.trim() !== '') {
+      return artist.expertise.split(',').map((exp, index) => (
+        <span key={index} className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 whitespace-nowrap m-1">
+          {exp.trim()}
+        </span>
+      ));
+    }
+    return <span className="text-gray-500">No expertise listed</span>;
   };
 
   return (
@@ -38,19 +55,8 @@ export default function ArtistsCard({ artist }: Artist) {
           {artist.location}
         </p>
 
-        <div className="grid grid-flow-col grid-cols-3 md:grid-cols-4 gap-2 md:gap-4 mt-2">
-          {typeof artist.expertise === 'string'
-            ? artist.expertise.split(',').slice(0, 4).map((exp, index) => (
-              <span key={index} className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                {exp.trim()}
-              </span>
-            ))
-            : artist.expertise
-              ? <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                {String(artist.expertise)}
-              </span>
-              : null
-          }
+        <div className="flex flex-wrap -m-1 mt-2">
+          {renderExpertiseBadges()}
         </div>
 
         {/* <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">

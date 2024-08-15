@@ -21,8 +21,8 @@ export default function EditArtistProfile() {
         whatsappNumber: '',
         contactNumber: '',
         description: '',
-        expertise: '',
-        skills: '',
+        expertise: [] as string[],
+        skills: [] as string[],
         startingPrice: '',
     })
     const [coverImage, setCoverImage] = useState<File | null>(null)
@@ -55,11 +55,11 @@ export default function EditArtistProfile() {
                     whatsappNumber: data.whatsappNumber || '',
                     contactNumber: data.contactNumber || '',
                     description: data.description || '',
-                    expertise: data.expertise || '',
-                    skills: data.skills || '',
+                    expertise: Array.isArray(data.expertise) ? data.expertise : (data.expertise ? data.expertise.split(',').map((item: string) => item.trim()) : []),
+                    skills: Array.isArray(data.skills) ? data.skills : (data.skills ? data.skills.split(',').map((item: string) => item.trim()) : []),                
                     startingPrice: data.startingPrice || '',
                 })
-
+    
                 // Set existing image URLs
                 if (data.coverImageUrl) {
                     setCoverImagePreview(data.coverImageUrl)
@@ -104,7 +104,13 @@ export default function EditArtistProfile() {
         return getDownloadURL(storageRef)
     }
 
+    const handleExpertiseChange = (newExpertise: string[]) => {
+        setProfileData(prev => ({ ...prev, expertise: newExpertise }))
+    }
 
+    const handleSkillsChange = (newSkills: string[]) => {
+        setProfileData(prev => ({ ...prev, skills: newSkills }))
+    }
 
 
     const handleSaveChanges = async () => {
@@ -158,6 +164,8 @@ export default function EditArtistProfile() {
                 onProfileImageChange={handleProfileImageChange}
                 coverImagePreview={coverImagePreview}
                 profileImagePreview={profileImagePreview}
+                onExpertiseChange={handleExpertiseChange}
+                onSkillsChange={handleSkillsChange}
             />
             <EditGallery
                 onGalleryImagesChange={handleGalleryImagesChange}
