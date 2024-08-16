@@ -4,7 +4,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
-  verifyPasswordResetCode
+  verifyPasswordResetCode,
+  GoogleAuthProvider,
+  FacebookAuthProvider, 
+  signInWithPopup
 } from "firebase/auth";
 
 type Email = string;
@@ -33,5 +36,16 @@ export const doResetPasword = ( code: string) => {
   return verifyPasswordResetCode (auth, code)
 }
 
+
+const googleProvider = new GoogleAuthProvider();
+const facebookProvider = new FacebookAuthProvider();
+
+export const signInWithGoogle = () => {
+    return signInWithPopup(auth, googleProvider);
+};
+
+export const signInWithFacebook = () => {
+    return signInWithPopup(auth, facebookProvider);
+};
 
 

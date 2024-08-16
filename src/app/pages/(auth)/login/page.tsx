@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/app/lib/store/authStore';
 import { z } from 'zod';
 import Image from 'next/image';
+import { signInWithGoogle, signInWithFacebook } from '@/app/firebase/utils/auth';
+
 
 
 
@@ -40,6 +42,8 @@ const Google = () => {
     )
 }
 
+
+
 export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -71,6 +75,25 @@ export default function Login() {
             }
         }
     };
+
+    const handleGoogleSignIn = async () => {
+        try {
+            await signInWithGoogle();
+            router.push('/pages/artistlisting');
+        } catch (error) {
+            setError('Failed to sign in with Google. Please try again.');
+        }
+    };
+
+    const handleFacebookSignIn = async () => {
+        try {
+            await signInWithFacebook();
+            router.push('/pages/artistlisting');
+        } catch (error) {
+            setError('Failed to sign in with Facebook. Please try again.');
+        }
+    };
+
 
     return (
         <section className="relative bg-white md:bg-[#EA2793] md:grid md:grid-cols-2 w-full min-h-screen">
@@ -110,24 +133,25 @@ export default function Login() {
                             {isLoading ? 'Logging in...' : 'Login'}
                         </button>
                     </div>
-                    <h1 className='text-xs mt-2 md:mb-1'>Forgot Password?</h1>
+                    <Link href="/pages/forgot">
+                        <h1 className='text-xs underline underline-offset-2 mt-2 md:mb-1'>Forgot Password?</h1>
+                    </Link>
                     <h1 className='mt-0 text-pink-500'>or</h1>
                     <h1 className='text-xs md:mt-2 mb-4'>Don&apos;t have an account ? <br className='md:hidden'></br>
                         <Link className='max-sm:ml-5 max-sm:mt-2 underline underline-offset-4 decoration-black  text-pink-500' href="/pages/signup">Create Account</Link></h1>
-                    <div className="flex flex-col items-center justify-center gap-2">
-                        <div className='relative flex justify-center items-center gap-1 h-[39px] md:h-11 w-[311px] md:w-[440px] border-2 border-[#EA279380] rounded-full'>
-                            <div className='relative w-10 h-10'>
-                                <Google />
-                            </div>
-                            <h1 className='text-xs'>Login with google</h1>
+                    <div onClick={handleGoogleSignIn} className='relative flex justify-center items-center gap-1 h-[39px] md:h-11 w-[311px] md:w-[440px] border-2 border-[#EA279380] rounded-full'>
+                        <div className='relative w-10 h-10'>
+                            <Google />
                         </div>
-                        <div className='relative flex justify-center items-center gap-1 h-[39px] md:h-11 w-[311px] md:w-[440px] border-2 border-[#EA279380] rounded-full'>
-                            <div className='relative w-10 h-10'>
-                                <Facebook />
-                            </div>
-                            <h1 className='text-xs'>Login with Facebook</h1>
-                        </div>
+                        <h1 className='text-xs'>Login with Google</h1>
                     </div>
+                    <div onClick={handleFacebookSignIn} className='relative flex justify-center items-center gap-1 h-[39px] md:h-11 w-[311px] md:w-[440px] border-2 border-[#EA279380] rounded-full'>
+                        <div className='relative w-10 h-10'>
+                            <Facebook />
+                        </div>
+                        <h1 className='text-xs'>Login with Facebook</h1>
+                    </div>
+
                     <h1 className='text-xs mt-5 md:mt-14 mb-10'>Are you a makeup artist ? <Link className='underline underline-offset-4 decoration-pink-500 font-bold text-pink-500' href="/pages/register">Yes</Link></h1>
                 </form>
             </div>

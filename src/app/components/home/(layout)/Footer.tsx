@@ -10,7 +10,7 @@ export default function Footer() {
                 <div className="max-sm:flex max-sm:justify-between md:m-auto md:grid md:grid-cols-4 mt-5 md:mt-20 w-full max-w-[360px] md:max-w-[1120px]">
                     <div className="max-sm:hidden pl-10">
                         <Link href="https://www.bookyourmua.com/">
-                            <h1 className="text-2xl text-white font-[sans-serif] mb-4">www.bookyourmua.com</h1>
+                            <h1 className="text-2xl text-white underline underline-offset-8 font-[sans-serif] mb-4">www.bookyourmua.com</h1>
                         </Link>
                         <p className="w-[280px] text-wrap text-white text-xl  font-[sans-serif]">&quot;Beauty At Your Fingertips: Your Ultimate Make-Up Artist Booking Place.&quot;</p>
                     </div>
