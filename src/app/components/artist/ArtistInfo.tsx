@@ -7,13 +7,31 @@ interface ArtistData {
     expertise: string | number | boolean | null | undefined;
     coverImageUrl?: string;
     profileImageUrl?: string;
+    reviews: Array<{
+        id: string;
+        text: string;
+        rating: number;
+        date: string;
+        userName?: string;
+        userId?: string;
+      }>;
 }
 
 interface ArtistInfoProps {
     artistData: ArtistData;
 }
 
+const calculateAverageRating = (reviews: ArtistData['reviews']): number => {
+    if (reviews.length === 0) return 0;
+    const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
+    return sum / reviews.length;
+};
+
+
 export default function ArtistInfo({ artistData }: ArtistInfoProps) {
+
+    const averageRating = calculateAverageRating(artistData.reviews);
+
     // Function to render expertise badges
     const renderExpertiseBadges = () => {
         if (Array.isArray(artistData.expertise)) {
@@ -64,7 +82,7 @@ export default function ArtistInfo({ artistData }: ArtistInfoProps) {
                     {renderExpertiseBadges()}
                 </div>
                 <div className="mt-2">
-                    <Ratings />
+                    <Ratings rating={averageRating}/>
                 </div>
                 <div className="flex gap-3 sm:gap-4 mt-3 sm:mt-4">
                     <button className="px-4 py-2 bg-[#EA2793] rounded-full text-xs sm:text-sm md:text-base text-white">Message</button>

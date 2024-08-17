@@ -18,6 +18,7 @@ interface ImageObject {
 // Define a type for the artist data
 interface ArtistData extends DocumentData {
   name: string;
+  userId: string;
   location: string;
   expertise: string;
   coverImageUrl?: string;
@@ -27,10 +28,12 @@ interface ArtistData extends DocumentData {
   startingPrice: number;
   galleryUrls: string[];
   reviews: Array<{
+    id: string;
     text: string;
     rating: number;
     date: string;
     userName?: string;
+    userId?: string;
   }>;
 }
 
@@ -69,7 +72,7 @@ function ArtistProfileContent() {
       <ArtistInfo artistData={artistData} />
       <ArtistAbout artistData={artistData} />
       <ArtistGallery images={transformGalleryUrls(artistData.galleryUrls)} />
-      <ArtistReviews artistId={artistData.id} reviews={artistData.reviews} />
+      <ArtistReviews artistId={artistData.userId} reviews={artistData.reviews} />
     </section>
   );
 }

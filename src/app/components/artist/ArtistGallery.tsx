@@ -9,10 +9,10 @@ interface ImageObject {
 }
 
 interface ArtistGalleryProps {
-  images: ImageObject[];
+  images?: ImageObject[];
 }
 
-export default function ArtistGallery({ images }: ArtistGalleryProps) {
+export default function ArtistGallery({ images = [] }: ArtistGalleryProps) {
   const [showMore, setShowMore] = useState(false);
 
   const handleToggle = () => {
@@ -20,6 +20,15 @@ export default function ArtistGallery({ images }: ArtistGalleryProps) {
   };
 
   const displayedImages = showMore ? images : images.slice(0, 6);
+
+  if (images.length === 0) {
+    return (
+      <div id="artistgallery" className="flex flex-col gap-4 items-center w-full max-w-[1120px] mx-auto p-4 rounded-xl border-2 shadow-2xl shadow-[#0000001F] mt-2">
+        <h1 className="font-semibold text-xl sm:text-2xl mt-2 sm:mt-4">Gallery</h1>
+        <p>No images available in the gallery.</p>
+      </div>
+    );
+  }
 
   return (
     <div id="artistgallery" className="flex flex-col gap-4 items-center w-full max-w-[1120px] mx-auto p-4 rounded-xl border-2 shadow-2xl shadow-[#0000001F] mt-2">

@@ -12,7 +12,7 @@ interface AuthState {
   role: string | null
   isLoading: boolean
   error: string | null
-  login: (email: string, password: string) => Promise<void>
+  login: (email: string, password: string) => Promise<User>;
   logout: () => Promise<void>
   register: (email: string, password: string, role?: string) => Promise<UserCredential | undefined>
   setUser: (user: User | null, role: string | null) => void
@@ -27,18 +27,25 @@ export const useAuthStore = create<AuthState>()(
       isLoading: false,
       error: null,
       login: async (email: string, password: string) => {
-        set({ isLoading: true, error: null })
+        set({ isLoading: true, error: null });
         try {
-          const userCredential = await loginUser(email, password)
-          const userDocRef = doc(db, 'users', userCredential.user.uid)
-          const userDocSnap = await getDoc(userDocRef)
-          const role = userDocSnap.exists() ? userDocSnap.data().role : 'user'
-          set({ user: userCredential.user, userId: userCredential.user.uid, role, isLoading: false })
+          const userCredential = await loginUser(email, password);
+          const userDocRef = doc(db, 'users', userCredential.user.uid);
+          const userDocSnap = await getDoc(userDocRef);
+
+          let role = 'user'; // Default role
+          if (userDocSnap.exists()) {
+            const userData = userDocSnap.data();
+            role = userData.role || 'user'; // Use 'user' as fallback if role is not set
+          }
+
+          set({ user: userCredential.user, userId: userCredential.user.uid, role, isLoading: false });
           document.cookie = "isLoggedIn=true; path=/; max-age=86400"; // expires in 1 day
-          // console.log('Login successful:', userCredential.user, role)
+          return userCredential.user; // Return the user object
         } catch (error: any) {
-          console.error('Login error:', error)
-          set({ error: error.message, isLoading: false, user: null, role: null })
+          console.error('Login error:', error);
+          set({ error: error.message, isLoading: false, user: null, role: null });
+          throw error; // Rethrow the error to be handled by the caller
         }
       },
       setUser: (user: User | null, role: string | null) => set({ user, role }),

@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/app/lib/store/authStore';
 import { z } from 'zod';
 import Image from 'next/image';
-import { signInWithGoogle, signInWithFacebook } from '@/app/firebase/utils/auth';
-
+import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from "firebase/auth";
+import { auth } from '@/app/firebase/firebase_config';
 
 
 
@@ -62,38 +62,49 @@ export default function Login() {
         e.preventDefault();
         setError('');
         try {
-            loginSchema.parse({ email, password });
-            await login(email, password);
-            router.push('/pages/artistlisting')
+          loginSchema.parse({ email, password });
+          const user = await login(email, password);
+          if (user) {
+            router.push('/pages/artistlisting');
+          }
         } catch (error) {
-            if (error instanceof z.ZodError) {
-                setError(error.errors[0].message);
-            } else if (error instanceof Error) {
-                setError(error.message);
-            } else {
-                setError('An unexpected error occurred');
-            }
+          if (error instanceof z.ZodError) {
+            setError(error.errors[0].message);
+          } else if (error instanceof Error) {
+            setError(error.message);
+          } else {
+            setError('An unexpected error occurred');
+          }
         }
-    };
+      };
 
     const handleGoogleSignIn = async () => {
         try {
-            await signInWithGoogle();
+          const provider = new GoogleAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+          if (result.user) {
+            setUser(result.user, 'user');
             router.push('/pages/artistlisting');
+          }
         } catch (error) {
-            setError('Failed to sign in with Google. Please try again.');
+          console.error("Google sign-in error:", error);
+          setError('Failed to sign in with Google. Please try again.');
         }
-    };
-
-    const handleFacebookSignIn = async () => {
+      };
+      
+      const handleFacebookSignIn = async () => {
         try {
-            await signInWithFacebook();
+          const provider = new FacebookAuthProvider();
+          const result = await signInWithPopup(auth, provider);
+          if (result.user) {
+            setUser(result.user, 'user');
             router.push('/pages/artistlisting');
+          }
         } catch (error) {
-            setError('Failed to sign in with Facebook. Please try again.');
+          console.error("Facebook sign-in error:", error);
+          setError('Failed to sign in with Facebook. Please try again.');
         }
-    };
-
+      };
 
     return (
         <section className="relative bg-white md:bg-[#EA2793] md:grid md:grid-cols-2 w-full min-h-screen">
