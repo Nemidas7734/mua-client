@@ -28,7 +28,7 @@ export default function ArtistReviews({ artistId, reviews = [] }: ArtistReviewsP
 
     useEffect(() => {
         const fetchUserReview = async () => {
-            if (userId) {
+            if (userId && artistId) {
                 const review = await getReviewByUser(artistId, userId)
                 setUserReview(review)
                 if (review) {

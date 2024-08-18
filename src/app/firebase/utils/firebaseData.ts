@@ -55,71 +55,60 @@ export async function getArtistData(artistId: string): Promise<ArtistData | null
   }
 }
 
-export async function addReview(artistId: string, review: Review) {
-  try {
-    if (!artistId) {
-      console.error("artistId is undefined or null");
-      return;
-    }
-
-    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    const firestore = getFirestore(app);
-
-    console.log("artistId:", artistId); // Debug log
-    console.log("firestore:", firestore); // Debug log
-
-    const artistRef = doc(firestore, "Artists", artistId);
-    await updateDoc(artistRef, {
-      reviews: arrayUnion(review)
-    });
-  } catch (error) {
-    console.error("Error adding review:", error);
-  }
-}
 
 export async function getReviewByUser(artistId: string, userId: string): Promise<Review | null> {
+  if (!artistId) {
+    console.error("Artist ID is undefined");
+    return null;
+  }
+
   const artistRef = doc(firestore, "Artists", artistId);
   const artistSnapshot = await getDoc(artistRef);
 
   if (artistSnapshot.exists()) {
-    const artistData = artistSnapshot.data() as ArtistData;
-    if (Array.isArray(artistData.reviews)) {
-      const userReview = artistData.reviews.find(review => review.userId === userId);
-      return userReview || null;
-    } else {
-      console.log("Reviews array not found for this artist");
-      return null;
-    }
-  } else {
-    console.log("No such artist!");
-    return null;
+    const artistData = artistSnapshot.data();
+    const reviews = artistData.reviews || [];
+    const userReview = reviews.find((review: Review) => review.userId === userId);
+    return userReview || null;
+  }
+
+  return null;
+}
+
+export async function addReview(artistId: string, review: Review): Promise<void> {
+  if (!artistId) {
+    console.error("Artist ID is undefined");
+    return;
+  }
+
+  const artistRef = doc(firestore, "Artists", artistId);
+  const artistSnapshot = await getDoc(artistRef);
+
+  if (artistSnapshot.exists()) {
+    const artistData = artistSnapshot.data();
+    const reviews = artistData.reviews || [];
+    reviews.push(review);
+    await updateDoc(artistRef, { reviews });
   }
 }
 
-export async function updateReview(artistId: string, reviewId: string, updatedReview: Partial<Review>) {
+export async function updateReview(artistId: string, reviewId: string, updatedReview: Review): Promise<void> {
+  if (!artistId) {
+    console.error("Artist ID is undefined");
+    return;
+  }
+
   const artistRef = doc(firestore, "Artists", artistId);
   const artistSnapshot = await getDoc(artistRef);
 
   if (artistSnapshot.exists()) {
-    const artistData = artistSnapshot.data() as ArtistData;
-    const reviewIndex = artistData.reviews.findIndex(review => review.id === reviewId);
-
+    const artistData = artistSnapshot.data();
+    const reviews = artistData.reviews || [];
+    const reviewIndex = reviews.findIndex((review: Review) => review.id === reviewId);
     if (reviewIndex !== -1) {
-      const oldReview = artistData.reviews[reviewIndex];
-      const newReview = { ...oldReview, ...updatedReview, id: reviewId };
-
-      await updateDoc(artistRef, {
-        reviews: arrayRemove(oldReview)
-      });
-
-      await updateDoc(artistRef, {
-        reviews: arrayUnion(newReview)
-      });
-    } else {
-      console.log("Review not found!");
+      reviews[reviewIndex] = { ...reviews[reviewIndex], ...updatedReview };
+      await updateDoc(artistRef, { reviews });
     }
-  } else {
-    console.log("No such artist!");
   }
 }
 

@@ -14,23 +14,24 @@ interface ArtistData {
         date: string;
         userName?: string;
         userId?: string;
-      }>;
+    }>;
 }
 
 interface ArtistInfoProps {
     artistData: ArtistData;
 }
 
-const calculateAverageRating = (reviews: ArtistData['reviews']): number => {
-    if (reviews.length === 0) return 0;
+const calculateAverageRating = (reviews: ArtistData['reviews'] | undefined): number => {
+    if (!reviews || reviews.length === 0) return 0;
     const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
     return sum / reviews.length;
 };
 
 
 export default function ArtistInfo({ artistData }: ArtistInfoProps) {
+    const averageRating = artistData ? calculateAverageRating(artistData.reviews || []) : 0;
 
-    const averageRating = calculateAverageRating(artistData.reviews);
+    if (!artistData) return <div>Loading...</div>;
 
     // Function to render expertise badges
     const renderExpertiseBadges = () => {

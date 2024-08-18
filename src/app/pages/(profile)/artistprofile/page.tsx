@@ -41,21 +41,25 @@ function transformGalleryUrls(urls: string[]): ImageObject[] {
   return urls?.map(url => ({ url, alt: "Gallery image" }));
 }
 
+// In page.tsx
+
 function ArtistProfileContent() {
   const searchParams = useSearchParams();
   const { userId } = useAuthStore();
   const [artistData, setArtistData] = useState<ArtistData | null>(null);
-  
+  const [artistId, setArtistId] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchArtistData() {
-      const artistId = searchParams.get('id');
-      if (artistId) {
-        const data = await getArtistData(artistId);
+      const paramArtistId = searchParams.get('id');
+      if (paramArtistId) {
+        setArtistId(paramArtistId);
+        const data = await getArtistData(paramArtistId);
         if (data) {
           setArtistData(data as ArtistData);
         }
       } else {
+        setArtistId(userId);
         const data = await getArtistData(userId);
         if (data) {
           setArtistData(data as ArtistData);
@@ -65,14 +69,14 @@ function ArtistProfileContent() {
     fetchArtistData();
   }, [searchParams, userId]);
 
-  if (!artistData) return <div>Loading...</div>;
+  if (!artistData || !artistId) return <div>Loading...</div>;
 
   return (
     <section className="flex flex-col items-center gap-4 md:gap-10">
       <ArtistInfo artistData={artistData} />
       <ArtistAbout artistData={artistData} />
       <ArtistGallery images={transformGalleryUrls(artistData.galleryUrls)} />
-      <ArtistReviews artistId={artistData.userId} reviews={artistData.reviews} />
+      <ArtistReviews artistId={artistId} reviews={artistData.reviews} />
     </section>
   );
 }
