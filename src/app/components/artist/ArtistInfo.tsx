@@ -1,5 +1,24 @@
-import Image from "next/image"
-import Ratings from "./Ratings"
+"use client"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Ratings from "./Ratings";
+import { doc, updateDoc, getFirestore } from "firebase/firestore";
+import { ArtistFormData } from "@/app/lib/schema/validationSchema";
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { useSearchParams } from "next/navigation";
+
+
+import { z } from "zod";
+
+const firebaseConfig = {
+    apiKey: process.env.NEXT_PUBLIC_API_KEY,
+    authDomain: process.env.NEXT_PUBLIC_Auth_Domain,
+    projectId: process.env.NEXT_PUBLIC_Project_ID,
+    storageBucket: process.env.NEXT_PUBLIC_Storage_Bucket,
+    messagingSenderId: process.env.NEXT_PUBLIC_Messaging_ID,
+    appId: process.env.NEXT_PUBLIC_App_ID,
+};
+
 
 interface ArtistData {
     name: string;
@@ -19,17 +38,63 @@ interface ArtistData {
 
 interface ArtistInfoProps {
     artistData: ArtistData;
+    artistId : string;
 }
 
-const calculateAverageRating = (reviews: ArtistData['reviews'] | undefined): number => {
+const calculateAverageRating = (
+    reviews: ArtistData["reviews"] | undefined
+): number => {
     if (!reviews || reviews.length === 0) return 0;
     const sum = reviews.reduce((acc, review) => acc + review.rating, 0);
     return sum / reviews.length;
 };
 
+export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
+    const searchParams = useSearchParams();
+    const averageRating = artistData
+        ? calculateAverageRating(artistData.reviews || [])
+        : 0;
+    const [showConnect, setShowConnect] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [formData, setFormData] = useState<Partial<ArtistFormData>>({
+        email: "",
+        phoneNumber: "",
+        eventDate: "",
+        message: "",
+        otp: "",
+    });
 
-export default function ArtistInfo({ artistData }: ArtistInfoProps) {
-    const averageRating = artistData ? calculateAverageRating(artistData.reviews || []) : 0;
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+    
+        setFormData((prev) => ({ ...prev, [name]: value }));
+        // if (errors[name]) {
+        //     setErrors((prev) => ({ ...prev, [name]: '' }));
+        // }
+    };
+    
+    
+
+
+
+    const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        try {
+            const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+            const firestore = getFirestore(app);
+            const artistRef = doc(firestore, "Artists", artistId);
+            await updateDoc(artistRef, {
+                message: formData.message,
+            });
+            setShowSuccess(true);
+        } catch (error) {
+            console.error("Error sending message:", error);
+        }
+    };
+
+
+
 
     if (!artistData) return <div>Loading...</div>;
 
@@ -76,18 +141,80 @@ export default function ArtistInfo({ artistData }: ArtistInfoProps) {
                     )}
                 </div>
             </div>
-            <div className="flex flex-col px-4 sm:px-6 md:px-8 pt-12 sm:pt-16 md:pt-20 pb-6">
-                <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">{artistData.name}</h1>
-                <h2 className="font-normal text-sm sm:text-base md:text-lg lg:text-xl mt-1">{artistData.location}</h2>
-                <div className="flex flex-wrap gap-2 mt-2">
-                    {renderExpertiseBadges()}
+            <div className={`max-sm:grid max-sm:grid-flow-row max-sm:${showConnect ? 'grid-rows-2' : 'grid-rows-1'} md:grid md:grid-flow-col md:grid-cols-2`}>
+                <div className="flex flex-col px-4 sm:px-6 md:px-8 pt-12 sm:pt-16 md:pt-20 pb-6">
+                    <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">{artistData.name}</h1>
+                    <h2 className="font-normal text-sm sm:text-base md:text-lg lg:text-xl mt-1">{artistData.location}</h2>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                        {renderExpertiseBadges()}
+                    </div>
+                    <div className="mt-2">
+                        <Ratings rating={averageRating} />
+                    </div>
+                    <div className="flex gap-3 sm:gap-4 mt-3 sm:mt-4">
+                        <button className="px-8 py-1 border-2 shadow-md rounded-md text-xs sm:text-sm md:text-base text-black" onClick={() => setShowConnect(!showConnect)}>Message</button>
+                        <button className="px-8 py-1 bg-[#007AFF] rounded-md text-xs sm:text-sm md:text-base text-white">Contact</button>
+                    </div>
                 </div>
-                <div className="mt-2">
-                    <Ratings rating={averageRating}/>
-                </div>
-                <div className="flex gap-3 sm:gap-4 mt-3 sm:mt-4">
-                    <button className="px-4 py-2 bg-[#EA2793] rounded-full text-xs sm:text-sm md:text-base text-white">Message</button>
-                    <button className="px-4 py-2 bg-[#EA2793] rounded-full text-xs sm:text-sm md:text-base text-white">Contact</button>
+                <div id="connect" className={`m-auto w-full ${showConnect ? "flex" : "hidden"}`}>
+                    {showSuccess ? (
+                        <div className="m-auto">
+                            <h1 className="text-2xl font-bold mb-4">Message Sent</h1>
+                            <p>Your message has been sent to the artist.</p>
+                        </div>
+                    ) : (
+                        <form onSubmit={handleSendMessage} className="flex flex-col w-auto h-auto max-sm:p-4 max-sm:pt-0 md:border md:mr-2 border-black rounded-xl">
+                            <h1 className="md:p-2 max-sm:m-auto max-sm:mt-2">Connect with the Artist</h1>
+                            <div className="grid grid-flow-row max-sm:mt-4 md:grid md:grid-flow-col md:grid-cols-3 gap-2 p-2">
+                                <input
+                                    name="email"
+                                    value={formData.email || ""}
+                                    onChange={handleInputChange}
+                                    className="border border-black rounded-md placeholder:text-xs pl-2"
+                                    placeholder="Email"
+                                />
+                                <input
+                                    name="phoneNumber"
+                                    value={formData.phoneNumber || ""}
+                                    onChange={handleInputChange}
+                                    className="border border-black rounded-md placeholder:text-xs pl-2"
+                                    placeholder="Mob No."
+                                />
+                                <input
+                                    name="eventDate"
+                                    type="date"
+                                    value={formData.eventDate || ""}
+                                    onChange={handleInputChange}
+                                    className="border border-black rounded-md placeholder:text-xsa pl-2"
+                                    placeholder="Event Date"
+                                />
+                            </div>
+                            <div className="grid grid-flow-row md:grid md:grid-flow-col md:grid-cols-3 gap-2 p-2 mb-2 h-full">
+                                <textarea
+                                    name="message"
+                                    value={formData.message || ""}
+                                    onChange={handleInputChange}
+                                    className="max-sm:row-span-2 md:col-span-2 border border-black rounded-md h-full placeholder:text-xs pl-2 pt-2"
+                                    placeholder="Message"
+                                />
+                                <div className="w-auto max-sm:gap-2 grid grid-flow-col grid-cols-2 md:flex md:flex-col">
+                                    <input
+                                        name="otp"
+                                        value={formData.otp || ""}
+                                        onChange={handleInputChange}
+                                        className="p-2 md:mr-4 md:ml-4 mt-1 md:mt-4 w-auto border h-[25px] border-black rounded-md placeholder:text-xs"
+                                        placeholder="OTP"
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="text-sm text-white md:ml-2 md:mr-2 mt-[2px] md:mt-4 w-auto border h-[30px] bg-[#007AFF] border-black rounded-md"
+                                    >
+                                        Send Message
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    )}
                 </div>
             </div>
         </div>

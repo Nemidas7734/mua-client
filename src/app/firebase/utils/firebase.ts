@@ -16,54 +16,54 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_App_ID,
 };
 
-export const registerForm = async (prevState: FormState, formData: FormData): Promise<FormState> => {
-  try {
-    const data: Partial<ArtistFormData> = {};
-    formData.forEach((value, key) => {
-      if (typeof value === 'string') {
-        data[key as keyof ArtistFormData] = value;
-      }
-    });
+// export const registerForm = async (prevState: FormState, formData: FormData): Promise<FormState> => {
+//   try {
+//     const data: Partial<ArtistFormData> = {};
+//     formData.forEach((value, key) => {
+//       if (typeof value === 'string') {
+//         data[key as keyof ArtistFormData] = value;
+//       }
+//     });
     
-    data.role = 'artist';
+//     data.role = 'artist';
 
-    const validatedData = artistSchema.parse(data);
+//     const validatedData = artistSchema.parse(data);
 
-    // // If you need to convert certain fields to numbers after validation:
-    // const finalData = {
-    //   ...validatedData,
-    //   mobNo: parseInt(validatedData.mobNo, 10),
-    //   workExp: parseInt(validatedData.workExp, 10),
-    //   adharNo: parseInt(validatedData.adharNo, 10),
-    // };
+//     // // If you need to convert certain fields to numbers after validation:
+//     // const finalData = {
+//     //   ...validatedData,
+//     //   mobNo: parseInt(validatedData.mobNo, 10),
+//     //   workExp: parseInt(validatedData.workExp, 10),
+//     //   adharNo: parseInt(validatedData.adharNo, 10),
+//     // };
 
-    // Initialize Firebase on the server
-    const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-    const firestore = getFirestore(app);
+//     // Initialize Firebase on the server
+//     const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+//     const firestore = getFirestore(app);
 
-    const collectionRef = collection(firestore, 'Artists');
-    const docRef = await addDoc(collectionRef, validatedData);
-    return {
-      message: 'success',
-    };
-  } catch (error) {
-    console.error('Error in registerForm:', error);
-    if (error instanceof z.ZodError) {
-      return {
-        message: 'validation_error',
-        errors: error.errors,
-      };
-    }
-    return {
-      message: 'error',
-      errors: [{
-        code: 'custom',
-        path: [],
-        message: error instanceof Error ? error.message : 'An unexpected error occurred'
-      }],
-    };
-  }
-}
+//     const collectionRef = collection(firestore, 'Artists');
+//     const docRef = await addDoc(collectionRef, validatedData);
+//     return {
+//       message: 'success',
+//     };
+//   } catch (error) {
+//     console.error('Error in registerForm:', error);
+//     if (error instanceof z.ZodError) {
+//       return {
+//         message: 'validation_error',
+//         errors: error.errors,
+//       };
+//     }
+//     return {
+//       message: 'error',
+//       errors: [{
+//         code: 'custom',
+//         path: [],
+//         message: error instanceof Error ? error.message : 'An unexpected error occurred'
+//       }],
+//     };
+//   }
+// }
 
 export const createUserDocument = async (userId: string, userData: any) => {
   const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();

@@ -73,7 +73,7 @@ function ArtistProfileContent() {
 
   return (
     <section className="flex flex-col items-center gap-4 md:gap-10">
-      <ArtistInfo artistData={artistData} />
+      <ArtistInfo artistData={artistData} artistId={artistId} />
       <ArtistAbout artistData={artistData} />
       <ArtistGallery images={transformGalleryUrls(artistData.galleryUrls)} />
       <ArtistReviews artistId={artistId} reviews={artistData.reviews} />

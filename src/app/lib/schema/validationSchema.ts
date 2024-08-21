@@ -27,7 +27,17 @@ const step3Schema = z.object({
 
 const role = z.object({role: z.string().default('artist')})
 
-export const artistSchema = step1Schema.merge(step2Schema).merge(step3Schema).merge(role);
+export const artistMessageSchema = z.object({
+  email: z.string().email(),
+  phoneNumber: z.string().min(10).max(15),
+  eventDate: z.string(),
+  message: z.string().min(10),
+  otp: z.string().min(6).max(6),
+  role: z.literal("artist"),
+});
+
+
+export const artistSchema = step1Schema.merge(step2Schema).merge(step3Schema).merge(role).merge(artistMessageSchema);
 
 export type ArtistFormData = z.infer<typeof artistSchema>;
 

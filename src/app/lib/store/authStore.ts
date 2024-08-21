@@ -45,7 +45,7 @@ export const useAuthStore = create<AuthState>()(
         } catch (error: any) {
           console.error('Login error:', error);
           set({ error: error.message, isLoading: false, user: null, role: null });
-          throw error; // Rethrow the error to be handled by the caller
+          throw error; 
         }
       },
       setUser: (user: User | null, role: string | null) => set({ user, role }),
