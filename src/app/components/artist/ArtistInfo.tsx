@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Ratings from "./Ratings";
-import { doc, updateDoc, getFirestore } from "firebase/firestore";
+import { doc, updateDoc, getFirestore, getDoc } from "firebase/firestore";
 import { ArtistFormData } from "@/app/lib/schema/validationSchema";
 import { initializeApp, getApps, getApp } from 'firebase/app';
 import { useSearchParams } from "next/navigation";
@@ -38,7 +38,7 @@ interface ArtistData {
 
 interface ArtistInfoProps {
     artistData: ArtistData;
-    artistId : string;
+    artistId: string;
 }
 
 const calculateAverageRating = (
@@ -55,7 +55,9 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
         ? calculateAverageRating(artistData.reviews || [])
         : 0;
     const [showConnect, setShowConnect] = useState(false);
+    const [showContact, setShowContact] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
+    const [artistContact, setArtistContact] = useState({ email: '', phone: '' });
     const [formData, setFormData] = useState<Partial<ArtistFormData>>({
         email: "",
         phoneNumber: "",
@@ -64,32 +66,75 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
         otp: "",
     });
 
+    const fetchArtistContact = async () => {
+        try {
+            const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+            const firestore = getFirestore(app);
+            const artistRef = doc(firestore, "Artists", artistId);
+            const artistDoc = await getDoc(artistRef);
+            if (artistDoc.exists()) {
+                const data = artistDoc.data();
+                setArtistContact({
+                    email: data.email || '',
+                    phone: data.phoneNumber || ''
+                });
+            }
+        } catch (error) {
+            console.error("Error fetching artist contact:", error);
+        }
+    };
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-    
+
         setFormData((prev) => ({ ...prev, [name]: value }));
         // if (errors[name]) {
         //     setErrors((prev) => ({ ...prev, [name]: '' }));
         // }
     };
-    
-    
 
 
+
+    const handleContactClick = () => {
+        if (formData.otp) {
+            // OTP has been verified, show contact info
+            setShowContact(true);
+            setShowConnect(false);
+        } else {
+            // OTP not verified, show connect div for OTP verification
+            setShowConnect(true);
+            setShowContact(false);
+        }
+    };
+    const verifyOtp = async (otp?: string): Promise<boolean> => {
+        // Implement your OTP verification logic here
+        // Return true if OTP is valid, false otherwise
+        return true; // Placeholder
+    };
+    
 
     const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        try {
-            const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-            const firestore = getFirestore(app);
-            const artistRef = doc(firestore, "Artists", artistId);
-            await updateDoc(artistRef, {
-                message: formData.message,
-            });
-            setShowSuccess(true);
-        } catch (error) {
-            console.error("Error sending message:", error);
+        // Add OTP verification logic here
+        const isOtpValid = await verifyOtp(formData.otp); // Implement this function
+
+        if (isOtpValid) {
+            try {
+                const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+                const firestore = getFirestore(app);
+                const artistRef = doc(firestore, "Artists", artistId);
+                await updateDoc(artistRef, {
+                    message: formData.message,
+                });
+                setShowSuccess(true);
+                fetchArtistContact(); // Fetch contact info after successful OTP verification
+            } catch (error) {
+                console.error("Error sending message:", error);
+            }
+        } else {
+            // Handle invalid OTP
+            console.error("Invalid OTP");
         }
     };
 
@@ -153,11 +198,18 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
                     </div>
                     <div className="flex gap-3 sm:gap-4 mt-3 sm:mt-4">
                         <button className="px-8 py-1 border-2 shadow-md rounded-md text-xs sm:text-sm md:text-base text-black" onClick={() => setShowConnect(!showConnect)}>Message</button>
-                        <button className="px-8 py-1 bg-[#007AFF] rounded-md text-xs sm:text-sm md:text-base text-white">Contact</button>
+                        <button className="px-8 py-1 bg-[#007AFF] rounded-md text-xs sm:text-sm md:text-base text-white" onClick={() => setShowConnect(!showConnect)}>Contact</button>
                     </div>
                 </div>
                 <div id="connect" className={`m-auto w-full ${showConnect ? "flex" : "hidden"}`}>
-                    {showSuccess ? (
+                    {showContact && (
+                        <div className="mt-4">
+                            <h2 className="text-lg font-bold mb-2">Contact Information</h2>
+                            <p>Email: {artistContact.email}</p>
+                            <p>Phone: {artistContact.phone}</p>
+                        </div>
+                    )}
+                    {showSuccess && !showContact ? (
                         <div className="m-auto">
                             <h1 className="text-2xl font-bold mb-4">Message Sent</h1>
                             <p>Your message has been sent to the artist.</p>
