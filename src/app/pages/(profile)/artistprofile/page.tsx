@@ -8,6 +8,7 @@ import ArtistInfo from "@/app/components/artist/ArtistInfo";
 import ArtistReviews from "@/app/components/artist/ArtistReviews";
 import { getArtistData } from "@/app/firebase/utils/firebaseData";
 import { DocumentData } from "firebase/firestore";
+import Loading from "./loading";
 
 // Define ImageObject interface
 interface ImageObject {
@@ -83,7 +84,7 @@ function ArtistProfileContent() {
 
 export default function ArtistProfile() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Loading/>}>
       <ArtistProfileContent />
     </Suspense>
   );

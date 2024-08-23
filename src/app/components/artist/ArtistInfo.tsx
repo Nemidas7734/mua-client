@@ -55,6 +55,7 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
         ? calculateAverageRating(artistData.reviews || [])
         : 0;
     const [showConnect, setShowConnect] = useState(false);
+    const [showMessageForm, setShowMessageForm] = useState(false);
     const [showContact, setShowContact] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
     const [artistContact, setArtistContact] = useState({ email: '', phone: '' });
@@ -76,7 +77,7 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
                 const data = artistDoc.data();
                 setArtistContact({
                     email: data.email || '',
-                    phone: data.phoneNumber || ''
+                    phone: data.contactNumber || ''
                 });
             }
         } catch (error) {
@@ -93,31 +94,29 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
         // }
     };
 
-
-
-    const handleContactClick = () => {
-        if (formData.otp) {
-            // OTP has been verified, show contact info
-            setShowContact(true);
-            setShowConnect(false);
-        } else {
-            // OTP not verified, show connect div for OTP verification
-            setShowConnect(true);
-            setShowContact(false);
-        }
-    };
     const verifyOtp = async (otp?: string): Promise<boolean> => {
         // Implement your OTP verification logic here
         // Return true if OTP is valid, false otherwise
         return true; // Placeholder
     };
-    
+
+    const handleMessageClick = () => {
+        setShowMessageForm(true);
+        setShowContact(false);
+        setShowSuccess(false);
+    };
+
+    const handleContactClick = () => {
+        fetchArtistContact();
+        setShowContact(true);
+        setShowMessageForm(false);
+        setShowSuccess(false);
+    };
 
     const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // Add OTP verification logic here
-        const isOtpValid = await verifyOtp(formData.otp); // Implement this function
+        const isOtpValid = await verifyOtp(formData.otp);
 
         if (isOtpValid) {
             try {
@@ -128,16 +127,14 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
                     message: formData.message,
                 });
                 setShowSuccess(true);
-                fetchArtistContact(); // Fetch contact info after successful OTP verification
+                setShowMessageForm(false);
             } catch (error) {
                 console.error("Error sending message:", error);
             }
         } else {
-            // Handle invalid OTP
             console.error("Invalid OTP");
         }
     };
-
 
 
 
@@ -186,7 +183,7 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
                     )}
                 </div>
             </div>
-            <div className={`max-sm:grid max-sm:grid-flow-row max-sm:${showConnect ? 'grid-rows-2' : 'grid-rows-1'} md:grid md:grid-flow-col md:grid-cols-2`}>
+            <div className={`max-sm:grid max-sm:grid-flow-row max-sm:${showMessageForm || showContact ? 'grid-rows-2' : 'grid-rows-1'} md:grid md:grid-flow-col md:grid-cols-2`}>
                 <div className="flex flex-col px-4 sm:px-6 md:px-8 pt-12 sm:pt-16 md:pt-20 pb-6">
                     <h1 className="font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl">{artistData.name}</h1>
                     <h2 className="font-normal text-sm sm:text-base md:text-lg lg:text-xl mt-1">{artistData.location}</h2>
@@ -197,24 +194,12 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
                         <Ratings rating={averageRating} />
                     </div>
                     <div className="flex gap-3 sm:gap-4 mt-3 sm:mt-4">
-                        <button className="px-8 py-1 border-2 shadow-md rounded-md text-xs sm:text-sm md:text-base text-black" onClick={() => setShowConnect(!showConnect)}>Message</button>
-                        <button className="px-8 py-1 bg-[#007AFF] rounded-md text-xs sm:text-sm md:text-base text-white" onClick={() => setShowConnect(!showConnect)}>Contact</button>
+                        <button className="px-8 py-1 border-2 shadow-md rounded-md text-xs sm:text-sm md:text-base text-black" onClick={handleMessageClick}>Message</button>
+                        <button className="px-8 py-1 bg-[#007AFF] rounded-md text-xs sm:text-sm md:text-base text-white" onClick={handleContactClick}>Contact</button>
                     </div>
                 </div>
-                <div id="connect" className={`m-auto w-full ${showConnect ? "flex" : "hidden"}`}>
-                    {showContact && (
-                        <div className="mt-4">
-                            <h2 className="text-lg font-bold mb-2">Contact Information</h2>
-                            <p>Email: {artistContact.email}</p>
-                            <p>Phone: {artistContact.phone}</p>
-                        </div>
-                    )}
-                    {showSuccess && !showContact ? (
-                        <div className="m-auto">
-                            <h1 className="text-2xl font-bold mb-4">Message Sent</h1>
-                            <p>Your message has been sent to the artist.</p>
-                        </div>
-                    ) : (
+                <div id="connect" className={`m-auto w-full ${showMessageForm || showContact || showSuccess ? "flex" : "hidden"}`}>
+                    {showMessageForm && (
                         <form onSubmit={handleSendMessage} className="flex flex-col w-auto h-auto max-sm:p-4 max-sm:pt-0 md:border md:mr-2 border-black rounded-xl">
                             <h1 className="md:p-2 max-sm:m-auto max-sm:mt-2">Connect with the Artist</h1>
                             <div className="grid grid-flow-row max-sm:mt-4 md:grid md:grid-flow-col md:grid-cols-3 gap-2 p-2">
@@ -267,8 +252,22 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
                             </div>
                         </form>
                     )}
+                    {showContact && (
+                        <div className="m-auto border border-black p-2 md:p-6 rounded-xl">
+                            <h2 className="text-lg font-bold mb-2">Contact Information</h2>
+                            <p>Email: {artistContact.email}</p>
+                            <p>Phone: {artistContact.phone}</p>
+                        </div>
+                    )}
+                    {showSuccess && (
+                        <div className="m-auto">
+                            <h1 className="text-2xl font-bold mb-4">Message Sent</h1>
+                            <p>Your message has been sent to the artist.</p>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
-    )
+    );
 }
+

@@ -4,6 +4,8 @@ import ArtistCard from '@/app/components/artist/ArtistCard';
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/app/firebase/firebase_config';
 import Image from 'next/image';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 interface Artist {
   id: string;
@@ -15,7 +17,7 @@ interface Artist {
   profileImageUrl: string;
 }
 
-export default function ArtistListing() {
+ function ArtistListingContent() {
   const [artists, setArtists] = useState<Artist[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredArtists, setFilteredArtists] = useState<Artist[]>([]);
@@ -110,5 +112,13 @@ export default function ArtistListing() {
         ))}
       </div>
     </div>
+  );
+}
+
+export default function ArtistListing() {
+  return (
+    <Suspense fallback={<Loading/>}>
+      <ArtistListingContent/>
+    </Suspense>
   );
 }
