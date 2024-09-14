@@ -13,7 +13,7 @@ export default function Gallery() {
     return (
         <div id="gallery" className="flex flex-col justify-center items-center w-full px-4 md:px-8 mt-12 md:mt-16 mb-1 md:mb-4 overflow-hidden">
             <h1 className="font-bold  font-[sans-serif] text-2xl md:text-3xl mb-8 md:mb-10">Gallery</h1>
-            <div className="w-full max-w-[427px] md:max-w-[1024px] relative pb-8 md:pb-12">
+            <div className="gallery-swiper w-full max-w-[427px] md:max-w-[1024px] relative pb-8 md:pb-12">
                 <Swiper
                     effect={'coverflow'}
                     grabCursor={true}
@@ -34,7 +34,7 @@ export default function Gallery() {
                     }}
                     pagination={{ 
                         clickable: true,
-                        el: '.swiper-pagination',
+                        el: '.gallery-swiper .swiper-pagination',
                     }}
                     modules={[Autoplay, EffectCoverflow, Pagination]}
                     className="w-full"
@@ -44,7 +44,6 @@ export default function Gallery() {
                             initialSlide: 2,
                         }
                     }}
-
                 >
                     {[...Array(8)].map((_, index) => (
                         <SwiperSlide key={index} className="w-[240px] sm:w-[300px] md:w-[377px] h-[280px] sm:h-[350px] md:h-[420px]">

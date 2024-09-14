@@ -1,9 +1,13 @@
 'use client'
 import Image from 'next/image';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/app/lib/store/authStore';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
 
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 function MuaSection() {
   const router = useRouter();
@@ -16,10 +20,33 @@ function MuaSection() {
       router.push('/pages/login');
     }
   };
+
   return (
     <div className="w-full">
-      <div>
-        <Image src="/MUA_Banner.png" alt="" width={1440} height={300} style={{ objectPosition: "30% 100%" }} className='w-full h-[90px] object-cover object-left md:h-64' />
+      <div className="mua-swiper-container relative pb-8 md:pb-12">
+        <Swiper
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
+          pagination={{ 
+            clickable: true,
+            el: '.mua-swiper-container .swiper-pagination',
+          }}
+          modules={[Autoplay, Pagination]}
+          className="w-full h-[90px] md:h-64"
+        >
+          <SwiperSlide>
+            <Image src="/images/MuaSection1.jpg" alt="MUA Banner" layout="fill" objectFit="cover" objectPosition="30% 100%" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image src="/images/MuaSection2.jpg" alt="MUA Banner 2" layout="fill" objectFit="cover" />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image src="/images/MuaSection3.jpg" alt="MUA Banner 3" layout="fill" objectFit="cover" />
+          </SwiperSlide>
+        </Swiper>
+        <div className="swiper-pagination absolute bottom-0 left-0 right-0"></div>
       </div>
       <div className='flex flex-col mt-10 md:mt-16 m-auto items-center max-w-[350px] md:max-w-[710px] h-44 md:h-[300px] text-wrap'>
         <h1 className="font-semibold font-[sans-serif] text-2xl md:text-5xl leading-tight md:leading-snug text-black z-20"><span className='ml-2 md:ml-4'>&quot;<span className='text-pink-500 font-semibold font-[sans-serif] text-2xl md:text-5xl z-20'>Beauty </span>At Your Fingertips: </span><span className="">Your Ultimate <span className='text-pink-500 font-semibold font-[sans-serif] text-2xl md:text-5xl z-20'>Make-Up Artist </span></span><span className='mx-20 md:mx-32 font-semibold font-[sans-serif] text-2xl md:text-5xl z-20'>Booking Place.&quot;</span></h1>

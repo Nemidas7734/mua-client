@@ -6,11 +6,14 @@
     overflow: hidden !important;
 }
 
-.swiper-container {
+/* Shared Swiper Styles */
+.gallery-swiper .swiper-container,
+.mua-swiper-container {
     padding-bottom: 30px !important;
 }
 
-.swiper-pagination {
+.gallery-swiper .swiper-pagination,
+.mua-swiper-container .swiper-pagination {
     position: absolute;
     bottom: 0 !important;
     left: 0 !important;
@@ -19,42 +22,71 @@
     padding-bottom: 0px;
 }
 
-.swiper-pagination-bullet {
+.gallery-swiper .swiper-pagination-bullet,
+.mua-swiper-container .swiper-pagination-bullet {
     width: 8px !important;
     height: 8px !important;
     background-color: #000000 !important;
     border-radius: 50%;
     transition: all 0.3s ease-in-out;
-    opacity: 0.5;
+    opacity: 0.3;
 }
 
-.swiper-pagination-bullet-active {
+.gallery-swiper .swiper-pagination-bullet-active,
+.mua-swiper-container .swiper-pagination-bullet-active {
     width: 24px !important;
     border-radius: 12px !important;
     opacity: 1;
 }
 
 @media (min-width: 640px) {
-    .swiper-pagination-bullet {
+    .gallery-swiper .swiper-pagination-bullet,
+    .mua-swiper-container .swiper-pagination-bullet {
         width: 10px !important;
         height: 10px !important;
     }
 
-    .swiper-pagination-bullet-active {
+    .gallery-swiper .swiper-pagination-bullet-active,
+    .mua-swiper-container .swiper-pagination-bullet-active {
         width: 28px !important;
     }
 }
 
 @media (min-width: 768px) {
-    .swiper-pagination-bullet {
+    .gallery-swiper .swiper-pagination-bullet,
+    .mua-swiper-container .swiper-pagination-bullet {
         width: 12px !important;
         height: 12px !important;
     }
 
-    .swiper-pagination-bullet-active {
+    .gallery-swiper .swiper-pagination-bullet-active,
+    .mua-swiper-container .swiper-pagination-bullet-active {
         width: 32px !important;
         border-radius: 14px !important;
     }
+}
+
+
+/* MUA Swiper Styles */
+.mua-swiper-container .swiper-pagination {
+    position: absolute;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+}
+
+.mua-swiper-container .swiper-pagination-bullet {
+    width: 10px !important;
+    height: 10px !important;
+    background-color: #000000 !important;
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+.mua-swiper-container .swiper-pagination-bullet-active {
+    width: 24px !important;
+    border-radius: 12px !important;
+    opacity: 1;
 }
 
 .loader {
@@ -95,7 +127,7 @@
     @media (min-width: 768px) {
        
         .menu3 {
-            margin-left: 120px;
+            margin-left: 100px;
           }
 
         .not-visible {
