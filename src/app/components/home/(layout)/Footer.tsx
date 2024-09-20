@@ -21,7 +21,7 @@ export default function Footer() {
                             <li><a href="/#gallery">Gallery</a></li>
                             <li><a>Cosmetics</a></li>
                             <li><Link href="/pages/aboutus">About Us</Link></li>
-                            <li><Link href="/pages/policy">Cancellation Policy</Link></li>
+                            <li><Link href="/pages/policy/cancellation">Cancellation Policy</Link></li>
                         </ol>
                     </div>
                     {/* <hr className="col-span-1 md:hidden h-[223px] mx-10 w-px md:w-0 bg-white border-0 dark:bg-gray-700"></hr> */}

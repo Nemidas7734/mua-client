@@ -1,4 +1,4 @@
-export default function Policy() {
+export default function CancellationPolicy() {
     return (
         <section className="flex justify-center px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col w-full max-w-[1080px] min-h-screen justify-center items-center">
