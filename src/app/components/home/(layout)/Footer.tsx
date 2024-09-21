@@ -10,7 +10,7 @@ export default function Footer() {
                 <div className="max-sm:flex max-sm:justify-between md:m-auto md:grid md:grid-cols-4 mt-5 md:mt-20 w-full max-w-[360px] md:max-w-[1120px]">
                     <div className="max-sm:hidden pl-10">
                         <Link href="https://www.bookyourmua.com/">
-                            <h1 className="text-2xl text-white underline underline-offset-8 font-[sans-serif] mb-4">www.bookyourmua.com</h1>
+                            <h1 className="text-2xl text-white hover:underline hover:underline-offset-8 font-[sans-serif] mb-4">www.bookyourmua.com</h1>
                         </Link>
                         <p className="w-[280px] text-wrap text-white text-xl  font-[sans-serif]">&quot;Beauty At Your Fingertips: Your Ultimate Make-Up Artist Booking Place.&quot;</p>
                     </div>
@@ -19,16 +19,17 @@ export default function Footer() {
                             <li><a href="/">Home</a></li>
                             <li><a href="/#blogs">Blogs</a></li>
                             <li><a href="/#gallery">Gallery</a></li>
-                            <li><a>Cosmetics</a></li>
+                            {/* <li><a>Cosmetics</a></li> */}
                             <li><Link href="/pages/aboutus">About Us</Link></li>
                             <li><Link href="/pages/policy/cancellation">Cancellation Policy</Link></li>
+                            <li><Link href="/pages/policy/privacy">Privacy Policy</Link></li>
                         </ol>
                     </div>
                     {/* <hr className="col-span-1 md:hidden h-[223px] mx-10 w-px md:w-0 bg-white border-0 dark:bg-gray-700"></hr> */}
                     <div className=" flex flex-col md:pl-[88px] pt-2 md:pt-0">
                         <p className="font-normal w-[170px] md:w-[187px] pr-3 md:pr-0 text-sm text-wrap text-white font-[sans-serif]">Are you a makeup artist ? Join the MUA community and spread your business all across your city.</p>
                         <Link href="/pages/register">
-                            <h1 className="font-bold underline underline-offset-4 text-sm text-white mt-10 font-[sans-serif]">Registser Yourself !</h1>
+                            <h1 className="font-bold hover:underline hover:underline-offset-4 text-sm text-white mt-10 font-[sans-serif]">Registser Yourself !</h1>
                         </Link>
                     </div>
                     <div className="max-sm:hidden pl-[88px]">

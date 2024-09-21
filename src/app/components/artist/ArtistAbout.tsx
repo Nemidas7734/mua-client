@@ -38,7 +38,7 @@ export default function ArtistAbout({ artistData }: ArtistAboutProps) {
     };
 
     return (
-        <section className="max-sm:grid max-sm:grid-rows-2 md:grid md:grid-cols-2 md:gap-2 w-full md:w-[1120px] rounded-xl border-2 shadow-2xl shadow-[#0000001F] md:mt-2">
+        <section className="max-sm:grid max-sm:grid-rows-2 md:grid md:grid-cols-2 md:gap-2 w-full md:w-[1120px] md:min-h-[320px] rounded-xl border-2 shadow-2xl shadow-[#0000001F] md:mt-2">
             <div className="flex flex-col gap-6 md:gap-10 pl-6 md:pl-12">
                 <p className="min-w-[330px] pr-4 md:min-w-[460px] text-wrap text-sm md:text-lg font-normal pt-5">{artistData.description}</p>
                 <div>

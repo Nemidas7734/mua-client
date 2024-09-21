@@ -29,6 +29,7 @@ function MuaSection() {
             delay: 2500,
             disableOnInteraction: false,
           }}
+          initialSlide={1}
           pagination={{ 
             clickable: true,
             el: '.mua-swiper-container .swiper-pagination',

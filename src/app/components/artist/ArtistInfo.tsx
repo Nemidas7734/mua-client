@@ -101,14 +101,14 @@ export default function ArtistInfo({ artistData, artistId }: ArtistInfoProps) {
     };
 
     const handleMessageClick = () => {
-        setShowMessageForm(true);
+        setShowMessageForm(!showMessageForm);
         setShowContact(false);
         setShowSuccess(false);
     };
 
     const handleContactClick = () => {
         fetchArtistContact();
-        setShowContact(true);
+        setShowContact(!showContact);
         setShowMessageForm(false);
         setShowSuccess(false);
     };
