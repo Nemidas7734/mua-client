@@ -10,6 +10,17 @@ import 'swiper/css/pagination';
 import { Autoplay, EffectCoverflow, Pagination } from "swiper/modules";
 
 export default function Gallery() {
+    const images = [
+        "/gallery/image1.jpeg",
+        "/gallery/image2.jpeg",
+        "/gallery/image3.jpeg",
+        "/gallery/image4.jpeg",
+        "/gallery/image5.jpeg",
+        "/gallery/image6.jpeg",
+        "/gallery/image7.jpeg",
+        "/gallery/image8.jpg"
+    ];
+
     return (
         <div id="gallery" className="flex flex-col justify-center items-center w-full px-4 md:px-8 mt-12 md:mt-16 mb-1 md:mb-4 overflow-hidden">
             <h1 className="font-bold  font-[sans-serif] text-2xl md:text-3xl mb-8 md:mb-10">Gallery</h1>
@@ -45,14 +56,14 @@ export default function Gallery() {
                         }
                     }}
                 >
-                    {[...Array(8)].map((_, index) => (
+                    {images.map((image, index) => (
                         <SwiperSlide key={index} className="w-[240px] sm:w-[300px] md:w-[377px] h-[280px] sm:h-[350px] md:h-[420px]">
                             <Image 
-                                src="/gallery/gallery2.jpg" 
+                                src={image}
                                 alt={`Slide_image_${index + 1}`} 
-                                width={475} 
-                                height={414} 
-                                className="w-full h-full object-cover rounded-xl"
+                                width={350} 
+                                height={430} 
+                                className="max-w-[342px] max-h-[425px] object-cover rounded-xl"
                             />
                         </SwiperSlide>
                     ))}
