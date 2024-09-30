@@ -63,7 +63,7 @@ export default function Gallery() {
                                 alt={`Slide_image_${index + 1}`} 
                                 width={350} 
                                 height={430} 
-                                className="max-w-[342px] max-h-[425px] object-cover rounded-xl"
+                                className="max-w-[160px] max-h-[200px] md:max-w-[342px] md:max-h-[425px] object-cover rounded-xl"
                             />
                         </SwiperSlide>
                     ))}
